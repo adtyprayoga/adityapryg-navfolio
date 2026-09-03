@@ -1,297 +1,166 @@
-<p align="center">
-  <img src="./public/images/logo-with-name.png" alt="Navfolio logo with name" width="360" />
-</p>
+# adityapryg-navfolio
 
-<p align="center">
-  一个基于 Astro 的安静个人发布空间 starter：主页、博客、项目文档、Vibe 碎片、全文搜索、评论系统和主题色盘都在同一个可维护的静态站点里。
-  <br />
-  <sub>适合内容优先的个人网站，强调克制视觉、轻量交互和 Markdown / MDX 内容管理。</sub>
-</p>
+Personal site of **Aditya Prayoga** — notes, projects, and links, in one place.
 
-<p align="center">
-  <a href="./README.md">简体中文</a>
+<p>
+  <a href="./README.md">English</a>
   ·
-  <a href="./README.en.md">English</a>
-  ·
-  <a href="https://astro.navfolio.site/">在线预览</a>
-  ·
-  <a href="https://astro.navfolio.site/blog/">模块手册</a>
+  <a href="./README.id.md">Bahasa Indonesia</a>
 </p>
 
-<p align="center">
-  <img src="./public/images/site-in-devices.png" alt="Navfolio device preview" />
-</p>
+Built with [Astro](https://astro.build) on the
+[navfolio](https://github.com/dodolalorc/astro-navfolio) theme. Static output,
+no runtime backend, deployed as a container.
 
-_效果图来自 @Lruihao 提供的[设备预览网页](https://github.com/Lruihao/vue-el-demo)。_
+## Stack
 
-## Navfolio 是什么
+|           |                                         |
+| --------- | --------------------------------------- |
+| Framework | Astro 7, static output                  |
+| Styling   | Tailwind CSS 4                          |
+| Content   | Markdown / MDX content collections      |
+| Search    | Pagefind (built from the static output) |
+| Serving   | nginx in a multi-stage Docker image     |
 
-Navfolio 把个人导航、作品集、博客、项目文档和轻量数字花园整合到一个 Astro 静态站点里。它不是传统的单页简历，也不是只有文章列表的博客模板，而是一个可以长期生长的个人发布系统。
+## Requirements
 
-- 主页负责介绍你是谁、你在做什么、读者可以去哪里找到你。
-- Blog 负责长文、教程、项目记录和模块使用手册。
-- Projects 负责沉淀项目文档和作品说明。
-- Vibe 负责更短、更即时的生活片段和开发札记。
-- About 负责站点说明、作者信息和友情链接。
+- **Node.js 22.12+**
+- **[bun](https://bun.sh)** — only for the font subsetting and content scaffold
+  scripts. Everything else runs on npm.
+- **Python 3 + fontTools** — only if you run the font subsetting step.
 
-在线站点：
+## Getting started
 
-- 主页：https://astro.navfolio.site/
-- 博客列表：https://astro.navfolio.site/blog/
-- GitHub 仓库：https://github.com/dodolalorc/astro-navfolio
-
-## 快速开始
-
-### 环境要求
-
-除 Bun 和 Git 外，生产构建还**硬依赖 Python 3、FontTools 和 Brotli**。`bun run build` 会根据站点 UI 与内容中的中日韩字符生成 WOFF2 字体子集；缺少这些工具时构建会失败。
-
-建议将 Python 依赖安装在项目虚拟环境中。无需激活虚拟环境，Navfolio 的构建脚本会自动优先使用 `.venv`：
-
-macOS / Linux：
-
-```sh
-python3 -m venv .venv
-.venv/bin/python -m pip install --upgrade pip fonttools brotli
+```bash
+npm install
+npx astro dev
 ```
 
-Windows（PowerShell 或命令提示符）：
+The site is then on <http://localhost:4321>.
 
-```powershell
-py -3 -m venv .venv
-.venv\Scripts\python.exe -m pip install --upgrade pip fonttools brotli
-```
+> `npm run build` starts with `bun run fonts:ui` and fails without bun
+> installed. Use `npx astro build` for a plain build, or see
+> [Building](#building) for the full sequence including the search index.
 
-可用下面的命令验证字体子集化环境：
+## Content
 
-```sh
-bun run fonts:ui
-```
+Content lives in `src/content/`. Each collection is a directory of Markdown or
+MDX files with typed frontmatter — the schemas are in `src/content.config.ts`,
+and the build fails on anything that does not match.
 
-安装依赖：
+| Path                    | What it holds                                                       |
+| ----------------------- | ------------------------------------------------------------------- |
+| `src/content/about.mdx` | The About page. **Required** — the build fails without it.          |
+| `src/content/blog/`     | Posts. Needs `title`, `description`, `date`.                        |
+| `src/content/projects/` | Project entries. `index.mdx` is the page intro and is **required**. |
+| `src/content/vibe/`     | Short fragments. Only `date` is required.                           |
+| `src/content/media/`    | Books, films, music. Needs `title`, `creator`, `type`.              |
 
-```sh
-bun install
-```
-
-启动开发服务器：
-
-```sh
-bun run dev
-```
-
-构建生产版本：
-
-```sh
-bun run build
-```
-
-预览生产构建：
-
-```sh
-bun run preview
-```
-
-## 第一次替换内容
-
-多数个人化内容不需要改组件，优先改这些文件：
-
-```text
-src/config/site.toml        站点标题、个人资料、导航、首页模块、评论、搜索、主题
-src/content/about.mdx       关于页面
-src/content/blog/           博客文章和模块手册
-src/content/projects/       项目入口和项目文档
-src/content/vibe/           轻量动态和生活碎片
-public/images/              Logo、头像、站点预览和静态图片
-```
-
-创建内容可以使用内置脚本：
-
-```sh
-bun run post:new my-first-post
-bun run post:new my-interactive-post --mdx
-bun run project:new my-project
-bun run vibe:new today-cloud
-bun run media:new my-favourite-book
-bun run post:new private-draft src/content/drafts
-```
-
-所有页面内容脚本都遵循
-`bun run <页面简称>:new <文件名> [可选输出目录]`。文件名经安全清理后同时作为
-输出 basename 和初始 `title`；不指定目录时使用对应模板声明的默认内容目录。
-`--md`、`--mdx` 或文件名扩展名可以覆盖模板的默认扩展名。默认 frontmatter 和
-正文位于各页面包发布的 `templates/default.md`，博客模板位于
-`scripts/templates/post.md`，可以直接修改而无需改 TypeScript。
-
-## 路由
-
-```text
-/                 个人仪表盘主页
-/blog             写作归档与模块手册
-/blog/[slug]      博客文章页
-/projects         项目文档入口
-/projects/[slug]  项目详情文档
-/vibe             短记录时间流
-/about            关于页面
-/rss.xml          RSS feed
-```
-
-## 模块使用手册
-
-Navfolio 的模块说明都写成了真实博客内容，位于 `src/content/blog/`，也会出现在在线博客列表里。
-
-| 模块               | 本地内容                                             | 在线阅读                                                         |
-| ------------------ | ---------------------------------------------------- | ---------------------------------------------------------------- |
-| 站点配置和首页数据 | `src/content/blog/toml-site-config-guide.md`         | https://astro.navfolio.site/blog/toml-site-config-guide/         |
-| 主题色盘           | `src/content/blog/theme-palettes.mdx`                | https://astro.navfolio.site/blog/theme-palettes/                 |
-| 全文搜索           | `src/content/blog/site-search-module-guide.md`       | https://astro.navfolio.site/blog/site-search-module-guide/       |
-| 评论系统           | `src/content/blog/add-comment-system-to-navfolio.md` | https://astro.navfolio.site/blog/add-comment-system-to-navfolio/ |
-| Vibe 短记录        | `src/content/blog/vibe-content-guide.mdx`            | https://astro.navfolio.site/blog/vibe-content-guide/             |
-| 分类与系列         | `src/content/blog/categories-series-guide.md`        | https://astro.navfolio.site/blog/categories-series-guide/        |
-| 友链卡片           | `src/content/blog/friend-link-card.mdx`              | https://astro.navfolio.site/blog/friend-link-card/               |
-| Markdown 渲染示例  | `src/content/blog/markdown-style-guide.md`           | https://astro.navfolio.site/blog/markdown-style-guide/           |
-
-## 站点配置
-
-站点级信息集中在 `src/config/site.toml`：
-
-- `[config.site]`：站点标题、描述、仓库地址和页脚说明。
-- `[config.profile]`：作者名称、账号、身份、头像、网站、GitHub、邮箱等信息。
-- `[[config.topNav.links]]`：顶部导航链接。
-- `[config.theme]`：内置色盘选择。
-- `[config.search]`：搜索入口、快捷键、占位文案和结果数量。
-- `[config.comments]`：评论开关和评论提供方。
-- `[config.vibe]`：Vibe 时间流显示行为。
-- `[config.home]`：首页引语、介绍、导航卡片、联系方式和当前关注事项。
-
-配置结构由 `src/content.config.ts` 中的 Zod schema 校验。字段缺失或类型不对时，`bun run build` 会直接报错，方便早发现。
-
-## 内容模型
-
-博客文章、项目文档和 About 页面共用文章 schema：
+A minimal post:
 
 ```yaml
-title: '文章标题'
-description: '用于归档页和元信息的简短摘要。'
-date: '2026-05-18'
+---
+title: 'Post title'
+description: 'One line, used for previews and meta tags.'
+date: 2026-09-03
+tags: ['astro']
+categories: ['Notes']
 draft: false
-heroImage: '/src/assets/figure/example.png'
-showHeroImage: true
-tags:
-  - Astro
-comments: true
-sidebar:
-  enable: true
-  toc: true
-  relatedPosts: true
+---
 ```
 
-`sidebar` 控制文章辅助区：
+## Configuration
 
-- `enable`：是否启用侧栏区块。
-- `toc`：是否展示目录导航。
-- `relatedPosts`：是否展示相关文章。
+Everything user-facing is in **`src/config/site.toml`** — profile, navigation,
+homepage blocks, social links, theme palette, and page copy. It is validated
+against a schema, so a typo fails the build rather than silently rendering.
 
-普通博客文章默认适合展示阅读工具；`/about` 和部分项目页可以设置为无侧栏、居中阅读。
+### Language
 
-## 搜索
-
-Navfolio 使用 Pagefind 生成静态全文搜索索引。顶部导航的搜索按钮支持点击打开，也支持 `Ctrl+K` / `Cmd+K` 快速唤起。
+The site ships English (default) and Indonesian:
 
 ```toml
-[config.search]
-enabled = true
-shortcut = "mod+k"
-placeholder = "Search notes..."
-maxResults = 6
+[config.theme]
+lang = "en" # en (default), id, zh-CN, zh-TW
 ```
 
-`bun run build` 会先执行 Astro 构建，再为 `dist` 生成 `dist/pagefind` 索引。开发环境如果还没有生产索引，搜索弹层会显示索引不可用提示；运行一次生产构建后可用 `bun run preview` 检查完整搜索体验。
+This is a **single-language switch**, not per-locale routing — there are no
+`/en/` and `/id/` URLs and no on-page language toggle. It sets the interface
+language for the whole site.
 
-## 评论
+UI strings live in `src/i18n/<locale>.json`. The Indonesian catalog (`id.json`)
+was added to this fork; `@navfolio/core` only knows the three locales it ships
+with, so `src/utils/ui-text.ts` resolves `id` locally before falling back to the
+upstream alias table.
 
-Navfolio 支持可配置评论系统：
+### Social links
 
-- `giscus`
-- `utterances`
-- `waline`
-- `none`
+In `[[config.home.links]]`, an **empty `tooltip` hides the entry**. LinkedIn and
+X are present but blank — fill in the URLs to make them appear.
 
-统一配置在 `src/config/site.toml`：
+## Building
 
-```toml
-[config.comments]
-enabled = true
-provider = "giscus"
-show_on_posts = true
+```bash
+npx astro build
+npx pagefind --site dist --output-subdir pagefind --root-selector main --exclude-selectors "[data-pagefind-ignore]"
 ```
 
-单篇文章也可以在 frontmatter 中关闭评论：
+Pagefind is a separate step: it indexes the _built_ HTML, so search is empty
+until it runs. `npm run build` chains both plus the font step.
 
-```yaml
-comments: false
+## Deployment
+
+A multi-stage `Dockerfile` builds the site and serves it from nginx. Only the
+built output reaches the final image.
+
+```bash
+SITE_URL=https://your-domain.com docker compose up -d --build
 ```
 
-## 部署
+Local development in a container:
 
-站点会构建为 `dist` 中的静态文件，可以部署到 GitHub Pages、Vercel、Netlify、Cloudflare Pages，或任何支持 Astro 静态输出的平台。
-
-GitHub Pages 项目页可使用仓库内置 workflow。`astro.config.mjs` 会根据 GitHub Actions 环境自动处理项目页 `base`，也可以手动覆盖：
-
-```sh
-SITE_URL=https://example.com SITE_BASE=/astro-navfolio bun run build
+```bash
+docker compose --profile dev up dev
 ```
 
-## 项目结构
+### Coolify
 
-```text
-public/
-  images/                 Logo、预览图和静态图片
-src/
-  assets/                 内容图片和本地字体
-  components/
-    article/              文章头部组件
-    blog/                 顶部导航、搜索、目录和相关文章
-    cards/                首页卡片组件
-    comments/             评论提供方组件
-    layout/               首页仪表盘布局
-    mdx/                  MDX 内容组件
-    widgets/              写作活动和工具组件
-    Icon.astro            统一图标适配器
-  content/
-    about.mdx             关于页面内容
-    blog/                 博客 Markdown / MDX 和模块手册
-    projects/             项目入口和项目文档
-    vibe/                 轻量短记录
-  config/site.toml        站点配置
-  data/site.ts            TOML 配置读取 helper
-  layouts/                基础布局和文章布局
-  pages/                  Astro 路由
-  styles/                 全局主题、色盘、排版和布局变量
-```
+| Setting           | Value      |
+| ----------------- | ---------- |
+| Build Pack        | Dockerfile |
+| Ports Exposes     | `80`       |
+| Health Check Path | `/health`  |
 
-## 技术栈
+Set `SITE_URL` and `SKIP_FONT_SUBSET` as **build** variables. `SITE_URL` is
+written into canonical tags, the sitemap, and RSS during the build — as a
+runtime variable it arrives too late and the site ships with the placeholder
+URL from `site.toml`.
 
-- Astro 6
-- Bun
-- Tailwind CSS 4 through Vite
-- Pagefind
-- `@astrojs/mdx`
-- `@astrojs/rss`
-- `@astrojs/sitemap`
-- `lucide-astro`
-- `sharp`
+### Build arguments
 
-## 设计方向
+| Argument           | Default   | Purpose                                         |
+| ------------------ | --------- | ----------------------------------------------- |
+| `SITE_URL`         | _(empty)_ | Public URL. Falls back to `config.site.url`.    |
+| `SITE_BASE`        | `/`       | Sub-path, when not served from the domain root. |
+| `SKIP_FONT_SUBSET` | `0`       | `1` skips CJK font subsetting.                  |
 
-Navfolio 希望呈现为一个安静的开发者笔记本：
+`SKIP_FONT_SUBSET=1` is the sensible default here: the step needs bun and Python
+fontTools and only matters for Chinese content.
 
-- 内容优先；
-- 柔和但有结构；
-- 克制的阴影和边框；
-- 稳定的文章阅读节奏；
-- 轻量动效；
-- 避免营销式落地页；
-- 长文阅读区域不被视觉噪音打扰。
+## Notes
 
-如果这个 starter 对你有帮助，欢迎在仓库点一个 star：<https://github.com/dodolalorc/astro-navfolio>。
+- **The lockfile pins the `@navfolio/*` packages to `git+ssh://` URLs**, which
+  cannot authenticate inside a container. The Dockerfile rewrites them to
+  anonymous HTTPS via `git config insteadOf`; the commit SHAs are unchanged.
+- **`site.url` cannot be empty** — the schema rejects it. It stays an explicit
+  placeholder until a domain is set, with the real value passed via `SITE_URL`.
+- **The pre-commit hook runs `bunx lint-staged`** and fails without bun. The
+  equivalents are `npx eslint .` and `npx prettier --check --ignore-unknown .`.
+
+## Credits
+
+Theme: [astro-navfolio](https://github.com/dodolalorc/astro-navfolio) by
+dodolalorc, MIT licensed. See [LICENSE](./LICENSE) — the upstream copyright
+notice is retained.
+
+Site content © Aditya Prayoga.
