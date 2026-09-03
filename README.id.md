@@ -25,22 +25,18 @@ backend, dijalankan sebagai kontainer.
 ## Kebutuhan
 
 - **Node.js 22.12+**
-- **[bun](https://bun.sh)** — hanya untuk skrip subset font dan pembuat konten.
-  Selebihnya berjalan dengan npm.
+- **[bun](https://bun.sh)** — package manager untuk proyek ini. `bun.lock`
+  adalah lockfile resmi dan yang dirawat Dependabot.
 - **Python 3 + fontTools** — hanya bila menjalankan langkah subset font.
 
 ## Menjalankan secara lokal
 
 ```bash
-npm install
-npx astro dev
+bun install
+bun run dev
 ```
 
 Situs tersedia di <http://localhost:4321>.
-
-> `npm run build` diawali `bun run fonts:ui` dan gagal tanpa bun. Gunakan
-> `npx astro build` untuk build biasa, atau lihat [Build](#build) untuk urutan
-> lengkap beserta indeks pencarian.
 
 ## Konten
 
@@ -148,13 +144,14 @@ dan Python fontTools, dan hanya relevan untuk konten berbahasa Mandarin.
 
 ## Catatan
 
-- **Lockfile mengunci paket `@navfolio/*` ke URL `git+ssh://`**, yang tidak bisa
-  diautentikasi di dalam kontainer. Dockerfile menulis ulang ke HTTPS anonim
-  lewat `git config insteadOf`; SHA commit-nya tidak berubah.
+- **Pakai satu lockfile saja**, yaitu `bun.lock`. Lockfile npm di sebelahnya
+  akan basi begitu Dependabot membuka PR, dan `npm ci` lalu menggagalkan build
+  karena package.json dan lockfile tidak cocok.
 - **`site.url` tidak boleh kosong** — skema menolaknya. Nilainya tetap
   placeholder sampai ada domain, dan nilai sebenarnya dikirim lewat `SITE_URL`.
-- **Hook pre-commit menjalankan `bunx lint-staged`** dan gagal tanpa bun.
-  Padanannya: `npx eslint .` dan `npx prettier --check --ignore-unknown .`.
+- **typescript ditahan di 6.x** meski versi 7 sudah rilis: typescript-eslint
+  belum mendukung TS 7. Compiler 7.x tersedia lewat alias `@typescript/native`,
+  jadi PR Dependabot yang menaikkan entri `typescript` ke 7 akan merusak lint.
 
 ## Kredit
 

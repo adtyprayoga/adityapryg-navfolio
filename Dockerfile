@@ -5,9 +5,10 @@
 # ---------------------------------------------------------------------------
 FROM node:22-bookworm-slim AS deps
 
-# git          : several @navfolio/* dependencies install straight from GitHub
 # python3/venv : scripts/fonts/subset-ui-font.ts shells out to fontTools
-# ca-certificates: HTTPS for both of the above
+# ca-certificates: HTTPS for package downloads
+# git          : not needed to install (bun fetches the @navfolio/* packages as
+#                HTTPS tarballs) but kept as a fallback for any git-resolved dep
 RUN apt-get update \
   && apt-get install --no-install-recommends -y \
        ca-certificates \
@@ -22,20 +23,18 @@ WORKDIR /app
 RUN python3 -m venv /app/.venv \
   && /app/.venv/bin/pip install --no-cache-dir fonttools brotli zopfli
 
-# package.json drives the font step through bun; astro and pagefind run on node.
+# bun is the package manager here: bun.lock is the lockfile of record and the
+# one Dependabot maintains. It also runs the font subset script; astro and
+# pagefind still run on node, via the bin stubs bun installs.
 RUN npm install -g bun@1
 
-# package-lock.json pins the @navfolio/* dependencies to git+ssh:// URLs, which
-# cannot authenticate inside the image. Rewrite them to anonymous HTTPS; the
-# resolved commit SHAs are unchanged. --add because insteadOf is multi-valued.
-RUN git config --global --add url."https://github.com/".insteadOf "ssh://git@github.com/" \
-  && git config --global --add url."https://github.com/".insteadOf "git@github.com:"
-
 # Dependencies first, so edits to src/ do not invalidate the install layer.
-COPY package.json package-lock.json ./
-# HUSKY=0 keeps the "prepare" hook from failing without a .git directory.
+COPY package.json bun.lock ./
+# HUSKY=0 keeps the "prepare" hook quiet without a .git directory.
 ENV HUSKY=0
-RUN npm ci
+# --frozen-lockfile fails on a lockfile that disagrees with package.json rather
+# than silently resolving something else, which is what a deploy wants.
+RUN bun install --frozen-lockfile
 
 # ---------------------------------------------------------------------------
 # Stage 2 — build the static site

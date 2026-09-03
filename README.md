@@ -25,22 +25,18 @@ no runtime backend, deployed as a container.
 ## Requirements
 
 - **Node.js 22.12+**
-- **[bun](https://bun.sh)** — only for the font subsetting and content scaffold
-  scripts. Everything else runs on npm.
+- **[bun](https://bun.sh)** — the package manager for this project. `bun.lock`
+  is the lockfile of record and the one Dependabot maintains.
 - **Python 3 + fontTools** — only if you run the font subsetting step.
 
 ## Getting started
 
 ```bash
-npm install
-npx astro dev
+bun install
+bun run dev
 ```
 
 The site is then on <http://localhost:4321>.
-
-> `npm run build` starts with `bun run fonts:ui` and fails without bun
-> installed. Use `npx astro build` for a plain build, or see
-> [Building](#building) for the full sequence including the search index.
 
 ## Content
 
@@ -149,13 +145,14 @@ fontTools and only matters for Chinese content.
 
 ## Notes
 
-- **The lockfile pins the `@navfolio/*` packages to `git+ssh://` URLs**, which
-  cannot authenticate inside a container. The Dockerfile rewrites them to
-  anonymous HTTPS via `git config insteadOf`; the commit SHAs are unchanged.
+- **Use one lockfile.** `bun.lock` is it. An npm lockfile alongside it goes
+  stale the moment Dependabot opens a PR, and `npm ci` then fails the build on
+  a package.json/lockfile mismatch.
 - **`site.url` cannot be empty** — the schema rejects it. It stays an explicit
   placeholder until a domain is set, with the real value passed via `SITE_URL`.
-- **The pre-commit hook runs `bunx lint-staged`** and fails without bun. The
-  equivalents are `npx eslint .` and `npx prettier --check --ignore-unknown .`.
+- **typescript is held on 6.x** even though 7 is out: typescript-eslint does
+  not support TS 7. `@typescript/native` aliases the 7.x compiler separately,
+  so a Dependabot PR moving the `typescript` entry to 7 will break `bun lint`.
 
 ## Credits
 
