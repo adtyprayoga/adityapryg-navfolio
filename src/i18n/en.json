@@ -112,5 +112,8 @@
       "page": "Page"
     },
     "matchedPassage": "Matched passage"
+  },
+  "home": {
+    "greeting": "Hi,"
   }
 }

@@ -1,4 +1,7 @@
 ---
+import { getSiteConfig } from '../../data/site';
+import { getUiText } from '../../utils/ui-text';
+
 interface Intro {
   title: string;
   name: string;
@@ -10,6 +13,7 @@ interface Quote {
 }
 
 const { intro, quote } = Astro.props as { intro: Intro; quote?: Quote };
+const ui = getUiText(await getSiteConfig());
 ---
 
 <article class="glass-card intro-card">
@@ -22,7 +26,7 @@ const { intro, quote } = Astro.props as { intro: Intro; quote?: Quote };
       )
     }
     <h2>
-      <span aria-hidden="true">Hi,</span>
+      <span aria-hidden="true">{ui.home.greeting}</span>
       {intro.title.replace(intro.name, '')}<em>{intro.name}</em>
     </h2>
     {

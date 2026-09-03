@@ -29,6 +29,9 @@ type Message = string | { one?: string; other: string };
 
 type RawUiText = {
   locale: string;
+  home: {
+    greeting: string;
+  };
   doing: {
     recently: string;
   };
@@ -195,6 +198,7 @@ function formatNumber(value: number, locale: string) {
 function createUiText(raw: RawUiText): UiText {
   return {
     locale: raw.locale,
+    home: raw.home,
     doing: raw.doing,
     heatmap: {
       ...raw.heatmap,

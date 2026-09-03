@@ -94,5 +94,8 @@
       "page": "頁面"
     },
     "matchedPassage": "匹配段落"
+  },
+  "home": {
+    "greeting": "你好，"
   }
 }
