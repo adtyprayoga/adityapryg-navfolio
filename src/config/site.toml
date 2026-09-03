@@ -1,11 +1,16 @@
 [config.site]
-title = "navfolio"
-description = "A personal navigation portfolio starter built with Astro."
-pageTitle = "navfolio | Digital Publication Space"
-pageDescription = "A calm AI-native personal publication space for notes, links, and writing."
-url = "https://astro.navfolio.site"
-repository = "https://github.com/dodolalorc/astro-navfolio"
-footerNote = "Released as an open-source starter."
+title = "Aditya Prayoga"
+description = "Personal site of Aditya Prayoga - notes, projects, and links."
+pageTitle = "Aditya Prayoga | Notes, Projects & Links"
+pageDescription = "A personal space for writing, project notes, and the links worth keeping in one place."
+# Deployed URL. Baked into canonical links, the sitemap, and RSS at build time.
+# The SITE_URL build arg (see docker-compose.yml) overrides this and is the
+# mechanism to use for the Docker/CI deploy. This is only the fallback for a
+# plain local build. The schema rejects an empty value, so it stays a visible
+# placeholder until the domain is settled.
+url = "https://example.com"
+repository = "https://github.com/adtyprayoga/adityapryg-navfolio"
+footerNote = "Built with Astro on the navfolio theme."
 
 [config.theme]
 # 可用色盘：
@@ -86,9 +91,9 @@ note = "Not formal enough for blog posts, but still part of the story."
 showTrail = true
 
 [config.pages.media]
-title = "书影音"
-subtitle = "读过、看过、听过的作品，以及一点当时的感受。"
-note = "一页浏览书、电影、剧集、专辑与播客。"
+title = "Media"
+subtitle = "Books, films, and music worth remembering."
+note = "One page for books, films, series, albums, and podcasts."
 
 [config.comments.giscus]
 repo = ""
@@ -119,12 +124,14 @@ pageview = true
 comment = true
 
 [config.profile]
-name = "navfolio"
-handle = "@navfolio"
-role = "A Cat Developer"
-email = "hello@navfolio.site"
-website = "https://astro.navfolio.site/"
-github = "https://github.com/dodolalorc/astro-navfolio"
+name = "Aditya Prayoga"
+handle = "@adtyprayoga"
+role = "Software Developer"
+email = "adityaprayoga772@gmail.com"
+# Rendered as an unconditional link in the header, so it cannot be left empty.
+# Point it at the site's own domain once there is one.
+website = "https://github.com/adtyprayoga"
+github = "https://github.com/adtyprayoga"
 avatar = "/images/logo-thin.webp"
 
 [[config.topNav.links]]
@@ -155,21 +162,17 @@ href = "/about"
 
 [config.home.quote]
 text = [
-  "Navigate your world,",
-  "Showcase your story,",
-  "and keep everything in one place.",
+  "Build things,",
+  "write them down,",
+  "and keep it all in one place.",
 ]
 
 [config.home.intro]
-title = "here is navfolio"
-name = "navfolio"
+title = "hey, I'm Aditya"
+name = "Aditya Prayoga"
 body = [
-  "The name combines \"Navigation\" and \"Portfolio\".",
-  "Navfolio prioritizes lightweight organization, seamless reading, and developer-friendly aesthetics.",
-  "It’s less a resume than a personal OS for your ideas, projects, notes, and online presence.",
-  "这个名字融合了“导航”与“作品集”。",
-  "Navfolio 专注于轻量级组织、流畅的阅读体验，以及对开发者友好的美学设计。",
-  "它不像一份简历，更像是一个属于你自己的个人操作系统——承载想法、项目、笔记与网络足迹。",
+  "Software developer. This is where I keep my notes, projects, and the links I do not want to lose.",
+  "Most of what lands here starts as something I had to figure out anyway, written down so the next person (usually future me) does not have to.",
 ]
 
 [config.home.latest]
@@ -181,45 +184,46 @@ startDate = ""
 dateArchiveBaseHref = ""
 
 [[config.home.navigation]]
-icon = "compass"
-title = "Portfolio"
-subtitle = "Selected work and case studies"
-href = "https://astro.navfolio.site/"
-
-[[config.home.navigation]]
 icon = "pen"
 title = "Blog"
-subtitle = "Essays, notes, and field reports"
+subtitle = "Notes, write-ups, and things I figured out"
 href = "/blog"
 
 [[config.home.navigation]]
-icon = "briefcase"
-title = "Resume"
-subtitle = "Career profile and experience"
-href = "https://github.com/dodolalorc/navfolio"
+icon = "compass"
+title = "Projects"
+subtitle = "Things I have built and shipped"
+href = "/projects"
 
 [[config.home.navigation]]
 icon = "github"
 title = "Open Source"
 subtitle = "Code, experiments, and tools"
-href = "https://github.com/dodolalorc/astro-navfolio"
+href = "https://github.com/adtyprayoga"
+
+[[config.home.navigation]]
+icon = "sparkles"
+title = "About"
+subtitle = "Who I am and what I work on"
+href = "/about"
 
 [[config.home.links]]
 label = "GitHub"
 icon = "github"
-tooltip = "https://github.com/dodolalorc/astro-navfolio"
+tooltip = "https://github.com/adtyprayoga"
 copy = false
 
+# An empty tooltip hides the link. Fill in the profile URLs to show these two.
 [[config.home.links]]
 label = "LinkedIn"
 icon = "linkedin"
-tooltip = "https://www.linkedin.com/"
+tooltip = ""
 copy = false
 
 [[config.home.links]]
 label = "X"
 icon = "x"
-tooltip = "" # 留空会隐藏这个链接项。
+tooltip = ""
 copy = false
 
 [[config.home.links]]
@@ -231,61 +235,18 @@ copy = false
 [[config.home.links]]
 label = "Email"
 icon = "mail"
-tooltip = "hello@navfolio.site"
+tooltip = "adityaprayoga772@gmail.com"
 copy = true
 
-[[config.home.links]]
-label = "QQ"
-icon = "qq"
-tooltip = "123456789"
-copy = true
-
-[[config.home.links]]
-label = "WeChat"
-icon = "wechat"
-tooltip = "navfolio"
-copy = true
-
-[[config.home.links]]
-label = "Weibo"
-icon = "weibo"
-tooltip = "https://weibo.com/"
-copy = false
-
-[[config.home.links]]
-label = "Xiaohongshu"
-icon = "xiaohongshu"
-tooltip = "https://www.xiaohongshu.com/"
-copy = false
-
-[[config.home.links]]
-label = "Zhihu"
-icon = "zhihu"
-tooltip = "https://www.zhihu.com/"
-copy = false
-
-[[config.home.links]]
-label = "Bilibili"
-icon = "bilibili"
-tooltip = "https://www.bilibili.com/"
-copy = false
-
+# Whatever you are currently working on. Placeholder text - worth replacing.
 [[config.home.doing]]
-text = "Shipping a personal dashboard template"
+text = "Setting up this site and writing the first notes"
 mark = "01"
 
 [[config.home.doing]]
-text = "Writing reusable notes for future projects"
+text = "Shipping it with Docker on my own server"
 mark = "02"
 
 [[config.home.doing]]
-text = "Improving static-site publishing workflow"
-mark = "03"
-
-[[config.home.doing]]
 text = "Collecting useful developer resources"
-mark = "04"
-
-[[config.home.doing]]
-text = "Exploring small open-source ideas"
-mark = "05"
+mark = "03"
