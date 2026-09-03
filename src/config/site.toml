@@ -11,7 +11,8 @@ footerNote = "Released as an open-source starter."
 # 可用色盘：
 # green-soft, green-vivid, rose-soft, pink-soft, purple-soft, blue-soft, orange-soft, brown-soft
 palette = "green-soft"
-# 原生 UI 语言。可用值：en、zh-CN、zh-TW。未知值会回退到 en。
+# UI language. Available values: en (default), id, zh-CN, zh-TW.
+# Unknown values fall back to en.
 lang = "en"
 
 [config.fonts]
@@ -101,7 +102,7 @@ emit_metadata = "0"
 input_position = "top"
 light_theme = "light"
 dark_theme = "dark"
-lang = "zh-CN"
+lang = "en"
 loading = "lazy"
 
 [config.comments.utterances]
@@ -112,7 +113,7 @@ theme = "github-light"
 
 [config.comments.waline]
 server_url = ""
-lang = "zh-CN"
+lang = "en"
 dark = "html.dark"
 pageview = true
 comment = true

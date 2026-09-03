@@ -1,0 +1,116 @@
+{
+  "locale": "id",
+  "doing": {
+    "recently": "Terbaru"
+  },
+  "heatmap": {
+    "totalPosts": "Total tulisan",
+    "activeDays": "Hari aktif",
+    "dayStreak": "Hari beruntun",
+    "latest": "Terbaru",
+    "latestPublishedPosts": "Tulisan terbaru yang diterbitkan",
+    "openLatestPost": "Buka tulisan terbaru: {title}",
+    "less": "Sedikit",
+    "more": "Banyak",
+    "weekdays": ["Sen", "Rab", "Jum"],
+    "writingSince": "Aktivitas menulis sejak {date}",
+    "recentWeeks": "Aktivitas menulis {weeks} minggu terakhir",
+    "upcoming": "mendatang",
+    "postCount": {
+      "one": "{count} tulisan",
+      "other": "{count} tulisan"
+    }
+  },
+  "groups": {
+    "categories": "Kategori",
+    "series": "Seri",
+    "category": "Kategori",
+    "tag": "Tag",
+    "tags": "Tag",
+    "years": "Tahun",
+    "back": "Kembali",
+    "allArticles": "Semua artikel",
+    "uncategorized": "Tanpa kategori",
+    "expand": "Buka",
+    "collapse": "Tutup",
+    "browseByTopic": "Jelajahi berdasarkan topik",
+    "followConnectedNotes": "Ikuti catatan yang terhubung",
+    "blogBrowsingGroups": "Kelompok penjelajahan blog",
+    "emptyCategories": "Belum ada kategori yang ditambahkan.",
+    "emptySeries": "Belum ada seri yang ditambahkan.",
+    "emptyTags": "Belum ada tag yang ditambahkan.",
+    "emptyArchives": "Belum ada artikel yang siap diarsipkan.",
+    "tagCloud": "Awan tag",
+    "tagCloudKicker": "Konstelasi tag",
+    "tagCloudNote": "Peta kata kunci yang tumbuh dari isi artikel. Ukuran, ketebalan, dan warna mengikuti jumlah artikel.",
+    "yearArchives": "Arsip tahunan",
+    "yearArchivesKicker": "Arsip tahun",
+    "yearArchivesNote": "Telusuri semua artikel berdasarkan tahun terbit, menyisakan judul, tanggal, dan beberapa tag pertama.",
+    "articleCount": {
+      "one": "{count} artikel",
+      "other": "{count} artikel"
+    },
+    "categoryNote": {
+      "one": "{count} artikel dalam topik ini.",
+      "other": "{count} artikel dalam topik ini."
+    },
+    "seriesNote": {
+      "one": "{count} artikel sesuai urutan baca.",
+      "other": "{count} artikel sesuai urutan baca."
+    },
+    "tagNote": {
+      "one": "{count} artikel dengan tag ini.",
+      "other": "{count} artikel dengan tag ini."
+    },
+    "publishedCount": "{count} terbit",
+    "publishedArticles": {
+      "one": "{count} artikel terbit",
+      "other": "{count} artikel terbit"
+    },
+    "viewMore": "Lihat {count} lainnya"
+  },
+  "article": {
+    "metadata": "Metadata artikel",
+    "groups": "Kelompok artikel",
+    "readingTools": "Alat baca",
+    "wordCount": "{count} kata",
+    "readingTime": "baca {minutes} menit",
+    "moreInSeries": "Lainnya di {name}",
+    "previousInSeries": "Sebelumnya di {name}",
+    "nextInSeries": "Berikutnya di {name}",
+    "pinned": "Disematkan",
+    "moreFromSite": "Lainnya dari {siteTitle}"
+  },
+  "toc": {
+    "title": "Daftar isi",
+    "open": "Buka daftar isi",
+    "close": "Tutup daftar isi",
+    "expand": "Bentangkan daftar isi",
+    "collapse": "Ciutkan daftar isi",
+    "showAll": "Tampilkan semua",
+    "collapseButton": "Ciutkan"
+  },
+  "pagination": {
+    "blog": "Navigasi halaman blog",
+    "previous": "Sebelumnya",
+    "next": "Berikutnya",
+    "page": "Halaman {current} dari {total}"
+  },
+  "search": {
+    "title": "Cari",
+    "trigger": "Cari di situs",
+    "close": "Tutup pencarian",
+    "idle": "Mulai mengetik untuk mencari.",
+    "loading": "Mencari...",
+    "empty": "Catatan tidak ditemukan.",
+    "unavailable": "Indeks pencarian belum tersedia. Jalankan build produksi terlebih dahulu.",
+    "resultKinds": {
+      "blogNote": "Catatan blog",
+      "blogIndex": "Indeks blog",
+      "vibe": "Vibe",
+      "project": "Proyek",
+      "page": "Halaman"
+    },
+    "matchedPassage": "Cuplikan yang cocok"
+  }
+}

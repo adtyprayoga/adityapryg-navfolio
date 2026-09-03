@@ -1,0 +1,35 @@
+services:
+  web:
+    build:
+      context: .
+      target: runtime
+      args:
+        # Baked into canonical URLs, the sitemap, and the RSS feed at build time.
+        # Leave empty to fall back to config.site.url in src/config/site.toml.
+        SITE_URL: ${SITE_URL:-}
+        SITE_BASE: ${SITE_BASE:-}
+        # 1 skips the CJK font subset step (not needed for English/Indonesian).
+        SKIP_FONT_SUBSET: ${SKIP_FONT_SUBSET:-0}
+    image: adityapryg-navfolio:latest
+    container_name: adityapryg-navfolio
+    ports:
+      - "${HTTP_PORT:-8080}:80"
+    restart: unless-stopped
+
+  # Local development with hot reload: docker compose --profile dev up dev
+  dev:
+    profiles: ["dev"]
+    build:
+      context: .
+      target: deps
+    image: adityapryg-navfolio-dev:latest
+    container_name: adityapryg-navfolio-dev
+    command: npx astro dev --host 0.0.0.0 --port 4321
+    ports:
+      - "${DEV_PORT:-4321}:4321"
+    volumes:
+      # Live source, but keep the image's node_modules and .venv rather than
+      # letting the bind mount hide them.
+      - .:/app
+      - /app/node_modules
+      - /app/.venv

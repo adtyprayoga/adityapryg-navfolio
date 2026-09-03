@@ -1,18 +1,28 @@
 import type { SiteConfig } from '../data/site';
-import { createI18n, normalizeLocale, type I18nMessages } from '@navfolio/core';
+import { createI18n, mergeI18nMessages, normalizeLocale, type I18nMessages } from '@navfolio/core';
 import { getResolvedPageModuleI18n } from '@navfolio/pages';
 import navfolioConfig from '../../navfolio.config';
 import en from '../i18n/en.json';
 import zhCN from '../i18n/zh-CN.json';
 import zhTW from '../i18n/zh-TW.json';
+import id from '../i18n/id.json';
 
 export const defaultUiLanguage = 'en';
 
 const rawUiText = {
   en,
+  id,
   'zh-CN': zhCN,
   'zh-TW': zhTW,
 } as const;
+
+// @navfolio/core only knows the locales it ships with, so locales added by this
+// site are normalized here before falling back to the upstream alias table.
+const localAliases: Record<string, string> = {
+  id: 'id',
+  'id-id': 'id',
+  in: 'id',
+};
 
 type TemplateValues = Record<string, string | number>;
 type Message = string | { one?: string; other: string };
@@ -229,7 +239,10 @@ const uiText = Object.fromEntries(
 ) as Record<UiLanguage, UiText>;
 
 export function normalizeUiLanguage(value: string | undefined): UiLanguage {
-  return normalizeLocale(value, defaultUiLanguage) as UiLanguage;
+  const normalized = value?.trim().toLowerCase();
+  const local = normalized ? localAliases[normalized] : undefined;
+
+  return (local ?? normalizeLocale(value, defaultUiLanguage)) as UiLanguage;
 }
 
 export function getUiLanguage(config: SiteConfig): UiLanguage {
@@ -241,13 +254,23 @@ export function getUiText(config: SiteConfig): UiText {
 }
 
 export function getI18n(config: SiteConfig) {
-  return createI18n({
-    locale: getUiLanguage(config),
-    catalogs: [
-      rawUiText as unknown as Record<string, I18nMessages>,
-      ...getResolvedPageModuleI18n(navfolioConfig).map((contribution) => contribution.messages),
-    ],
-  });
+  const locale = getUiLanguage(config);
+  const catalogs: Record<string, I18nMessages>[] = [
+    rawUiText as unknown as Record<string, I18nMessages>,
+    ...getResolvedPageModuleI18n(navfolioConfig).map((contribution) => contribution.messages),
+  ];
+
+  // Resolve the catalogs here (with an English fallback per catalog) and pass the
+  // result as overrides, so locales that @navfolio/core does not know about are
+  // not silently downgraded to English by its own normalization.
+  const messages = mergeI18nMessages(
+    ...catalogs.map((catalog) => catalog[locale] ?? catalog.en ?? {}),
+  );
+
+  return {
+    ...createI18n({ locale, overrides: messages }),
+    locale,
+  };
 }
 
 export function getHtmlLang(config: SiteConfig): UiText['locale'] {
