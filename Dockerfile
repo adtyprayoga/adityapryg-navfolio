@@ -71,7 +71,8 @@ RUN set -eux; \
       --site dist \
       --output-subdir pagefind \
       --root-selector main \
-      --exclude-selectors "[data-pagefind-ignore]"
+      --exclude-selectors "[data-pagefind-ignore]"; \
+    sh scripts/link-shared-assets.sh dist dist/id
 
 # ---------------------------------------------------------------------------
 # Stage 3 — serve it

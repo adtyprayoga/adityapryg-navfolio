@@ -19,3 +19,12 @@ for path in public/*; do
     ln -s "../$name" "$target/$name"
   fi
 done
+
+# pagefind indexes the whole of dist in one pass and writes a single bundle at
+# the root, but the localized build resolves its loader against base=/id. Point
+# /id/pagefind at that bundle so the Indonesian pages can load it. This runs
+# again after pagefind, once dist/pagefind exists.
+if [ -d "$root/pagefind" ] && [ ! -L "$target/pagefind" ]; then
+  rm -rf "$target/pagefind"
+  ln -s "../pagefind" "$target/pagefind"
+fi
