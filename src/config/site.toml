@@ -168,8 +168,13 @@ text = [
 ]
 
 [config.home.intro]
-title = "hey, I'm Aditya"
-name = "Aditya Prayoga"
+# The heading renders as: Hi, <title with name emphasized>.
+# "name" MUST appear inside "title" - the component strips it out of the title
+# and re-inserts it as the emphasized part. If it does not match, both strings
+# render in full and the heading (white-space: nowrap) overflows the layout.
+# Keep it short for the same reason.
+title = "I'm Aditya"
+name = "Aditya"
 body = [
   "Software developer. This is where I keep my notes, projects, and the links I do not want to lose.",
   "Most of what lands here starts as something I had to figure out anyway, written down so the next person (usually future me) does not have to.",
