@@ -61,7 +61,11 @@ const routeLabels = getRouteLabels();
 const activeRoute = Object.entries(routeLabels).find(
   ([route]) => currentPath === route || currentPath.startsWith(`${route}/`),
 );
-const brandRouteLabel = activeRoute?.[1];
+// getRouteLabels returns the theme's English route ids, so /id/about showed
+// " · about". The top nav labels already carry the translation from
+// site.toml, so prefer those and keep the route id as the fallback.
+const activeNavLink = links.find((link) => link.href !== '/' && isActive(link.href));
+const brandRouteLabel = activeNavLink?.label ?? activeRoute?.[1];
 const shouldShowTocAction = showTocIcon && tocItems.length > 0;
 ---
 
