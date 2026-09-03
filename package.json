@@ -24,7 +24,7 @@
     "format": "prettier --write --ignore-unknown .",
     "format:check": "bun run lint && prettier --check --ignore-unknown .",
     "prepare": "husky",
-    "build:id": "NAVFOLIO_LANG=id NAVFOLIO_SITE_CONFIG=./src/config/site.id.toml NAVFOLIO_CONTENT_BASE=./src/content-id SITE_BASE=/id astro build --outDir dist-id && rm -rf dist/id && mkdir -p dist/id && cp -r dist-id/. dist/id/ && rm -rf dist-id"
+    "build:id": "NAVFOLIO_LANG=id NAVFOLIO_SITE_CONFIG=./src/config/site.id.toml NAVFOLIO_CONTENT_BASE=./src/content-id SITE_BASE=/id astro build --outDir dist-id && rm -rf dist/id && mkdir -p dist/id && cp -r dist-id/. dist/id/ && rm -rf dist-id && sh scripts/link-shared-assets.sh dist dist/id"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.8",
