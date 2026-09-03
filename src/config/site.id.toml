@@ -1,0 +1,253 @@
+[config.site]
+title = "Aditya Prayoga"
+description = "Situs pribadi Aditya Prayoga - catatan, proyek, dan tautan."
+pageTitle = "Aditya Prayoga | Catatan, Proyek & Tautan"
+pageDescription = "Ruang pribadi untuk tulisan, catatan proyek, dan tautan yang layak disimpan di satu tempat."
+# Deployed URL. Baked into canonical links, the sitemap, and RSS at build time.
+# The SITE_URL build arg (see docker-compose.yml) overrides this; this is the
+# fallback used by a plain local build.
+url = "https://adityapryg.dev"
+repository = "https://github.com/adtyprayoga/adityapryg-navfolio"
+footerNote = "Dibangun dengan Astro di atas tema navfolio."
+
+[config.theme]
+# Available palettes:
+# green-soft, green-vivid, rose-soft, pink-soft, purple-soft, blue-soft, orange-soft, brown-soft
+palette = "green-soft"
+# UI language. Available values: en (default), id, zh-CN, zh-TW.
+# Unknown values fall back to en.
+lang = "id"
+
+[config.fonts]
+# 英文与代码感 UI 字体
+en = "Maple Mono"
+code = "Monaco"
+# 模板内可直接选择：ChillRoundM、LXGW WenKai
+# 中文阅读字体
+zh = "ChillRoundM"
+# 中文完整字体文件
+file = "/fonts/ChillRoundM.ttf"
+
+[config.code]
+lightTheme = "catppuccin-latte"
+darkTheme = "catppuccin-macchiato"
+lineNumbers = true
+wrap = true
+preserveIndent = true
+collapseStyle = "collapsible-auto"
+
+[config.math]
+render = "katex" # "katex" | "mathjax"
+
+[config.comments]
+enabled = false
+provider = "none"
+show_on_posts = true
+
+[config.search]
+enabled = true
+shortcut = "mod+k"
+placeholder = "Cari catatan..."
+maxResults = 6
+
+[config.pages.blog]
+title = "Catatan"
+kicker = "Arsip catatan"
+subtitle = "Catatan dari pinggiran."
+note = "Catatan lapangan, draf, dan margin teknis, ditata untuk dibaca pelan."
+postsPerPage = 6
+# date-fns format pattern. "yyyy" shows the year alone; the underlying dates stay
+# full and sortable, and the datetime attribute keeps the exact value.
+dateFormat = "yyyy"
+# 元信息分隔符。可以使用 "|"、"/" 等符号，也可以使用特殊值 "icon"。
+metadataSeparator = "icon"
+# 文章列表封面样式："card" 保留带边框的缩略图，"mask" 会将图片融合到右侧。
+coverImageStyle = "mask"
+
+[config.pages.blog.categories]
+title = "Kategori"
+kicker = "Jelajahi catatan"
+subtitle = ""
+note = "Indeks topik yang berulang, dihimpun dari frontmatter artikel."
+
+[config.pages.blog.series]
+title = "Seri"
+kicker = "Alur baca"
+subtitle = ""
+note = "Catatan yang saling terhubung, bisa diikuti sesuai urutan penulisannya."
+
+[config.pages.projects]
+title = "Proyek"
+kicker = "Rak proyek"
+subtitle = "Perkakas kecil dan sistem situs."
+note = "Rak ringkas untuk pilihan implementasi, rilis, dan eksperimen penerbitan."
+
+[config.pages.vibe]
+title = "vibe"
+kicker = ""
+subtitle = "Serpihan hidup dan ngoding."
+note = "Kurang formal untuk jadi tulisan blog, tapi tetap bagian dari ceritanya."
+showTrail = true
+
+[config.pages.media]
+title = "Media"
+subtitle = "Buku, film, dan musik yang layak diingat."
+note = "Satu halaman untuk buku, film, serial, album, dan podcast."
+
+[config.comments.giscus]
+repo = ""
+repo_id = ""
+category = ""
+category_id = ""
+mapping = "pathname"
+strict = "0"
+reactions_enabled = "1"
+emit_metadata = "0"
+input_position = "top"
+light_theme = "light"
+dark_theme = "dark"
+lang = "en"
+loading = "lazy"
+
+[config.comments.utterances]
+repo = ""
+issue_term = "pathname"
+label = "comment"
+theme = "github-light"
+
+[config.comments.waline]
+server_url = ""
+lang = "en"
+dark = "html.dark"
+pageview = true
+comment = true
+
+[config.profile]
+name = "Aditya Prayoga"
+handle = "@adtyprayoga"
+role = "Software Developer & Tersertifikasi ISTQB"
+email = "adityaprayoga772@gmail.com"
+website = "https://adityapryg.dev"
+github = "https://github.com/adtyprayoga"
+avatar = "/images/f30083fcbf8a673fbe9f2b1a5ab8de84.jpg"
+
+[[config.topNav.links]]
+label = "Beranda"
+href = "/"
+
+[[config.topNav.links]]
+label = "Blog"
+href = "/blog"
+
+[[config.topNav.links]]
+label = "Proyek"
+module = "projects"
+
+[[config.topNav.links]]
+label = "Vibe"
+module = "vibe"
+
+[[config.topNav.links]]
+label = "Media"
+module = "media"
+
+[[config.topNav.links]]
+label = "Tentang"
+href = "/about"
+
+[config.home]
+
+[config.home.quote]
+text = [
+  "Bangun sesuatu,",
+  "tuliskan,",
+  "dan simpan semuanya di satu tempat.",
+]
+
+[config.home.intro]
+# The heading renders as: Hi, <title with name emphasized>.
+# "name" MUST appear inside "title" - the component strips it out of the title
+# and re-inserts it as the emphasized part. If it does not match, both strings
+# render in full and the heading (white-space: nowrap) overflows the layout.
+# Keep it short for the same reason.
+title = "Saya Aditya"
+name = "Aditya"
+body = [
+  "Software engineer dan instruktur IT di Jakarta. Di sini saya menyimpan catatan, proyek, dan tautan yang tidak ingin saya lupakan.",
+  "Sebagian besar berawal dari hal yang memang harus saya pecahkan, lalu saya tulis supaya bisa saya temukan lagi.",
+]
+
+[config.home.latest]
+count = 1
+heatmapWeeks = 24
+showHeatmapLatest = true
+excludeDraft = true
+startDate = ""
+dateArchiveBaseHref = ""
+
+[[config.home.navigation]]
+icon = "pen"
+title = "Blog"
+subtitle = "Catatan, tulisan, dan hal-hal yang saya pelajari"
+href = "/blog"
+
+[[config.home.navigation]]
+icon = "compass"
+title = "Proyek"
+subtitle = "Yang sudah saya bangun dan rilis"
+href = "/projects"
+
+[[config.home.navigation]]
+icon = "github"
+title = "Open Source"
+subtitle = "Kode, eksperimen, dan perkakas"
+href = "https://github.com/adtyprayoga"
+
+[[config.home.navigation]]
+icon = "sparkles"
+title = "Tentang"
+subtitle = "Siapa saya dan apa yang saya kerjakan"
+href = "/about"
+
+[[config.home.links]]
+label = "GitHub"
+icon = "github"
+tooltip = "https://github.com/adtyprayoga"
+copy = false
+
+# An empty tooltip hides the link.
+[[config.home.links]]
+label = "LinkedIn"
+icon = "linkedin"
+tooltip = "https://www.linkedin.com/in/adityaprayoga"
+copy = false
+
+[[config.home.links]]
+label = "X"
+icon = "x"
+tooltip = "https://twitter.com/adityapryg_"
+copy = false
+
+[[config.home.links]]
+label = "RSS"
+icon = "rss"
+tooltip = "/rss.xml"
+copy = false
+
+[[config.home.links]]
+label = "Email"
+icon = "mail"
+tooltip = "adityaprayoga772@gmail.com"
+copy = true
+
+[[config.home.doing]]
+text = "Membangun frontend dengan React dan backend dengan Laravel"
+mark = "01"
+
+[[config.home.doing]]
+text = "Mengajar Laravel, Java, React, dan software testing"
+mark = "02"
+
+[[config.home.doing]]
+text = "Menuliskan apa saja yang saya pelajari di sepanjang jalan"
+mark = "03"

@@ -55,7 +55,11 @@ const blogArticleSchema = (context: Parameters<CollectionSchemaFactory>[0]) =>
   });
 
 const contentSource = process.env.NAVFOLIO_CONTENT_SOURCE === 'docs' ? 'docs' : 'content';
-const contentBase = contentSource === 'docs' ? './src/docs' : './src/content';
+// NAVFOLIO_CONTENT_BASE and NAVFOLIO_SITE_CONFIG point a build at a different
+// content tree and site.toml, which is how the localized passes are produced.
+const contentBase =
+  process.env.NAVFOLIO_CONTENT_BASE || (contentSource === 'docs' ? './src/docs' : './src/content');
+const siteConfigPath = process.env.NAVFOLIO_SITE_CONFIG || './src/config/site.toml';
 const projectsModuleEnabled = isPageModuleEnabled(navfolioConfig, 'projects');
 const vibeModuleEnabled = isPageModuleEnabled(navfolioConfig, 'vibe');
 const mediaModuleEnabled = isPageModuleEnabled(navfolioConfig, 'media');
@@ -285,7 +289,7 @@ const mediaPageSchema = z.object({
 });
 
 const siteConfig = defineCollection({
-  loader: file('./src/config/site.toml'),
+  loader: file(siteConfigPath),
   schema: z.object({
     site: z.object({
       title: z.string(),

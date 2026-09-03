@@ -1,5 +1,5 @@
 ---
-import { Github, ListTree, Menu, Moon, Sun } from 'lucide-astro';
+import { Github, Languages, ListTree, Menu, Moon, Sun } from 'lucide-astro';
 import SiteSearch from './SiteSearch.astro';
 import TocTree from './TocTree.astro';
 import { getRouteLabels, getSiteConfig, getTopNavLinks } from '../../data/site';
@@ -22,6 +22,16 @@ const currentPathname =
     ? Astro.url.pathname.slice(basePath.length) || '/'
     : Astro.url.pathname;
 const currentPath = currentPathname.replace(/\/$/, '') || '/';
+
+// The localized pass builds under base "/id", so basePath tells us which
+// language this page belongs to. currentPathname is already base-free, which
+// makes the counterpart URL the same path under the other base.
+const isLocalized = basePath === '/id';
+const languageHref = isLocalized
+  ? currentPathname
+  : `/id${currentPathname === '/' ? '/' : currentPathname}`;
+const languageLabel = isLocalized ? 'English' : 'Bahasa Indonesia';
+const languageCode = isLocalized ? 'EN' : 'ID';
 
 function withBase(href: string) {
   if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('#')) {
@@ -134,6 +144,15 @@ const shouldShowTocAction = showTocIcon && tocItems.length > 0;
       title="GitHub"
     >
       <Github size={17} stroke-width={2} />
+    </a>
+    <a
+      class="language-switch"
+      href={languageHref}
+      aria-label={`Switch language to ${languageLabel}`}
+      title={languageLabel}
+    >
+      <Languages size={17} stroke-width={2} />
+      <span>{languageCode}</span>
     </a>
     <button type="button" data-theme-toggle aria-label="Switch theme">
       <Moon class="theme-icon-moon" size={17} stroke-width={2} />
@@ -518,6 +537,16 @@ const shouldShowTocAction = showTocIcon && tocItems.length > 0;
   .nav-link[data-nav-link-pending]::after,
   .brand[data-nav-link-pending] .brand-mark {
     animation: nav-pending-pulse 620ms ease-in-out infinite alternate;
+  }
+
+  .language-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
   }
 
   .nav-link-placeholder {

@@ -55,9 +55,17 @@ ENV SITE_URL=$SITE_URL \
     SITE_BASE=$SITE_BASE
 
 # Mirrors the "build" script in package.json, with the font step made optional.
+# Two passes: English at the root, Indonesian under /id, then one search index
+# over the merged output so search covers both.
 RUN set -eux; \
     if [ "$SKIP_FONT_SUBSET" != "1" ]; then bun run fonts:ui; fi; \
     npx astro build; \
+    NAVFOLIO_LANG=id \
+      NAVFOLIO_SITE_CONFIG=./src/config/site.id.toml \
+      NAVFOLIO_CONTENT_BASE=./src/content-id \
+      SITE_BASE=/id \
+      npx astro build --outDir dist-id; \
+    rm -rf dist/id; mkdir -p dist/id; cp -r dist-id/. dist/id/; rm -rf dist-id; \
     npx pagefind \
       --site dist \
       --output-subdir pagefind \

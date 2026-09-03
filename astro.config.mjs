@@ -18,7 +18,8 @@ import { getAstroPluginConfig } from './src/plugins/config';
  */
 const isRecord = (value) => typeof value === 'object' && value !== null && !Array.isArray(value);
 
-const siteToml = parse(fs.readFileSync(new URL('./src/config/site.toml', import.meta.url), 'utf8'));
+const siteConfigPath = process.env.NAVFOLIO_SITE_CONFIG || './src/config/site.toml';
+const siteToml = parse(fs.readFileSync(new URL(siteConfigPath, import.meta.url), 'utf8'));
 const configToml = isRecord(siteToml.config) ? siteToml.config : {};
 const siteConfig = isRecord(configToml.site) ? configToml.site : {};
 const mathConfig = isRecord(configToml.math) ? configToml.math : {};

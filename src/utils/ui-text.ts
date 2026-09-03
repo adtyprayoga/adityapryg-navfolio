@@ -245,8 +245,12 @@ export function normalizeUiLanguage(value: string | undefined): UiLanguage {
   return (local ?? normalizeLocale(value, defaultUiLanguage)) as UiLanguage;
 }
 
+// NAVFOLIO_LANG lets one build target a locale without editing site.toml, which
+// is how the /id pass is produced. Falls back to the configured language.
+const envLanguage = typeof process !== 'undefined' ? process.env?.NAVFOLIO_LANG : undefined;
+
 export function getUiLanguage(config: SiteConfig): UiLanguage {
-  return normalizeUiLanguage(config.theme.lang);
+  return normalizeUiLanguage(envLanguage || config.theme.lang);
 }
 
 export function getUiText(config: SiteConfig): UiText {
