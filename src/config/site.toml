@@ -173,7 +173,7 @@ title = "I'm Aditya"
 name = "Aditya"
 body = [
   "Software engineer and IT instructor in Jakarta. This is where I keep my notes, projects, and the links I do not want to lose.",
-  "Most of what lands here starts as something I had to figure out anyway, written down so the next person (usually future me) does not have to.",
+  "Most of it started as something I had to work out anyway, written down so I can find it again.",
 ]
 
 [config.home.latest]
