@@ -124,7 +124,7 @@ comment = true
 [config.profile]
 name = "Aditya Prayoga"
 handle = "@adtyprayoga"
-role = "Software Developer & System Analyst"
+role = "Technical Lead - Laravel & JavaScript"
 email = "adityaprayoga772@gmail.com"
 website = "https://adityapryg.dev"
 github = "https://github.com/adtyprayoga"
@@ -172,7 +172,7 @@ text = [
 title = "I'm Aditya"
 name = "Aditya"
 body = [
-  "Developer and system analyst at Brainmatics and Braindevs, and an IT trainer. This is where I keep my notes, projects, and the links I do not want to lose.",
+  "Software engineer and IT instructor in Jakarta. This is where I keep my notes, projects, and the links I do not want to lose.",
   "Most of what lands here starts as something I had to figure out anyway, written down so the next person (usually future me) does not have to.",
 ]
 
