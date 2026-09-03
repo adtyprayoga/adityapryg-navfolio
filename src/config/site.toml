@@ -13,7 +13,7 @@ repository = "https://github.com/adtyprayoga/adityapryg-navfolio"
 footerNote = "Built with Astro on the navfolio theme."
 
 [config.theme]
-# 可用色盘：
+# Available palettes:
 # green-soft, green-vivid, rose-soft, pink-soft, purple-soft, blue-soft, orange-soft, brown-soft
 palette = "green-soft"
 # UI language. Available values: en (default), id, zh-CN, zh-TW.
