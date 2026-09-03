@@ -4,11 +4,9 @@ description = "Personal site of Aditya Prayoga - notes, projects, and links."
 pageTitle = "Aditya Prayoga | Notes, Projects & Links"
 pageDescription = "A personal space for writing, project notes, and the links worth keeping in one place."
 # Deployed URL. Baked into canonical links, the sitemap, and RSS at build time.
-# The SITE_URL build arg (see docker-compose.yml) overrides this and is the
-# mechanism to use for the Docker/CI deploy. This is only the fallback for a
-# plain local build. The schema rejects an empty value, so it stays a visible
-# placeholder until the domain is settled.
-url = "https://example.com"
+# The SITE_URL build arg (see docker-compose.yml) overrides this; this is the
+# fallback used by a plain local build.
+url = "https://adityapryg.dev"
 repository = "https://github.com/adtyprayoga/adityapryg-navfolio"
 footerNote = "Built with Astro on the navfolio theme."
 
@@ -128,9 +126,7 @@ name = "Aditya Prayoga"
 handle = "@adtyprayoga"
 role = "Software Developer & System Analyst"
 email = "adityaprayoga772@gmail.com"
-# Rendered as an unconditional link in the header, so it cannot be left empty.
-# Point it at the site's own domain once there is one.
-website = "https://github.com/adtyprayoga"
+website = "https://adityapryg.dev"
 github = "https://github.com/adtyprayoga"
 avatar = "/images/logo-thin.webp"
 
