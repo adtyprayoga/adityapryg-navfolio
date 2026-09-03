@@ -229,6 +229,12 @@ tooltip = "https://twitter.com/adityapryg_"
 copy = false
 
 [[config.home.links]]
+label = "Instagram"
+icon = "instagram"
+tooltip = "https://instagram.com/prayoaa8"
+copy = false
+
+[[config.home.links]]
 label = "RSS"
 icon = "rss"
 tooltip = "/rss.xml"
