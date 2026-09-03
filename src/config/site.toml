@@ -126,7 +126,7 @@ comment = true
 [config.profile]
 name = "Aditya Prayoga"
 handle = "@adtyprayoga"
-role = "Software Developer"
+role = "Software Developer & System Analyst"
 email = "adityaprayoga772@gmail.com"
 # Rendered as an unconditional link in the header, so it cannot be left empty.
 # Point it at the site's own domain once there is one.
@@ -176,7 +176,7 @@ text = [
 title = "I'm Aditya"
 name = "Aditya"
 body = [
-  "Software developer. This is where I keep my notes, projects, and the links I do not want to lose.",
+  "Developer and system analyst at Brainmatics and Braindevs, and an IT trainer. This is where I keep my notes, projects, and the links I do not want to lose.",
   "Most of what lands here starts as something I had to figure out anyway, written down so the next person (usually future me) does not have to.",
 ]
 
@@ -218,17 +218,17 @@ icon = "github"
 tooltip = "https://github.com/adtyprayoga"
 copy = false
 
-# An empty tooltip hides the link. Fill in the profile URLs to show these two.
+# An empty tooltip hides the link.
 [[config.home.links]]
 label = "LinkedIn"
 icon = "linkedin"
-tooltip = ""
+tooltip = "https://www.linkedin.com/in/adityaprayoga"
 copy = false
 
 [[config.home.links]]
 label = "X"
 icon = "x"
-tooltip = ""
+tooltip = "https://twitter.com/adityapryg_"
 copy = false
 
 [[config.home.links]]
@@ -243,15 +243,14 @@ icon = "mail"
 tooltip = "adityaprayoga772@gmail.com"
 copy = true
 
-# Whatever you are currently working on. Placeholder text - worth replacing.
 [[config.home.doing]]
-text = "Setting up this site and writing the first notes"
+text = "Building frontends with React and backends with Laravel"
 mark = "01"
 
 [[config.home.doing]]
-text = "Shipping it with Docker on my own server"
+text = "Teaching Laravel, Java, React, and software testing"
 mark = "02"
 
 [[config.home.doing]]
-text = "Collecting useful developer resources"
+text = "Writing up what I figure out along the way"
 mark = "03"
