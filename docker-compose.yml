@@ -13,12 +13,12 @@ services:
     image: adityapryg-navfolio:latest
     container_name: adityapryg-navfolio
     ports:
-      - "${HTTP_PORT:-8080}:80"
+      - '${HTTP_PORT:-8080}:80'
     restart: unless-stopped
 
   # Local development with hot reload: docker compose --profile dev up dev
   dev:
-    profiles: ["dev"]
+    profiles: ['dev']
     build:
       context: .
       target: deps
@@ -26,7 +26,7 @@ services:
     container_name: adityapryg-navfolio-dev
     command: npx astro dev --host 0.0.0.0 --port 4321
     ports:
-      - "${DEV_PORT:-4321}:4321"
+      - '${DEV_PORT:-4321}:4321'
     volumes:
       # Live source, but keep the image's node_modules and .venv rather than
       # letting the bind mount hide them.
