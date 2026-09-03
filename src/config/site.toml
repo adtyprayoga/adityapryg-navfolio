@@ -56,8 +56,9 @@ kicker = "Notebook archive"
 subtitle = "Notes from the margins."
 note = "Field notes, drafts, and technical margins arranged for slow browsing."
 postsPerPage = 6
-# date-fns 使用的日期格式模板。
-dateFormat = "yyyy-MM-dd"
+# date-fns format pattern. "yyyy" shows the year alone; the underlying dates stay
+# full and sortable, and the datetime attribute keeps the exact value.
+dateFormat = "yyyy"
 # 元信息分隔符。可以使用 "|"、"/" 等符号，也可以使用特殊值 "icon"。
 metadataSeparator = "icon"
 # 文章列表封面样式："card" 保留带边框的缩略图，"mask" 会将图片融合到右侧。
