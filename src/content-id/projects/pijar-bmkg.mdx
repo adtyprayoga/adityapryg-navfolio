@@ -1,5 +1,6 @@
 ---
 title: 'PIJAR'
+seoTitle: 'PIJAR, jaringan data petir BMKG'
 description: 'Komputasi geospasial sambaran petir untuk BMKG, menghitung titik potong sambaran dalam rentang waktu bersamaan.'
 date: 2021-01-01
 icon: 'sparkles'
@@ -8,9 +9,14 @@ tags: ['work', 'laravel', 'python', 'postgresql']
 
 **Programmer di BraindevsID · 2021 · BMKG**
 
+PIJAR mengintegrasikan data pengamatan petir dari stasiun tunggal menjadi
+jaringan multistasiun. Sistem ini terdaftar dalam arsitektur SPBE BMKG pada
+Perka BMKG 9/2023.
+
 Saya membangun perhitungan jarak dan radius atas koordinat sambaran petir, lalu
 menentukan titik potong di antara tiga sambaran atau lebih yang terdeteksi dalam
-rentang waktu yang sama.
+rentang waktu yang sama. Titik potong itulah yang mengubah pembacaan
+masing-masing stasiun menjadi satu sambaran yang terlokasi.
 
 Laravel melayani aplikasi dan API, Python mengerjakan komputasinya, dan
 PostgreSQL berada di belakang keduanya.

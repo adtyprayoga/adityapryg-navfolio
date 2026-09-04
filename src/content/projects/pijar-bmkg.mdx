@@ -1,5 +1,6 @@
 ---
 title: 'PIJAR'
+seoTitle: 'PIJAR, BMKG lightning data network'
 description: 'Lightning strike geospatial computation for BMKG, calculating strike intersections in concurrent time windows.'
 date: 2021-01-01
 icon: 'sparkles'
@@ -8,9 +9,14 @@ tags: ['work', 'laravel', 'python', 'postgresql']
 
 **Programmer at BraindevsID · 2021 · BMKG**
 
-I built the distance and radius calculations over lightning strike coordinates,
-resolving intersection points among three or more strikes detected in the same
-time window.
+PIJAR integrates lightning observation data from single stations into a
+multi-station network. It is registered in BMKG's e-government architecture
+under Perka BMKG 9/2023.
+
+I built the distance and radius calculations over strike coordinates, resolving
+the intersection points among three or more detections landing in the same time
+window. That intersection is what turns separate station readings into one
+located strike.
 
 Laravel served the application and API layer, Python did the computation, and
 PostgreSQL sat behind both.
