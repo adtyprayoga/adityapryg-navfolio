@@ -1,0 +1,144 @@
+---
+title: 'Testing Quadrants'
+description: 'Teams keep adding tools and keep shipping bugs. What is usually missing is a map of what gets tested, who owns it, and when.'
+date: 2026-09-05
+tags: ['testing', 'istqb', 'qa', 'agile']
+categories: ['Software Testing']
+---
+
+The question comes up in nearly every cohort I teach. The team is bigger than
+last year, the tooling is better, the sprints are shorter. Bugs still reach
+production. Why?
+
+Tools are rarely the cause. People do test. What nobody has agreed on is which
+tests matter, who owns them, and when they happen. Early on, each person tests
+by instinct and it holds together. Then the team grows and it stops holding.
+
+Capgemini's World Quality Report 2023-24 puts a number on how common this is:
+4% of organisations run QA on a fully Agile model, though most say they work in
+Agile.
+
+## What breaks without a test strategy
+
+**Coverage lands unevenly.** A team leans hard on unit tests and leaves whole
+categories untouched. Performance goes unmeasured until production slows down.
+Security goes unexamined until data leaks. Nobody looks at the product the way a
+real user would. The bug arrives in the user's hands, and by then it costs many
+times what it would have cost in the sprint that wrote it.
+
+**Effort gets spent twice, or not at all.** A developer and a tester write the
+same check. Meanwhile performance testing has no owner, so it happens the week
+of release or never. Sprint planning stops matching reality, and the team spends
+the last three days firefighting.
+
+**Nobody shares a vocabulary.** A developer says testing and means the unit
+tests passed. A product manager says testing and assumes UAT happened. A tester
+has no way to argue about priority, because there is no shared frame to argue
+inside. The conversation repeats every sprint.
+
+All three have one structural fix.
+
+## What Testing Quadrants is
+
+Brian Marick drew the first version of this grid. Lisa Crispin and Janet Gregory
+carried it further in _Agile Testing: A Practical Guide for Testers and Agile
+Teams_. In 2023 ISTQB wrote it into the Certified Tester Foundation Level v4.0
+syllabus as core planning material, which is where most testers meet it now.
+
+Two questions sort every test you might run. Is it business-facing or
+technology-facing? Does it support the team building the thing, or critique the
+product that came out?
+
+|                       | Supports the team                         | Critiques the product              |
+| --------------------- | ----------------------------------------- | ---------------------------------- |
+| **Business-facing**   | Q2: functional tests, BDD, prototypes     | Q3: exploratory, usability, UAT    |
+| **Technology-facing** | Q1: unit and component tests              | Q4: performance, security, scale   |
+
+### Q1: automated, technology-facing, supports the team
+
+Developers write tests for the smallest units of code, and CI runs them on every
+commit.
+
+Unit tests per function. Component tests before integration. Both wired into the
+pipeline so nobody has to remember to run them.
+
+You find technical mistakes in seconds instead of days, and people change code
+without bracing first. Q1 is the floor the other three stand on. A team with a
+weak Q1 feels that weakness everywhere else.
+
+### Q2: automated and manual, business-facing, supports the team
+
+Developers and testers check that the feature matches the user story everyone
+agreed to.
+
+Functional tests written from story scenarios. BDD in Given-When-Then, which
+earns its ceremony because it forces the business and the engineers to write one
+sentence together. Prototypes before full implementation.
+
+This is where you catch the feature that works and solves the wrong problem.
+
+### Q3: manual, business-facing, critiques the product
+
+No script catches what a user feels. In Q3 a tester explores the product the way
+someone meeting it for the first time would.
+
+Exploratory testing without a rigid script. Usability testing. UAT and
+alpha/beta rounds.
+
+The findings here are the ones nobody thought to write a test for. That is the
+point of the quadrant, and it is why it resists automation.
+
+### Q4: tool-driven, technology-facing, critiques the product
+
+Q4 answers what functional testing cannot. Is the system fast enough, safe
+enough, and able to carry real load?
+
+Load and performance work in JMeter or k6. Security testing with OWASP ZAP, or a
+manual pass against the OWASP Top 10. Scalability and data migration checks.
+
+A system can pass every functional test and still fall over on its first day of
+real traffic. Q4 is how you find that out on your schedule instead of the
+user's.
+
+## Putting it in place
+
+Change one thing, measure, then change the next.
+
+**1. Map what you already do.** Inventory the tests the team runs today and drop
+each one into Q1, Q2, Q3, or Q4. Q3 and Q4 are the boxes that come back empty.
+You cannot see the gap until it is on the page.
+
+**2. Give each quadrant an owner.** Developers and QA share Q1 and Q2. Q3 needs
+an experienced tester and access to real users. Q4 needs tools and a slot in the
+sprint plan, not a scramble in the final week. Ownership removes the grey zone
+where miscommunication starts.
+
+**3. Wire it into sprint planning.** Every new story carries tests from at least
+Q1 and Q2. Book Q3 on a rhythm, one exploratory block every two weeks. Plan Q4
+for each significant release. This is shift-left testing with a checklist
+attached: find the defect while it is still cheap.
+
+**4. Use the grid as shared language.** Once a developer, a tester, and a
+product manager can point at the same box, the argument about priority gets
+short.
+
+**5. Review the distribution each sprint.** Is Q4 still empty? Has Q3 had any
+time at all? Small corrections repeated beat one large reorganisation.
+
+## What you get
+
+Testing Quadrants lines up everything from unit tests to security scans on a
+single map. Coverage gaps become visible. Ownership stops being ambiguous. The
+team argues about priority using the same four boxes instead of four private
+definitions of the word tested.
+
+None of that needs new tooling. It needs the map agreed before the sprint
+starts.
+
+## References
+
+- Capgemini Research Institute. _World Quality Report 2023-24_. Capgemini, 2023.
+- ISTQB. _Certified Tester Foundation Level Syllabus v4.0_. International
+  Software Testing Qualifications Board, 2023.
+- Crispin, L. and Gregory, J. _Agile Testing: A Practical Guide for Testers and
+  Agile Teams_. Addison-Wesley.

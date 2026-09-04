@@ -1,0 +1,150 @@
+---
+title: 'Testing Quadrants'
+description: 'Tim terus menambah tools dan bug terus lolos. Yang biasanya hilang adalah peta soal apa yang diuji, siapa pemiliknya, dan kapan.'
+date: 2026-09-05
+tags: ['testing', 'istqb', 'qa', 'agile']
+categories: ['Software Testing']
+---
+
+Pertanyaan ini muncul di hampir setiap kelas yang saya ajar. Timnya lebih besar
+dari tahun lalu, tools-nya lebih bagus, sprint-nya lebih pendek. Bug tetap lolos
+ke produksi. Kenapa?
+
+Tools jarang jadi penyebabnya. Orang-orang memang menguji. Yang belum disepakati
+adalah pengujian mana yang penting, siapa pemiliknya, dan kapan dijalankan. Di
+awal setiap orang menguji berdasarkan insting dan itu masih jalan. Begitu tim
+membesar, cara itu berhenti bekerja.
+
+Capgemini World Quality Report 2023-24 memberi angkanya: 4% organisasi
+menjalankan QA dengan model Agile penuh, meski sebagian besar mengaku sudah
+bekerja secara Agile.
+
+## Yang rusak tanpa strategi pengujian
+
+**Cakupan tidak merata.** Tim bertumpu pada unit testing dan meninggalkan
+kategori lain tanpa sentuhan. Performa tidak pernah diukur sampai produksi mulai
+lambat. Keamanan tidak diperiksa sampai data bocor. Tidak ada yang melihat
+produk seperti pengguna sungguhan melihatnya. Bug sampai ke tangan pengguna, dan
+biayanya berlipat dibanding kalau ketemu di sprint yang menulisnya.
+
+**Tenaga terpakai dua kali, atau tidak sama sekali.** Pengembang dan penguji
+menulis pemeriksaan yang sama. Sementara itu pengujian performa tidak punya
+pemilik, jadi dikerjakan seminggu sebelum rilis atau tidak sama sekali. Sprint
+planning berhenti cocok dengan kenyataan, dan tiga hari terakhir habis untuk
+memadamkan api.
+
+**Tidak ada kosakata bersama.** Pengembang bilang sudah diuji dan maksudnya unit
+test lulus. Manajer produk bilang sudah diuji dan mengira UAT sudah jalan.
+Penguji tidak punya cara berdebat soal prioritas, karena tidak ada kerangka
+bersama untuk berdebat di dalamnya. Percakapan itu berulang tiap sprint.
+
+Ketiganya punya satu perbaikan struktural.
+
+## Apa itu Testing Quadrants
+
+Brian Marick menggambar versi pertama kerangka ini. Lisa Crispin dan Janet
+Gregory melanjutkannya di _Agile Testing: A Practical Guide for Testers and
+Agile Teams_. Pada 2023 ISTQB memasukkannya ke silabus Certified Tester
+Foundation Level v4.0 sebagai materi inti perencanaan, dan di situlah kebanyakan
+penguji sekarang pertama kali bertemu dengannya.
+
+Dua pertanyaan memilah setiap pengujian yang mungkin Anda jalankan. Apakah dia
+berorientasi bisnis atau teknologi? Apakah dia mendukung tim yang membangun,
+atau mengkritisi produk yang sudah jadi?
+
+|                            | Mendukung tim                            | Mengkritisi produk             |
+| -------------------------- | ---------------------------------------- | ------------------------------ |
+| **Berorientasi bisnis**    | Q2: pengujian fungsional, BDD, prototipe | Q3: eksplorasi, usability, UAT |
+| **Berorientasi teknologi** | Q1: unit dan component testing           | Q4: performa, keamanan, skala  |
+
+### Q1: otomatis, berorientasi teknologi, mendukung tim
+
+Pengembang menulis pengujian untuk unit kode terkecil, dan CI menjalankannya di
+setiap commit.
+
+Unit test per fungsi. Component test sebelum integrasi. Keduanya tertanam di
+pipeline supaya tidak ada yang perlu ingat menjalankannya.
+
+Kesalahan teknis ketemu dalam hitungan detik, bukan hari, dan orang mengubah
+kode tanpa menahan napas dulu. Q1 adalah lantai tempat tiga kuadran lain
+berdiri. Tim dengan Q1 lemah akan merasakan kelemahan itu di mana-mana.
+
+### Q2: otomatis dan manual, berorientasi bisnis, mendukung tim
+
+Pengembang dan penguji memastikan fitur yang dibangun cocok dengan user story
+yang sudah disepakati semua pihak.
+
+Pengujian fungsional dari skenario user story. BDD dengan format
+Given-When-Then, yang seremoninya sepadan karena memaksa sisi bisnis dan sisi
+teknis menulis satu kalimat bersama. Prototipe sebelum implementasi penuh.
+
+Di sinilah Anda menangkap fitur yang jalan mulus dan menyelesaikan masalah yang
+salah.
+
+### Q3: manual, berorientasi bisnis, mengkritisi produk
+
+Tidak ada skrip yang menangkap apa yang dirasakan pengguna. Di Q3 penguji
+menjelajahi produk seperti orang yang baru pertama kali menemuinya.
+
+Exploratory testing tanpa skrip kaku. Usability testing. UAT dan putaran
+alfa/beta.
+
+Temuan di sini adalah yang tidak terpikirkan siapa pun untuk dibuatkan test
+case. Itu justru inti kuadran ini, dan itu juga alasan dia sulit diotomatisasi.
+
+### Q4: berbasis alat, berorientasi teknologi, mengkritisi produk
+
+Q4 menjawab yang tidak bisa dijawab pengujian fungsional. Apakah sistemnya cukup
+cepat, cukup aman, dan sanggup menanggung beban nyata?
+
+Pengujian beban dan kinerja dengan JMeter atau k6. Pengujian keamanan dengan
+OWASP ZAP, atau pemeriksaan manual terhadap OWASP Top 10. Pengujian skalabilitas
+dan migrasi data.
+
+Sebuah sistem bisa lulus semua pengujian fungsional dan tetap tumbang di hari
+pertama trafik sungguhan. Q4 adalah cara Anda mengetahuinya di jadwal Anda
+sendiri, bukan di jadwal pengguna.
+
+## Cara menerapkannya
+
+Ubah satu hal, ukur hasilnya, lalu lanjut ke berikutnya.
+
+**1. Petakan yang sudah dikerjakan.** Inventarisasi pengujian yang tim jalankan
+hari ini, lalu masukkan satu per satu ke Q1, Q2, Q3, atau Q4. Q3 dan Q4 yang
+biasanya kembali kosong. Celahnya tidak kelihatan sampai dia ada di atas kertas.
+
+**2. Beri setiap kuadran pemilik.** Pengembang dan QA berbagi Q1 dan Q2. Q3
+butuh penguji berpengalaman dan akses ke pengguna sungguhan. Q4 butuh alat
+khusus dan tempat di rencana sprint, bukan kepanikan di minggu terakhir.
+Kejelasan kepemilikan menghapus zona abu-abu tempat miskomunikasi bermula.
+
+**3. Tanam di sprint planning.** Setiap story baru membawa pengujian dari
+minimal Q1 dan Q2. Jadwalkan Q3 dengan ritme tetap, satu blok eksplorasi tiap
+dua minggu. Rencanakan Q4 untuk tiap rilis besar. Ini shift-left testing dengan
+daftar periksa: temukan cacatnya selagi masih murah.
+
+**4. Pakai kerangkanya sebagai bahasa bersama.** Begitu pengembang, penguji, dan
+manajer produk bisa menunjuk kotak yang sama, perdebatan soal prioritas jadi
+pendek.
+
+**5. Evaluasi sebarannya tiap sprint.** Apakah Q4 masih kosong? Apakah Q3 sudah
+kebagian waktu sama sekali? Koreksi kecil yang diulang mengalahkan satu
+perombakan besar.
+
+## Hasilnya
+
+Testing Quadrants menyusun semuanya, dari unit test sampai pemindaian keamanan,
+di atas satu peta. Celah cakupan jadi terlihat. Kepemilikan berhenti kabur. Tim
+berdebat soal prioritas memakai empat kotak yang sama, bukan empat definisi
+pribadi tentang kata "diuji".
+
+Semua itu tidak butuh tools baru. Yang dibutuhkan adalah peta yang disepakati
+sebelum sprint dimulai.
+
+## Referensi
+
+- Capgemini Research Institute. _World Quality Report 2023-24_. Capgemini, 2023.
+- ISTQB. _Certified Tester Foundation Level Syllabus v4.0_. International
+  Software Testing Qualifications Board, 2023.
+- Crispin, L. dan Gregory, J. _Agile Testing: A Practical Guide for Testers and
+  Agile Teams_. Addison-Wesley.
