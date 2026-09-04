@@ -10,12 +10,16 @@ interface Props {
   title: string;
   description: string;
   image?: ImageMetadata | string;
+  // Longer title for search results and link previews, when the visible
+  // heading is too terse to stand on its own in a result list.
+  seoTitle?: string;
   // Set on article pages so the head can emit publication metadata and
   // BlogPosting structured data.
   publishedTime?: Date;
 }
 
-const { title, description, image, publishedTime } = Astro.props;
+const { title, seoTitle, description, image, publishedTime } = Astro.props;
+const headTitle = seoTitle ?? title;
 const siteConfig = await getSiteConfig();
 const { site, fonts } = siteConfig;
 const language = getUiLanguage(siteConfig);
@@ -34,7 +38,9 @@ const idHref = `${origin}/id${sharedPath === '/' ? '/' : sharedPath}`;
 
 const ogLocale = language === 'id' ? 'id_ID' : 'en_US';
 const brandedTitle =
-  title === site.title || title.includes(site.title) ? title : `${title} | ${site.title}`;
+  headTitle === site.title || headTitle.includes(site.title)
+    ? headTitle
+    : `${headTitle} | ${site.title}`;
 
 const profiles = [
   'https://github.com/adtyprayoga',

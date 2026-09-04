@@ -35,6 +35,7 @@ interface Props {
     body?: string;
     data: {
       title: string;
+      seoTitle?: string;
       description: string;
       date: Date;
       heroImage?: ImageMetadata | string;
@@ -144,6 +145,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
   <head>
     <BaseHead
       title={title}
+      seoTitle={post.data.seoTitle}
       description={description}
       publishedTime={isBlogPost ? date : undefined}
     />

@@ -36,6 +36,10 @@ const contentImageSchema = ({ image }: Parameters<CollectionSchemaFactory>[0]) =
 const articleSchema = ({ image }: Parameters<CollectionSchemaFactory>[0]) =>
   z.object({
     title: z.string(),
+    // Optional longer title for <title> and link previews. The visible heading
+    // stays short; this is what a search result shows, so acronyms can be
+    // expanded here without lengthening the page's own headline.
+    seoTitle: z.string().optional(),
     description: z.string(),
     // Creation date. Accepts ISO 8601 strings and plain dates such as YYYY-MM-DD.
     date: z.coerce.date(),
