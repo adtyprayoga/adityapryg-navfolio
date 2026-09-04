@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "fonts:ui": "bun scripts/fonts/subset-ui-font.ts",
-    "build": "bun run fonts:ui && astro build && bun run build:id && pagefind --site dist --output-subdir pagefind --root-selector main --exclude-selectors \"[data-pagefind-ignore]\" && sh scripts/link-shared-assets.sh dist dist/id",
+    "build": "bun run fonts:ui && astro build && bun run build:id && pagefind --site dist --output-subdir pagefind --root-selector main --exclude-selectors \"[data-pagefind-ignore]\" && sh scripts/link-shared-assets.sh dist dist/id && sh scripts/merge-sitemaps.sh dist dist/id",
     "preview": "astro preview",
     "docs:dev": "NAVFOLIO_CONTENT_SOURCE=docs astro dev",
     "docs:build": "NAVFOLIO_CONTENT_SOURCE=docs bun run build",

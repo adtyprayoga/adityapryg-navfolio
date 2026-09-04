@@ -67,6 +67,7 @@ RUN set -eux; \
       npx astro build --outDir dist-id; \
     rm -rf dist/id; mkdir -p dist/id; cp -r dist-id/. dist/id/; rm -rf dist-id; \
     sh scripts/link-shared-assets.sh dist dist/id; \
+    sh scripts/merge-sitemaps.sh dist dist/id; \
     npx pagefind \
       --site dist \
       --output-subdir pagefind \

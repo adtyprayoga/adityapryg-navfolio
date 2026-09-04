@@ -142,7 +142,11 @@ const hasSidebar = shouldRenderSidebar && hasToc;
 <!doctype html>
 <html lang={ui.locale} data-palette={palette}>
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead
+      title={title}
+      description={description}
+      publishedTime={isBlogPost ? date : undefined}
+    />
     {
       comments.provider === 'waline' && comments.enabled && (
         <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />

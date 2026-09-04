@@ -1,25 +1,122 @@
 ---
 import type { ImageMetadata } from 'astro';
 import ThemeBaseHead from '@navfolio/theme-default/components/BaseHead.astro';
-import FallbackImage from '../assets/figure/fail-loading-image.png';
+import ShareCard from '../assets/figure/share-card.jpg';
 import { getSiteConfig } from '../data/site';
+import { getUiLanguage } from '../utils/ui-text';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description: string;
   image?: ImageMetadata | string;
+  // Set on article pages so the head can emit publication metadata and
+  // BlogPosting structured data.
+  publishedTime?: Date;
 }
 
-const { title, description, image } = Astro.props;
-const { site, fonts } = await getSiteConfig();
+const { title, description, image, publishedTime } = Astro.props;
+const siteConfig = await getSiteConfig();
+const { site, fonts } = siteConfig;
+const language = getUiLanguage(siteConfig);
+
+// The localized pass builds under base "/id", so stripping the base leaves the
+// path each language shares. That is what pairs a page with its counterpart.
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const sharedPath =
+  basePath && Astro.url.pathname.startsWith(basePath)
+    ? Astro.url.pathname.slice(basePath.length) || '/'
+    : Astro.url.pathname;
+
+const origin = site.url.replace(/\/$/, '');
+const enHref = `${origin}${sharedPath}`;
+const idHref = `${origin}/id${sharedPath === '/' ? '/' : sharedPath}`;
+
+const ogLocale = language === 'id' ? 'id_ID' : 'en_US';
+const brandedTitle =
+  title === site.title || title.includes(site.title) ? title : `${title} | ${site.title}`;
+
+const profiles = [
+  'https://github.com/adtyprayoga',
+  'https://www.linkedin.com/in/adityaprayoga',
+  'https://twitter.com/adityapryg_',
+  'https://instagram.com/prayoaa8',
+];
+
+// Google resolves the ambiguity around a common name through sameAs links, so
+// the Person node is repeated as the author of every article rather than
+// referenced only from the about page.
+const person = {
+  '@type': 'Person',
+  '@id': `${origin}/#person`,
+  name: site.title,
+  url: origin,
+  image: `${origin}${ShareCard.src.startsWith('/') ? '' : '/'}${ShareCard.src}`,
+  jobTitle: 'Software Developer',
+  sameAs: profiles,
+};
+
+const schema: Record<string, unknown>[] = [];
+
+if (sharedPath === '/') {
+  schema.push({
+    '@type': 'WebSite',
+    '@id': `${origin}/#website`,
+    url: origin,
+    name: site.title,
+    description: site.description,
+    inLanguage: language === 'id' ? 'id-ID' : 'en-US',
+    publisher: { '@id': `${origin}/#person` },
+  });
+  schema.push(person);
+} else if (sharedPath === '/about' || sharedPath === '/about/') {
+  schema.push(person);
+}
+
+if (publishedTime) {
+  schema.push({
+    '@type': 'BlogPosting',
+    '@id': `${Astro.url}#article`,
+    headline: title,
+    description,
+    datePublished: publishedTime.toISOString(),
+    inLanguage: language === 'id' ? 'id-ID' : 'en-US',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': String(Astro.url) },
+    author: { '@id': `${origin}/#person` },
+  });
+  schema.push(person);
+}
+
+const jsonLd =
+  schema.length > 0 ? JSON.stringify({ '@context': 'https://schema.org', '@graph': schema }) : null;
 ---
 
 <ThemeBaseHead
-  title={title}
+  title={brandedTitle}
   description={description}
   image={image}
-  fallbackImage={FallbackImage}
+  fallbackImage={ShareCard}
   site={site}
   fonts={fonts}
 />
+
+<!-- Language alternates. The two trees are built from the same routes, so every
+     page has a counterpart at the same path under the other base. -->
+<link rel="alternate" hreflang="en" href={enHref} />
+<link rel="alternate" hreflang="id" href={idHref} />
+<link rel="alternate" hreflang="x-default" href={enHref} />
+
+<meta property="og:locale" content={ogLocale} />
+<meta property="og:site_name" content={site.title} />
+{
+  publishedTime && (
+    <>
+      <meta property="article:published_time" content={publishedTime.toISOString()} />
+      <meta property="article:author" content={site.title} />
+    </>
+  )
+}
+<meta name="author" content={site.title} />
+<meta name="twitter:card" content="summary_large_image" />
+
+{jsonLd && <script type="application/ld+json" is:inline set:html={jsonLd} />}
