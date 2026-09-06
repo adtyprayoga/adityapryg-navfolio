@@ -1,0 +1,24 @@
+---
+title: 'BM Payroll'
+seoTitle: 'BM Payroll, PPh 21 and BPJS payroll system'
+description: 'Indonesian payroll system covering PPh 21 TER calculation, BPJS contributions, and a queued payslip lifecycle.'
+date: 2025-09-14
+icon: 'layers-3'
+tags: ['work', 'laravel', 'react', 'postgresql']
+---
+
+**Tech Lead at BraindevsID · 2025 · Brainmatics**
+
+Indonesian payroll, end to end. PPh 21 under the PP 58/2023 TER method, BPJS
+health and employment contributions, seven allowance types, and a period that
+moves from draft to calculated to approved to disbursed.
+
+Tax brackets, TER rates, PTKP values, and BPJS rates sit in the database rather
+than in code. Indonesian rates change by regulation, and a payroll run has to
+reproduce the numbers that applied when it ran, not the ones current today.
+Gross-up allowances take an iterative solve, since the tax on an allowance moves
+the allowance.
+
+Calculation is queued per employee, and Reverb pushes batch progress to the
+browser. Laravel 12 and PostgreSQL behind Inertia and React, Octane on
+FrankenPHP, Redis for cache and queues, Pest for the tests, PHPStan at level 5.

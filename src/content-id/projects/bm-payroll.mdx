@@ -1,0 +1,24 @@
+---
+title: 'BM Payroll'
+seoTitle: 'BM Payroll, sistem penggajian PPh 21'
+description: 'Sistem penggajian Indonesia dengan perhitungan PPh 21 TER, iuran BPJS, dan siklus payslip berbasis antrean.'
+date: 2025-09-14
+icon: 'layers-3'
+tags: ['work', 'laravel', 'react', 'postgresql']
+---
+
+**Tech Lead di BraindevsID · 2025 · Brainmatics**
+
+Penggajian Indonesia dari hulu ke hilir. PPh 21 dengan metode TER sesuai PP
+58/2023, iuran BPJS Kesehatan dan Ketenagakerjaan, tujuh jenis tunjangan, dan
+periode yang bergerak dari draft, calculated, approved, sampai disbursed.
+
+Lapisan tarif pajak, tarif TER, nilai PTKP, dan tarif BPJS disimpan di basis
+data, bukan di kode. Tarif di Indonesia berubah lewat regulasi, dan satu proses
+penggajian harus bisa menghasilkan ulang angka yang berlaku saat itu, bukan
+angka yang berlaku hari ini. Tunjangan gross-up butuh penyelesaian iteratif,
+karena pajak atas tunjangan menggeser tunjangannya sendiri.
+
+Perhitungan diantrekan per karyawan, dan Reverb mendorong progres batch ke
+browser. Laravel 12 dan PostgreSQL di balik Inertia dan React, Octane di atas
+FrankenPHP, Redis untuk cache dan antrean, Pest untuk pengujian, PHPStan level 5.
