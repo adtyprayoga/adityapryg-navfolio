@@ -27,11 +27,11 @@
     "build:id": "NAVFOLIO_LANG=id NAVFOLIO_SITE_CONFIG=./src/config/site.id.toml NAVFOLIO_CONTENT_BASE=./src/content-id SITE_BASE=/id astro build --outDir dist-id && rm -rf dist/id && mkdir -p dist/id && cp -r dist-id/. dist/id/ && rm -rf dist-id && sh scripts/link-shared-assets.sh dist dist/id"
   },
   "dependencies": {
-    "@astrojs/mdx": "^7.0.8",
+    "@astrojs/mdx": "^8.0.1",
     "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.3",
-    "@expressive-code/plugin-collapsible-sections": "^0.44.1",
-    "@expressive-code/plugin-line-numbers": "^0.44.1",
+    "@astrojs/sitemap": "^3.7.4",
+    "@expressive-code/plugin-collapsible-sections": "^0.44.2",
+    "@expressive-code/plugin-line-numbers": "^0.44.2",
     "@fontsource/maple-mono": "^5.3.0",
     "@navfolio/core": "github:navfolio/core",
     "@navfolio/mdx-components": "github:navfolio/mdx-components",
@@ -39,28 +39,28 @@
     "@navfolio/plugin-markdown": "github:navfolio/plugin-markdown",
     "@navfolio/theme-default": "github:navfolio/theme-default",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.2.9",
-    "astro-expressive-code": "^0.44.1",
+    "astro": "^7.3.2",
+    "astro-expressive-code": "^0.44.2",
     "date-fns": "^4.4.0",
     "github-slugger": "^2.0.0",
-    "katex": "^0.18.4",
+    "katex": "^0.18.7",
     "lucide-astro": "^0.556.0",
-    "mermaid": "^11.17.2",
+    "mermaid": "^12.0.0",
     "sharp": "^0.35.4",
     "smol-toml": "^1.8.0",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@astrojs/compiler": "^4.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.68.0",
-    "@typescript-eslint/parser": "^8.68.0",
+    "@typescript-eslint/eslint-plugin": "^8.70.0",
+    "@typescript-eslint/parser": "^8.70.0",
     "@typescript/native": "npm:typescript@^7.0.2",
     "husky": "^9.1.7",
-    "lint-staged": "^17.4.1",
+    "lint-staged": "^17.5.1",
     "pagefind": "^1.5.2",
     "prettier": "^3.9.6",
-    "prettier-plugin-astro": "^0.14.1",
-    "typescript": "^6.0.2"
+    "prettier-plugin-astro": "^1.0.0",
+    "typescript": "^7.0.2"
   },
   "lint-staged": {
     "*": "bun run format:check"
