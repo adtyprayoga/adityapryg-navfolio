@@ -1,0 +1,18 @@
+---
+title: 'Weekly Journal Bot'
+description: 'A Telegram bot that validates weekly employee journals, records them in Google Sheets, and sends reminders and recaps.'
+date: 2026-09-14
+icon: 'terminal'
+tags: ['telegram', 'python', 'fastapi', 'google-sheets']
+---
+
+A weekly reporting workflow for teams that already submit journals in Telegram.
+The bot identifies the sender and reporting group, checks the journal format and
+submission window, and stores structured reports in **Google Sheets**.
+
+It sends a Friday reminder and a Saturday recap, while keeping the report status
+and weekly and monthly summaries deterministic. Employees can use a private
+Telegram menu for guidance; reports are submitted in their assigned group topic.
+
+Built with **Python**, **FastAPI**, **gspread**, and **Docker** for deployment on
+Coolify.

@@ -247,13 +247,17 @@ tooltip = "adityaprayoga772@gmail.com"
 copy = true
 
 [[config.home.doing]]
-text = "Membangun frontend dengan React dan backend dengan Laravel"
+text = "Membangun bot Telegram untuk jurnal mingguan, pengingat, dan rekap"
 mark = "01"
 
 [[config.home.doing]]
-text = "Mengajar Laravel, Java, React, dan software testing"
+text = "Membangun frontend dengan React dan backend dengan Laravel"
 mark = "02"
 
 [[config.home.doing]]
-text = "Menuliskan apa saja yang saya pelajari di sepanjang jalan"
+text = "Mengajar Laravel, Java, React, dan software testing"
 mark = "03"
+
+[[config.home.doing]]
+text = "Menuliskan apa saja yang saya pelajari di sepanjang jalan"
+mark = "04"

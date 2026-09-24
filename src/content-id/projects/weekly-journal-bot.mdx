@@ -1,0 +1,19 @@
+---
+title: 'Weekly Journal Bot'
+description: 'Bot Telegram yang memvalidasi jurnal mingguan karyawan, mencatatnya di Google Sheets, serta mengirim pengingat dan rekap.'
+date: 2026-09-14
+icon: 'terminal'
+tags: ['telegram', 'python', 'fastapi', 'google-sheets']
+---
+
+Alur pelaporan mingguan untuk tim yang sudah mengirim jurnal lewat Telegram.
+Bot mengenali pengirim dan grup pelaporan, memeriksa format jurnal dan waktu
+pengiriman, lalu menyimpan laporan terstruktur di **Google Sheets**.
+
+Bot mengirim pengingat pada hari Jumat dan rekap pada hari Sabtu. Status laporan
+serta ringkasan mingguan dan bulanan dihitung dengan aturan yang konsisten.
+Karyawan bisa membuka panduan lewat menu Telegram pribadi; laporan dikirim di
+topik grup yang ditentukan.
+
+Dibangun dengan **Python**, **FastAPI**, **gspread**, dan **Docker** untuk
+deployment di Coolify.
