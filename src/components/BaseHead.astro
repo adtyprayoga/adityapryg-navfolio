@@ -41,6 +41,9 @@ const brandedTitle =
   headTitle === site.title || headTitle.includes(site.title)
     ? headTitle
     : `${headTitle} | ${site.title}`;
+const articleImageUrl = image
+  ? new URL(typeof image === 'string' ? image : image.src, Astro.url).href
+  : undefined;
 
 const profiles = [
   'https://github.com/adtyprayoga',
@@ -85,6 +88,7 @@ if (publishedTime) {
     '@id': `${Astro.url}#article`,
     headline: title,
     description,
+    ...(articleImageUrl ? { image: articleImageUrl } : {}),
     datePublished: publishedTime.toISOString(),
     inLanguage: language === 'id' ? 'id-ID' : 'en-US',
     mainEntityOfPage: { '@type': 'WebPage', '@id': String(Astro.url) },

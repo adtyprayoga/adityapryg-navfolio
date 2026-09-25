@@ -1,7 +1,7 @@
 ---
-title: 'Obsidian LiveSync, CouchDB, and Codex'
-seoTitle: 'Self-Hosted Obsidian LiveSync + CouchDB on Coolify + Headless Sync for Codex'
-description: 'Build a self-hosted Second Brain with Obsidian, CouchDB on Coolify, and LiveSync CLI, making synchronized Markdown notes available to Codex on your coding server.'
+title: 'Obsidian LiveSync on Coolify: CouchDB Setup'
+seoTitle: 'Obsidian LiveSync on Coolify: CouchDB Setup'
+description: 'My Obsidian LiveSync setup with CouchDB on Coolify, HTTPS, E2EE, and LiveSync CLI to make a Markdown vault available to Codex on my server.'
 date: 2026-09-25
 heroImage: '../../assets/blog/obsidian-livesync-codex.png'
 showHeroImage: false
@@ -10,6 +10,11 @@ categories: ['Infrastructure']
 ---
 
 ![An Obsidian note vault, a private database server, and a coding laptop connected by two-way synchronization.](../../assets/blog/obsidian-livesync-codex.png)
+
+I run Obsidian LiveSync with CouchDB on Coolify so my notes stay synchronized
+across devices and are available as Markdown on my coding server. LiveSync CLI
+connects the server vault to the database, while Codex reads those notes during
+development. This is also my setup record for reinstalling or checking the system.
 
 My architecture notes live in Obsidian, while coding happens in a terminal. Moving
 between projects or starting a new agent session often means explaining the same

@@ -1,7 +1,7 @@
 ---
-title: 'Obsidian LiveSync, CouchDB, dan Codex'
-seoTitle: 'Self-Hosted Obsidian LiveSync + CouchDB di Coolify + Headless Sync untuk Codex'
-description: 'Membangun Second Brain dengan Obsidian, CouchDB di Coolify, dan LiveSync CLI agar catatan tersinkron ke server dan bisa digunakan Codex sebagai konteks kerja.'
+title: 'Obsidian LiveSync di Coolify: Setup CouchDB'
+seoTitle: 'Obsidian LiveSync di Coolify: Setup CouchDB'
+description: 'Catatan setup Obsidian LiveSync dengan CouchDB di Coolify, HTTPS, E2EE, dan LiveSync CLI agar vault Markdown tersedia di server untuk Codex.'
 date: 2026-09-25
 heroImage: '../../assets/blog/obsidian-livesync-codex.png'
 showHeroImage: false
@@ -10,6 +10,12 @@ categories: ['Infrastructure']
 ---
 
 ![Vault catatan Obsidian, server database privat, dan laptop coding yang terhubung melalui sinkronisasi dua arah.](../../assets/blog/obsidian-livesync-codex.png)
+
+Saya menjalankan Obsidian LiveSync dengan CouchDB di Coolify agar catatan tetap
+tersinkron antar-device dan tersedia sebagai Markdown di server coding. LiveSync
+CLI menghubungkan vault di server ke database, sementara Codex membaca catatan
+tersebut saat saya bekerja. Ini juga catatan setup untuk saya sendiri ketika perlu
+memasang ulang atau memeriksa sistemnya.
 
 Catatan arsitektur saya biasanya ada di Obsidian, sementara pekerjaan coding
 berlangsung di terminal. Setiap pindah proyek atau membuka sesi agent baru, saya
