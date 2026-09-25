@@ -247,17 +247,21 @@ tooltip = "adityaprayoga772@gmail.com"
 copy = true
 
 [[config.home.doing]]
-text = "Building a Telegram bot for weekly journals, reminders, and recaps"
+text = "Documenting a self-hosted Obsidian knowledge base for Codex"
 mark = "01"
 
 [[config.home.doing]]
-text = "Building frontends with React and backends with Laravel"
+text = "Building a Telegram bot for weekly journals, reminders, and recaps"
 mark = "02"
 
 [[config.home.doing]]
-text = "Teaching Laravel, Java, React, and software testing"
+text = "Building frontends with React and backends with Laravel"
 mark = "03"
 
 [[config.home.doing]]
-text = "Writing up what I figure out along the way"
+text = "Teaching Laravel, Java, React, and software testing"
 mark = "04"
+
+[[config.home.doing]]
+text = "Writing up what I figure out along the way"
+mark = "05"
