@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BlogArticle from '../../layouts/BlogArticle.astro';
+import { getSiteConfig } from '../../data/site';
+import { getI18n } from '../../utils/ui-text';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects', ({ id, data }) => id !== 'index' && !data.draft);
@@ -13,6 +15,7 @@ export async function getStaticPaths() {
 
 const project = Astro.props;
 const { Content, headings } = await render(project);
+const i18n = getI18n(await getSiteConfig());
 ---
 
 <BlogArticle
@@ -20,5 +23,30 @@ const { Content, headings } = await render(project);
   headings={headings}
   sidebar={{ enable: false, ...project.data.sidebar }}
 >
-  <Content />
+  <div
+    data-book-meta
+    data-project-date={project.data.date.getFullYear()}
+    data-project-tags={project.data.tags.join(', ')}
+    data-project-authors={project.data.authors.map((author) => author.name).join(', ')}
+    data-project-links={JSON.stringify(project.data.links)}
+  >
+  </div>
+  <div data-book-content data-project-id={project.id} data-project-title={project.data.title}>
+    {
+      project.data.bookChapters ? (
+        <Content />
+      ) : (
+        <section
+          data-book-chapter
+          data-chapter-id="overview"
+          data-chapter-title={i18n.t('library.overview')}
+        >
+          <h2 id="overview">{i18n.t('library.overview')}</h2>
+          <div data-chapter-body>
+            <Content />
+          </div>
+        </section>
+      )
+    }
+  </div>
 </BlogArticle>

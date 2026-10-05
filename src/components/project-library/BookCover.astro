@@ -1,0 +1,27 @@
+---
+import type { Shelf } from './model';
+interface Props {
+  id: string;
+  title: string;
+  description: string;
+  year: number;
+  href: string;
+  shelf: Shelf;
+  kicker: string;
+}
+const { id, title, description, year, href, shelf, kicker } = Astro.props;
+const colors = ['sage', 'slate', 'clay', 'plum'];
+const color =
+  colors[Array.from(id).reduce((sum, letter) => sum + letter.charCodeAt(0), 0) % colors.length];
+---
+
+<article class="library-book" data-shelf={shelf}>
+  <a href={href} class="library-book-link" data-book-link data-book-id={id} aria-label={title}>
+    <span class={`library-cover library-cover--${color}`} data-book-cover>
+      <span class="library-cover-kicker">{kicker}</span>
+      <span class="library-cover-title">{title}</span>
+      <span class="library-cover-year">{year}</span>
+    </span>
+  </a>
+  <p class="library-book-description">{description}</p>
+</article>

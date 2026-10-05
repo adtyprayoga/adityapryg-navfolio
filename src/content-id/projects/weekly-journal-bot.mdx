@@ -1,4 +1,6 @@
 ---
+shelf: professional
+bookChapters: true
 title: 'Weekly Journal Bot'
 description: 'Bot Telegram yang memvalidasi jurnal mingguan karyawan, mencatatnya di Google Sheets, serta mengirim pengingat dan rekap.'
 date: 2026-09-14
@@ -6,14 +8,52 @@ icon: 'terminal'
 tags: ['telegram', 'python', 'fastapi', 'google-sheets']
 ---
 
-Alur pelaporan mingguan untuk tim yang sudah mengirim jurnal lewat Telegram.
-Bot mengenali pengirim dan grup pelaporan, memeriksa format jurnal dan waktu
-pengiriman, lalu menyimpan laporan terstruktur di **Google Sheets**.
+import BookChapter from '../../components/project-library/BookChapter.astro';
 
-Bot mengirim pengingat pada hari Jumat dan rekap pada hari Sabtu. Status laporan
-serta ringkasan mingguan dan bulanan dihitung dengan aturan yang konsisten.
-Karyawan bisa membuka panduan lewat menu Telegram pribadi; laporan dikirim di
-topik grup yang ditentukan.
+<BookChapter id="when-the-team-grew" title="Ketika tim bertambah besar">
 
-Dibangun dengan **Python**, **FastAPI**, **gspread**, dan **Docker** untuk
-deployment di Coolify.
+Saat jumlah karyawan masih 20, 30, atau 40 orang, rekap laporan mingguan masih bisa ditangani. Seiring bertambahnya karyawan hingga mencapai sekitar seratus orang, proses yang sama mulai terasa kewalahan.
+
+Laporan masuk pada akhir pekan, dan admin HR berulang kali harus lembur untuk menyelesaikan rekap. Saya membangun Weekly Journal Bot untuk mengotomatiskan pengingat, validasi laporan, dan rekap yang sudah terlalu berat dikerjakan secara manual.
+
+</BookChapter>
+
+<BookChapter id="building-relief-for-hr" title="Membantu pekerjaan HR">
+
+Admin HR adalah pengguna yang ingin saya bantu. Saya mengerjakan seluruh pengembangannya sendiri, sementara HR menyediakan data yang dibutuhkan, termasuk data karyawan.
+
+Bot memproses laporan yang dikirim melalui Telegram. Bot memeriksa format dan periode pengiriman, mencatat laporan terstruktur ke Google Sheets, serta mengirim pengingat pada hari Jumat dan menyiapkan rekap pada hari Sabtu. Saya membangunnya dengan Python dan FastAPI, menghubungkan alur pelaporan dengan spreadsheet yang digunakan HR.
+
+</BookChapter>
+
+<BookChapter id="two-places-to-report" title="Melapor di dua tempat">
+
+Masih ada masalah yang belum diselesaikan oleh bot ini. Karyawan mengisi timesheet di aplikasi lain dan juga mengirim laporan mingguan di Telegram. Mereka tetap harus melakukan dua aktivitas pelaporan.
+
+Otomatisasi alur Telegram membantu pekerjaan administrasi, tetapi pekerjaan ganda itu masih ada. Menghubungkan kedua aktivitas tersebut masih menjadi perbaikan yang ingin saya pelajari.
+
+</BookChapter>
+
+<BookChapter id="rules-and-empathy" title="Aturan dan empati">
+
+Pelaporan juga berkaitan dengan sanksi, sehingga masalahnya melampaui urusan teknis. Saya perlu memikirkan bagaimana proses pelaporan dapat membangun kebiasaan yang baik sambil tetap memberi ruang bagi empati.
+
+Pertimbangan itu menjadi salah satu bagian tersulit dalam proyek ini. Membangun validasinya membuat saya belajar tentang proses HR dan aturan yang mendasarinya, sekaligus mempelajari cara kerja bot.
+
+</BookChapter>
+
+<BookChapter id="a-more-consistent-habit" title="Kebiasaan yang lebih teratur">
+
+Setelah bot mulai digunakan, saya melihat lebih banyak karyawan mengirim laporan setiap pekan. Karyawan yang sebelumnya sering tidak melapor mulai lebih rutin, dan jumlah karyawan yang belum melapor berkurang.
+
+Laporannya juga menjadi lebih rapi. Penggunaan satu template bersama membantu mengurangi kesalahan penulisan periode. Perubahan ini merupakan pengamatan saya terhadap prosesnya; saya belum memiliki angka pengukuran untuk menjelaskannya.
+
+</BookChapter>
+
+<BookChapter id="what-i-would-change" title="Yang saya pelajari dan ingin ubah">
+
+Melalui proyek ini, saya belajar Python, pembuatan bot Telegram, pemformatan pesan bot dengan HTML, dan integrasi Google Sheets. Saya juga belajar lebih banyak tentang proses HR dan regulasi.
+
+Jika punya kesempatan untuk mengubah pendekatan insentifnya, saya ingin memberikan poin untuk pelaporan dan penghargaan berdasarkan poin tersebut. Saya ingin kebiasaan itu tumbuh melalui apresiasi. Sistem poin dan penghargaan ini masih berupa gagasan untuk pengembangan berikutnya, belum menjadi bagian dari bot saat ini.
+
+</BookChapter>

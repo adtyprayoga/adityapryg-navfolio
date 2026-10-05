@@ -1,0 +1,62 @@
+---
+import BookHand from './BookHand.astro';
+interface Props {
+  labels: Record<string, string>;
+}
+const { labels } = Astro.props;
+---
+
+<dialog
+  class="book-reader"
+  data-book-reader
+  data-labels={JSON.stringify(labels)}
+  aria-labelledby="book-reader-title"
+  data-pagefind-ignore
+>
+  <div class="book-reader-shell">
+    <header class="book-reader-toolbar">
+      <span class="book-reader-wordmark">{labels.wordmark}</span>
+      <div class="book-reader-toolbar-actions">
+        <button type="button" data-reader-skip hidden>{labels.skip}</button>
+        <button type="button" data-reader-close aria-label={labels.close}
+          >× <span>{labels.close}</span></button
+        >
+      </div>
+    </header>
+    <div class="book-reader-stage" data-reader-stage aria-hidden="true">
+      <div class="book-reader-motion-cover" data-motion-cover></div>
+      <BookHand />
+    </div>
+    <p class="book-reader-status" data-reader-status role="status" aria-live="polite"></p>
+    <div class="book-reader-spread" data-reader-spread hidden>
+      <aside class="book-reader-left">
+        <p class="book-reader-eyebrow">{labels.readerKicker}</p>
+        <h2 id="book-reader-title" data-reader-title>{labels.loading}</h2>
+        <p data-reader-meta></p>
+        <div data-reader-links class="book-reader-links"></div>
+        <p class="book-reader-chapter-title" data-reader-chapter-title></p>
+      </aside>
+      <div class="book-reader-right" data-reader-page tabindex="-1"></div>
+    </div>
+    <div class="book-reader-error" data-reader-error hidden>
+      <p data-reader-error-text></p>
+      <button type="button" data-reader-retry>{labels.retry}</button>
+      <a data-reader-open-page href="/projects/">{labels.openPage}</a>
+    </div>
+    <nav class="book-reader-nav" data-reader-nav hidden aria-label={labels.chapters}>
+      <button type="button" data-reader-previous>{labels.previous}</button>
+      <label
+        >{labels.chapters}
+        <select data-reader-chapters aria-label={labels.chapters}></select></label
+      >
+      <span data-reader-progress aria-live="polite"></span>
+      <button type="button" data-reader-next>{labels.next}</button>
+    </nav>
+  </div>
+</dialog>
+
+<script>
+  import { initBookReader } from './reader';
+  initBookReader();
+  document.addEventListener('astro:page-load', initBookReader);
+</script>
