@@ -132,8 +132,13 @@
     "retry": "Coba lagi",
     "openPage": "Buka halaman proyek",
     "progress": "Bab {current} dari {total}",
-    "coverKicker": "ADITYA PRAYOGA / PROYEK",
+    "coverKicker": "ADITYA PRAYOGA",
     "readerKicker": "CERITA PROYEK",
-    "wordmark": "ADITYA / PERPUSTAKAAN PROYEK"
+    "wordmark": "ADITYA / PERPUSTAKAAN PROYEK",
+    "featured": "Cerita pilihan",
+    "featureTitle": "Setiap proyek punya cerita.",
+    "featureDescription": "Tim terus bertambah. Laporan menumpuk tiap minggu. Baca bagaimana saya membangun Weekly Journal Bot untuk meringankan pekerjaan HR.",
+    "readStory": "Baca ceritanya",
+    "browseShelves": "Jelajahi rak"
   }
 }

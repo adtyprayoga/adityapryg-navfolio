@@ -12,6 +12,18 @@
 
 **Status:** Implemented locally on `codex/project-library`. See the implementation record below. Deployment remains outside this plan.
 
+## Reference design refresh — 2026-10-06
+
+Adapt the visual direction of [MindInventory's E-Book Dashboard](https://dribbble.com/shots/20454786-E-Book-Dashboard) within the existing portfolio layout. Keep **Project / Proyek** navigation and the current reader interaction.
+
+- Feature Weekly Journal Bot above the shelves with a localized introduction and reading link.
+- Add category jump links with counts; retain all 18 books in their existing shelves.
+- Use original SVG cover illustrations, six muted cover colors, and system-serif display titles alongside the site's existing interface typography. No external fonts or artwork dependencies.
+- Allow the featured book and its shelf copy to open the same story, animating from the selected copy and restoring focus to it after closing.
+- Preserve English/Indonesian parity, light/dark themes, ordinary link fallback, and reduced motion.
+
+Verified with 21 passing Bun tests, formatting/lint checks, the bilingual production build, and Chromium checks at 320, 390, 768, 1024, and 1440 pixels. Browser checks covered opening from both book placements, chapter navigation, focus restoration, reduced motion, and failed-load recovery. This refresh is local and has not been pushed.
+
 ## Global constraints
 
 - Preserve `/projects/`, all project detail URLs, locale prefixes, and existing SEO metadata.

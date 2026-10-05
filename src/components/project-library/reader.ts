@@ -188,8 +188,8 @@ export function initBookReader() {
     closeButton.focus();
   }
 
-  function startOpening(id: string, animated: boolean) {
-    const link = books.get(id);
+  function startOpening(id: string, animated: boolean, trigger?: HTMLAnchorElement) {
+    const link = trigger ?? books.get(id);
     if (!link || closing) return;
     session.cancel();
     request?.abort();
@@ -271,7 +271,9 @@ export function initBookReader() {
       const target = link?.isConnected
         ? link
         : [...document.querySelectorAll<HTMLAnchorElement>('[data-book-link]')].find(
-            (candidate) => candidate.dataset.bookId === id,
+            (candidate) =>
+              candidate.dataset.bookId === id &&
+              candidate.dataset.bookPlacement === link?.dataset.bookPlacement,
           );
       if (!target) return;
       target.focus({ preventScroll: true });
@@ -318,7 +320,7 @@ export function initBookReader() {
         '',
         withBookId(new URL(location.href), link.dataset.bookId),
       );
-      startOpening(link.dataset.bookId, true);
+      startOpening(link.dataset.bookId, true, link);
     },
     listenerOptions,
   );
@@ -335,7 +337,7 @@ export function initBookReader() {
   reader.querySelector('[data-reader-retry]')?.addEventListener(
     'click',
     () => {
-      if (activeId) startOpening(activeId, false);
+      if (activeId) startOpening(activeId, false, activeLink ?? undefined);
     },
     listenerOptions,
   );

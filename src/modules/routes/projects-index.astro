@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import BlogArticle from '../../layouts/BlogArticle.astro';
 import BookCover from '../../components/project-library/BookCover.astro';
+import BookJacket from '../../components/project-library/BookJacket.astro';
 import BookReader from '../../components/project-library/BookReader.astro';
 import { groupBooks } from '../../components/project-library/model';
 import '../../components/project-library/library.css';
@@ -21,6 +22,9 @@ const indexPage = {
   data: { ...projectIndex.data, title: pageMeta.title, description: pageMeta.subtitle },
 };
 const shelves = groupBooks(entries);
+const featured = shelves
+  .flatMap((shelf) => shelf.books)
+  .find((project) => project.id === 'weekly-journal-bot');
 const route = getPageModuleRoute(navfolioConfig, 'projects');
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const i18n = getI18n(siteConfig);
@@ -43,6 +47,11 @@ const keys = [
   'coverKicker',
   'readerKicker',
   'wordmark',
+  'featured',
+  'featureTitle',
+  'featureDescription',
+  'readStory',
+  'browseShelves',
 ];
 const labels = Object.fromEntries(keys.map((key) => [key, i18n.t(`library.${key}`)]));
 labels.progress = i18n.t('library.progress', { current: '{current}', total: '{total}' });
@@ -59,13 +68,60 @@ labels.progress = i18n.t('library.progress', { current: '{current}', total: '{to
 >
   <div class="project-library" data-project-library>
     {
+      featured && (
+        <section class="library-feature" aria-label={labels.featured}>
+          <a
+            class="library-feature-link"
+            href={`${base}${route}/${featured.id}/`}
+            data-book-link
+            data-book-id={featured.id}
+            data-book-placement="featured"
+            aria-label={`${labels.readStory}: ${featured.data.title}`}
+          >
+            <div class="library-feature-copy">
+              <span class="library-eyebrow">
+                {labels.featured} <span aria-hidden="true">/</span>{' '}
+                {featured.data.date.getFullYear()}
+              </span>
+              <h2>{labels.featureTitle}</h2>
+              <p>{labels.featureDescription}</p>
+              <span class="library-read-button">
+                {labels.readStory}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+              </span>
+            </div>
+            <div class="library-feature-book">
+              <BookJacket
+                id={featured.id}
+                title={featured.data.title}
+                year={featured.data.date.getFullYear()}
+                kicker={labels.coverKicker}
+              />
+            </div>
+          </a>
+        </section>
+      )
+    }
+    <nav class="library-shelf-nav" aria-label={labels.browseShelves}>
+      <span class="library-eyebrow">{labels.browseShelves}</span>
+      <div>
+        {
+          shelves.map((shelf) => (
+            <a href={`#shelf-${shelf.id}`}>
+              {labels[shelf.id]}
+              <span>{String(shelf.books.length).padStart(2, '0')}</span>
+            </a>
+          ))
+        }
+      </div>
+    </nav>
+    {
       shelves.map((shelf) => (
         <section class="library-shelf" aria-labelledby={`shelf-${shelf.id}`}>
           <div class="library-shelf-heading">
             <>
-              <span class="library-shelf-mark" aria-hidden="true">
-                ✳
-              </span>
               <h2 id={`shelf-${shelf.id}`}>{labels[shelf.id]}</h2>
               <span class="library-shelf-count">{String(shelf.books.length).padStart(2, '0')}</span>
             </>
