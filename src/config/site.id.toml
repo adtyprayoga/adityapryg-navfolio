@@ -140,7 +140,7 @@ label = "Blog"
 href = "/blog"
 
 [[config.topNav.links]]
-label = "Perpustakaan Proyek"
+label = "Proyek"
 module = "projects"
 
 [[config.topNav.links]]
@@ -193,7 +193,7 @@ href = "/blog"
 
 [[config.home.navigation]]
 icon = "compass"
-title = "Perpustakaan Proyek"
+title = "Proyek"
 subtitle = "Yang sudah saya bangun dan rilis"
 href = "/projects"
 

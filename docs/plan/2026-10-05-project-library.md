@@ -30,7 +30,7 @@
 
 ### Shelves and covers
 
-Rename visible Projects labels to **Project Library** / **Perpustakaan Proyek**, including the archive header, top navigation, and home navigation card. Keep route identifiers unchanged. Introduce the library with “Projects from work, personal practice, and experiments. Pick a book to read its story.” / “Proyek dari pekerjaan, karya pribadi, dan eksperimen. Pilih buku untuk membaca ceritanya.”
+Use **Project** / **Proyek** in the top and home navigation. Use **Project Library** / **Perpustakaan Proyek** for the archive heading. Keep route identifiers unchanged. Introduce the library with “Projects from work, personal practice, and experiments. Pick a book to read its story.” / “Proyek dari pekerjaan, karya pribadi, dan eksperimen. Pilih buku untuk membaca ceritanya.”
 
 Use front-facing covers with cloth-like CSS texture, subtle spines, page edges, restrained shadows, and shallow shelf ledges. Covers have a title and year; put a short description beneath each cover. Keep the current site fonts and paper color tokens. Use a fixed sequence of muted green, blue, rust, and plum accents selected by project ID so covers remain stable across builds and languages. Ensure text contrast in both themes.
 

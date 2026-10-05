@@ -140,7 +140,7 @@ label = "Blog"
 href = "/blog"
 
 [[config.topNav.links]]
-label = "Project Library"
+label = "Project"
 module = "projects"
 
 [[config.topNav.links]]
@@ -193,7 +193,7 @@ href = "/blog"
 
 [[config.home.navigation]]
 icon = "compass"
-title = "Project Library"
+title = "Project"
 subtitle = "Things I have built and shipped"
 href = "/projects"
 
