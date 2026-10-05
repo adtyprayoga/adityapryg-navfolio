@@ -474,6 +474,8 @@ const projects = defineCollection({
   loader: glob({ base: `${contentBase}/projects`, pattern: '**/*.{md,mdx}' }),
   schema: (context) =>
     articleSchema(context).extend({
+      shelf: z.enum(['professional', 'personal', 'learning']).optional().default('personal'),
+      bookChapters: z.boolean().optional().default(false),
       sticky: z.union([z.boolean(), z.number().positive()]).optional().default(false),
       icon: z
         .enum([

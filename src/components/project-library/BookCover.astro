@@ -1,0 +1,21 @@
+---
+import type { Shelf } from './model';
+import BookJacket from './BookJacket.astro';
+interface Props {
+  id: string;
+  title: string;
+  description: string;
+  year: number;
+  href: string;
+  shelf: Shelf;
+  kicker: string;
+}
+const { id, title, description, year, href, shelf, kicker } = Astro.props;
+---
+
+<article class="library-book" data-shelf={shelf}>
+  <a href={href} class="library-book-link" data-book-link data-book-id={id} aria-label={title}>
+    <BookJacket id={id} title={title} year={year} kicker={kicker} />
+  </a>
+  <p class="library-book-description">{description}</p>
+</article>

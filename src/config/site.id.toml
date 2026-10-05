@@ -77,10 +77,10 @@ subtitle = ""
 note = "Catatan yang saling terhubung, bisa diikuti sesuai urutan penulisannya."
 
 [config.pages.projects]
-title = "Proyek"
+title = "Perpustakaan Proyek"
 kicker = "Rak proyek"
-subtitle = "Perkakas kecil dan sistem situs."
-note = "Rak ringkas untuk pilihan implementasi, rilis, dan eksperimen penerbitan."
+subtitle = "Proyek dari pekerjaan, karya pribadi, dan eksperimen. Pilih buku untuk membaca ceritanya."
+note = ""
 
 [config.pages.vibe]
 title = "vibe"

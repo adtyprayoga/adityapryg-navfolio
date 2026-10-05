@@ -115,5 +115,30 @@
   },
   "home": {
     "greeting": "Hi,"
+  },
+  "library": {
+    "professional": "Professional Work",
+    "personal": "Personal Projects",
+    "learning": "Learning & Experiments",
+    "overview": "Overview",
+    "close": "Close book",
+    "skip": "Skip animation",
+    "previous": "Previous chapter",
+    "next": "Next chapter",
+    "chapters": "Chapters",
+    "loading": "Opening book…",
+    "error": "This book could not be opened.",
+    "unavailable": "This book is unavailable.",
+    "retry": "Try again",
+    "openPage": "Open project page",
+    "progress": "Chapter {current} of {total}",
+    "coverKicker": "ADITYA PRAYOGA",
+    "readerKicker": "PROJECT STORY",
+    "wordmark": "ADITYA / PROJECT LIBRARY",
+    "featured": "Featured story",
+    "featureTitle": "Every project has a story.",
+    "featureDescription": "A growing team. A weekly pile of reports. Read how I built Weekly Journal Bot to give HR a little breathing room.",
+    "readStory": "Read the story",
+    "browseShelves": "Browse the shelves"
   }
 }

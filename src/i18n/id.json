@@ -115,5 +115,30 @@
   },
   "home": {
     "greeting": "Halo,"
+  },
+  "library": {
+    "professional": "Proyek Profesional",
+    "personal": "Proyek Pribadi",
+    "learning": "Pembelajaran & Eksperimen",
+    "overview": "Ringkasan",
+    "close": "Tutup buku",
+    "skip": "Lewati animasi",
+    "previous": "Bab sebelumnya",
+    "next": "Bab berikutnya",
+    "chapters": "Daftar bab",
+    "loading": "Membuka buku…",
+    "error": "Buku ini tidak dapat dibuka.",
+    "unavailable": "Buku ini tidak tersedia.",
+    "retry": "Coba lagi",
+    "openPage": "Buka halaman proyek",
+    "progress": "Bab {current} dari {total}",
+    "coverKicker": "ADITYA PRAYOGA",
+    "readerKicker": "CERITA PROYEK",
+    "wordmark": "ADITYA / PERPUSTAKAAN PROYEK",
+    "featured": "Cerita pilihan",
+    "featureTitle": "Setiap proyek punya cerita.",
+    "featureDescription": "Tim terus bertambah. Laporan menumpuk tiap minggu. Baca bagaimana saya membangun Weekly Journal Bot untuk meringankan pekerjaan HR.",
+    "readStory": "Baca ceritanya",
+    "browseShelves": "Jelajahi rak"
   }
 }

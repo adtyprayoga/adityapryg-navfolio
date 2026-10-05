@@ -1,4 +1,6 @@
 ---
+shelf: professional
+bookChapters: true
 title: 'Weekly Journal Bot'
 description: 'A Telegram bot that validates weekly employee journals, records them in Google Sheets, and sends reminders and recaps.'
 date: 2026-09-14
@@ -6,13 +8,52 @@ icon: 'terminal'
 tags: ['telegram', 'python', 'fastapi', 'google-sheets']
 ---
 
-A weekly reporting workflow for teams that already submit journals in Telegram.
-The bot identifies the sender and reporting group, checks the journal format and
-submission window, and stores structured reports in **Google Sheets**.
+import BookChapter from '../../components/project-library/BookChapter.astro';
 
-It sends a Friday reminder and a Saturday recap, while keeping the report status
-and weekly and monthly summaries deterministic. Employees can use a private
-Telegram menu for guidance; reports are submitted in their assigned group topic.
+<BookChapter id="when-the-team-grew" title="When the team grew">
 
-Built with **Python**, **FastAPI**, **gspread**, and **Docker** for deployment on
-Coolify.
+When the team had 20, 30, or 40 employees, recapping weekly reports was still manageable. As more people joined and the team reached about a hundred employees, that same process became overwhelming.
+
+Reports came at the end of the week, and HR administrators repeatedly had to work overtime to finish the recap. I built Weekly Journal Bot to automate the reminders, report validation, and recaps that had become too much to handle manually.
+
+</BookChapter>
+
+<BookChapter id="building-relief-for-hr" title="Building relief for HR">
+
+HR administrators were the people I wanted to help. I handled the entire development myself, while HR supplied the data I needed, including employee information.
+
+The bot works with reports submitted through Telegram. It checks the report format and submission period, records structured reports in Google Sheets, sends a Friday reminder, and prepares a Saturday recap. I built it with Python and FastAPI, connecting the reporting workflow to the spreadsheet HR uses.
+
+</BookChapter>
+
+<BookChapter id="two-places-to-report" title="Two places to report">
+
+There is still a problem this bot has not solved. Employees fill out a timesheet in another application and also submit their weekly report in Telegram. They still have two reporting activities to complete.
+
+Automating the Telegram workflow helps with administration, but the duplicated effort remains. Bringing those activities together is an improvement I would still like to explore.
+
+</BookChapter>
+
+<BookChapter id="rules-and-empathy" title="Rules and empathy">
+
+Reporting also affects penalties, which made this more than a technical problem for me. I had to think about how a reporting process could encourage a good habit while still making room for empathy.
+
+That tension was one of the hardest parts of the project. Building the checks meant learning about the HR process and the rules behind it, as well as learning how to make the bot work.
+
+</BookChapter>
+
+<BookChapter id="a-more-consistent-habit" title="A more consistent habit">
+
+After people started using the bot, I noticed more employees submitting their reports each week. People who previously missed reports began reporting more regularly, and the number of employees not reporting went down.
+
+The reports also became cleaner. Using one shared template helped reduce mistakes in the reporting period. These are changes I observed in the workflow; I do not have measured figures to attach to them.
+
+</BookChapter>
+
+<BookChapter id="what-i-would-change" title="What I learned—and would change">
+
+This project taught me Python, how to build a Telegram bot, how to format bot messages with HTML, and how to integrate Google Sheets. I also learned more about HR processes and regulations.
+
+If I had the chance to approach the incentive differently, I would introduce points for reporting and rewards based on those points. I would like the habit to grow through appreciation. That points-and-rewards system is an idea for the future; it is not part of the current bot.
+
+</BookChapter>

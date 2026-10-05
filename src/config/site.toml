@@ -77,10 +77,10 @@ subtitle = ""
 note = "Connected notes that can be followed in the order they were written."
 
 [config.pages.projects]
-title = "Projects"
+title = "Project Library"
 kicker = "Project shelf"
-subtitle = "Small tools and site systems."
-note = "A compact shelf for implementation choices, releases, and publishing experiments."
+subtitle = "Projects from work, personal practice, and experiments. Pick a book to read its story."
+note = ""
 
 [config.pages.vibe]
 title = "vibe"
@@ -140,7 +140,7 @@ label = "Blog"
 href = "/blog"
 
 [[config.topNav.links]]
-label = "Projects"
+label = "Project"
 module = "projects"
 
 [[config.topNav.links]]
@@ -193,7 +193,7 @@ href = "/blog"
 
 [[config.home.navigation]]
 icon = "compass"
-title = "Projects"
+title = "Project"
 subtitle = "Things I have built and shipped"
 href = "/projects"
 
