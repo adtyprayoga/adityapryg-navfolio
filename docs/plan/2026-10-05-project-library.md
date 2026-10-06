@@ -10,7 +10,7 @@
 
 **Spec:** This document's [Design specification](#design-specification) and [Flagship manuscript](#flagship-manuscript) are the accompanying specification. Read both before executing tasks.
 
-**Status:** Implemented locally on `codex/project-library`. See the implementation record below. Deployment remains outside this plan.
+**Status:** The original library was implemented on `codex/project-library`. The approved clean dashboard redesign supersedes its hand and physical book animation and is implemented on `codex/clean-project-dashboard`. Deployment remains outside this plan.
 
 ## Reference design refresh — 2026-10-06
 
@@ -23,6 +23,10 @@ Adapt the visual direction of [MindInventory's E-Book Dashboard](https://dribbbl
 - Preserve English/Indonesian parity, light/dark themes, ordinary link fallback, and reduced motion.
 
 Verified with 21 passing Bun tests, formatting/lint checks, the bilingual production build, and Chromium checks at 320, 390, 768, 1024, and 1440 pixels. Browser checks covered opening from both book placements, chapter navigation, focus restoration, reduced motion, and failed-load recovery. This refresh is local and has not been pushed.
+
+## Clean dashboard redesign — 2026-10-06
+
+The approved mockup supersedes the earlier physical shelf and hand treatment. The Project route uses a dedicated dashboard with category filtering, search, a compact Weekly Journal Bot feature, and 18 flat editorial covers. Projects open in a focused chapter reader with a short fade instead of a hand or cover-opening sequence. Navigation remains Project / Proyek. The existing project pages and `?book=` links stay available. The earlier specifications and task checklists below describe the original implementation and are retained as its history.
 
 ## Global constraints
 
