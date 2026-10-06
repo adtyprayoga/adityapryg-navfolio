@@ -1,6 +1,6 @@
 ---
-import { getCollection, render } from 'astro:content';
-import BlogArticle from '../../layouts/BlogArticle.astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import BookCover from '../../components/project-library/BookCover.astro';
 import BookJacket from '../../components/project-library/BookJacket.astro';
 import BookReader from '../../components/project-library/BookReader.astro';
@@ -14,13 +14,6 @@ import { getI18n } from '../../utils/ui-text';
 const siteConfig = await getSiteConfig();
 const pageMeta = siteConfig.pages.projects;
 const entries = await getCollection('projects');
-const projectIndex = entries.find((entry) => entry.id === 'index');
-if (!projectIndex) throw new Error('Missing src/content/projects/index.mdx content entry.');
-const { headings } = await render(projectIndex);
-const indexPage = {
-  ...projectIndex,
-  data: { ...projectIndex.data, title: pageMeta.title, description: pageMeta.subtitle },
-};
 const shelves = groupBooks(entries);
 const featured = shelves
   .flatMap((shelf) => shelf.books)
@@ -29,12 +22,18 @@ const route = getPageModuleRoute(navfolioConfig, 'projects');
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const i18n = getI18n(siteConfig);
 const keys = [
+  'projectTitle',
+  'projectIntro',
+  'allProjects',
   'professional',
   'personal',
   'learning',
-  'overview',
+  'search',
+  'clearSearch',
+  'result',
+  'results',
+  'empty',
   'close',
-  'skip',
   'previous',
   'next',
   'chapters',
@@ -45,103 +44,148 @@ const keys = [
   'openPage',
   'progress',
   'coverKicker',
-  'readerKicker',
-  'wordmark',
   'featured',
   'featureTitle',
   'featureDescription',
   'readStory',
-  'browseShelves',
+  'backToProjects',
 ];
 const labels = Object.fromEntries(keys.map((key) => [key, i18n.t(`library.${key}`)]));
 labels.progress = i18n.t('library.progress', { current: '{current}', total: '{total}' });
+labels.result = i18n.t('library.result', { count: '{count}' });
+labels.results = i18n.t('library.results', { count: '{count}' });
+const count = shelves.reduce((total, shelf) => total + shelf.books.length, 0);
 ---
 
-<BlogArticle
-  post={indexPage}
-  headings={headings}
-  sidebar={{ enable: false, ...projectIndex.data.sidebar }}
-  headerVariant="archive"
-  headerKicker={pageMeta.kicker}
-  headerNote={pageMeta.note}
-  contentFont="ui"
->
-  <div class="project-library" data-project-library>
-    {
-      featured && (
-        <section class="library-feature" aria-label={labels.featured}>
-          <a
-            class="library-feature-link"
-            href={`${base}${route}/${featured.id}/`}
-            data-book-link
-            data-book-id={featured.id}
-            data-book-placement="featured"
-            aria-label={`${labels.readStory}: ${featured.data.title}`}
-          >
-            <div class="library-feature-copy">
-              <span class="library-eyebrow">
-                {labels.featured} <span aria-hidden="true">/</span>{' '}
-                {featured.data.date.getFullYear()}
-              </span>
-              <h2>{labels.featureTitle}</h2>
-              <p>{labels.featureDescription}</p>
-              <span class="library-read-button">
-                {labels.readStory}
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-              </span>
-            </div>
-            <div class="library-feature-book">
-              <BookJacket
-                id={featured.id}
-                title={featured.data.title}
-                year={featured.data.date.getFullYear()}
-                kicker={labels.coverKicker}
-              />
-            </div>
-          </a>
-        </section>
-      )
-    }
-    <nav class="library-shelf-nav" aria-label={labels.browseShelves}>
-      <span class="library-eyebrow">{labels.browseShelves}</span>
-      <div>
+<BaseLayout title={pageMeta.title} description={pageMeta.subtitle}>
+  <main
+    class="project-dashboard"
+    data-project-library
+    data-pagefind-body
+    data-labels={JSON.stringify(labels)}
+  >
+    <aside class="library-sidebar" aria-label={labels.allProjects}>
+      <div class="library-sidebar-heading">
+        <span aria-hidden="true">◫</span>
+        {labels.projectTitle}
+      </div>
+      <nav class="library-categories" aria-label={labels.allProjects} data-library-controls hidden>
+        <button type="button" data-library-category="all" aria-pressed="true"
+          >{labels.allProjects}<span>{count}</span></button
+        >
+        {
+          shelves.map((shelf) => (
+            <button type="button" data-library-category={shelf.id} aria-pressed="false">
+              {labels[shelf.id]}
+              <span>{shelf.books.length}</span>
+            </button>
+          ))
+        }
+      </nav>
+      <nav
+        class="library-categories library-category-fallback"
+        aria-label={labels.allProjects}
+        data-library-fallback
+      >
+        <a href="#library-collections">{labels.allProjects}<span>{count}</span></a>
         {
           shelves.map((shelf) => (
             <a href={`#shelf-${shelf.id}`}>
               {labels[shelf.id]}
-              <span>{String(shelf.books.length).padStart(2, '0')}</span>
+              <span>{shelf.books.length}</span>
             </a>
           ))
         }
+      </nav>
+    </aside>
+    <div class="library-main">
+      <div class="library-heading">
+        <div><h1>{labels.projectTitle}</h1><p>{labels.projectIntro}</p></div>
+        <div class="library-search" data-library-controls hidden>
+          <label for="library-search">{labels.search}</label>
+          <input
+            id="library-search"
+            type="search"
+            placeholder={labels.search}
+            autocomplete="off"
+            data-library-search
+          />
+          <button type="button" data-library-clear hidden>{labels.clearSearch}</button>
+        </div>
       </div>
-    </nav>
-    {
-      shelves.map((shelf) => (
-        <section class="library-shelf" aria-labelledby={`shelf-${shelf.id}`}>
-          <div class="library-shelf-heading">
-            <>
-              <h2 id={`shelf-${shelf.id}`}>{labels[shelf.id]}</h2>
-              <span class="library-shelf-count">{String(shelf.books.length).padStart(2, '0')}</span>
-            </>
-          </div>
-          <div class="library-books">
-            {shelf.books.map((project) => (
-              <BookCover
-                id={project.id}
-                title={project.data.title}
-                description={project.data.description}
-                year={project.data.date.getFullYear()}
-                href={`${base}${route}/${project.id}/`}
-                shelf={shelf.id}
-                kicker={labels.coverKicker}
-              />
-            ))}
-          </div>
-        </section>
-      ))
-    }
-  </div>
-  <BookReader slot="overlay" labels={labels} />
-</BlogArticle>
+      {
+        featured && (
+          <section class="library-feature" aria-label={labels.featured}>
+            <a
+              class="library-feature-link"
+              href={`${base}${route}/${featured.id}/`}
+              data-book-link
+              data-book-id={featured.id}
+              data-book-placement="featured"
+              aria-label={`${labels.readStory}: ${featured.data.title}`}
+            >
+              <div class="library-feature-copy">
+                <span class="library-eyebrow">{labels.featured}</span>
+                <h2>{labels.featureTitle}</h2>
+                <p>{labels.featureDescription}</p>
+                <span class="library-read-button">
+                  {labels.readStory} <span aria-hidden="true">→</span>
+                </span>
+              </div>
+              <div class="library-feature-book">
+                <BookJacket
+                  id={featured.id}
+                  title={featured.data.title}
+                  year={featured.data.date.getFullYear()}
+                  kicker={labels.coverKicker}
+                />
+              </div>
+            </a>
+          </section>
+        )
+      }
+      <div id="library-collections" class="library-collections">
+        <p class="library-results" role="status" aria-live="polite" data-library-results hidden></p>
+        {
+          shelves.map((shelf) => (
+            <section
+              class="library-shelf"
+              id={`shelf-${shelf.id}`}
+              data-library-section={shelf.id}
+              aria-labelledby={`shelf-heading-${shelf.id}`}
+            >
+              <div class="library-shelf-heading">
+                <>
+                  <h2 id={`shelf-heading-${shelf.id}`}>{labels[shelf.id]}</h2>
+                  <span>{shelf.books.length}</span>
+                </>
+              </div>
+              <div class="library-books">
+                {shelf.books.map((project) => (
+                  <BookCover
+                    id={project.id}
+                    title={project.data.title}
+                    description={project.data.description}
+                    tags={project.data.tags ?? []}
+                    year={project.data.date.getFullYear()}
+                    href={`${base}${route}/${project.id}/`}
+                    shelf={shelf.id}
+                    kicker={labels.coverKicker}
+                  />
+                ))}
+              </div>
+            </section>
+          ))
+        }
+        <p class="library-empty" data-library-empty hidden>{labels.empty}</p>
+      </div>
+    </div>
+  </main>
+  <BookReader labels={labels} />
+</BaseLayout>
+
+<script>
+  import { initLibraryFilters } from '../../components/project-library/filters';
+  initLibraryFilters();
+  document.addEventListener('astro:page-load', initLibraryFilters);
+</script>

@@ -5,17 +5,24 @@ interface Props {
   id: string;
   title: string;
   description: string;
+  tags: string[];
   year: number;
   href: string;
   shelf: Shelf;
   kicker: string;
 }
-const { id, title, description, year, href, shelf, kicker } = Astro.props;
+const { id, title, description, tags, year, href, shelf, kicker } = Astro.props;
 ---
 
-<article class="library-book" data-shelf={shelf}>
+<article
+  class="library-book"
+  data-shelf={shelf}
+  data-search={`${title} ${description} ${tags.join(' ')}`.toLocaleLowerCase()}
+>
   <a href={href} class="library-book-link" data-book-link data-book-id={id} aria-label={title}>
     <BookJacket id={id} title={title} year={year} kicker={kicker} />
   </a>
+  <h3 class="library-book-name">{title}</h3>
+  <span class="library-book-year">{year}</span>
   <p class="library-book-description">{description}</p>
 </article>

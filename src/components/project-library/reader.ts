@@ -1,6 +1,5 @@
 import { readBookId, withBookId } from './model';
 import { createSession } from './session';
-import { closeBook, openBook, turnPage, type MotionHandle } from './motion';
 
 type BookContent = {
   title: string;
@@ -34,38 +33,25 @@ export function initBookReader() {
   const listeners = new AbortController();
   const listenerOptions = { signal: listeners.signal };
   const cache = new Map<string, BookContent>();
-  const stage = reader.querySelector<HTMLElement>('[data-reader-stage]')!;
-  const motionCover = stage.querySelector<HTMLElement>('[data-motion-cover]')!;
   const status = reader.querySelector<HTMLElement>('[data-reader-status]')!;
   const spread = reader.querySelector<HTMLElement>('[data-reader-spread]')!;
   const error = reader.querySelector<HTMLElement>('[data-reader-error]')!;
   const nav = reader.querySelector<HTMLElement>('[data-reader-nav]')!;
   const page = reader.querySelector<HTMLElement>('[data-reader-page]')!;
+  const cover = reader.querySelector<HTMLElement>('[data-reader-cover]')!;
+  const chapters = reader.querySelector<HTMLElement>('[data-reader-chapter-buttons]')!;
   const select = reader.querySelector<HTMLSelectElement>('[data-reader-chapters]')!;
-  const skip = reader.querySelector<HTMLButtonElement>('[data-reader-skip]')!;
   const prev = reader.querySelector<HTMLButtonElement>('[data-reader-previous]')!;
   const next = reader.querySelector<HTMLButtonElement>('[data-reader-next]')!;
-  const closeButton = reader.querySelector<HTMLButtonElement>('[data-reader-close]')!;
   let activeId: string | null = null;
   let activeLink: HTMLAnchorElement | null = null;
   let data: BookContent | null = null;
   let chapter = 0;
   let request: AbortController | null = null;
-  let motion: MotionHandle | null = null;
   let turning = false;
   let closing = false;
   let oldOverflow = '';
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-  function hideStage() {
-    motion?.cancel();
-    motion = null;
-    stage.classList.remove('is-active');
-    motionCover.replaceChildren();
-    const source = activeLink?.querySelector<HTMLElement>('[data-book-cover]');
-    if (source) source.style.visibility = '';
-    skip.hidden = true;
-  }
 
   function setStatus(message: string) {
     textOf(status, message);
@@ -91,7 +77,6 @@ export function initBookReader() {
     }
     page.replaceChildren(copy);
     page.scrollTop = 0;
-    textOf(reader.querySelector('[data-reader-chapter-title]'), source.dataset.chapterTitle ?? '');
     textOf(
       reader.querySelector('[data-reader-progress]'),
       (labels.progress ?? 'Chapter {current} of {total}')
@@ -101,6 +86,10 @@ export function initBookReader() {
     select.value = String(chapter);
     prev.disabled = chapter === 0 || turning;
     next.disabled = chapter === data.chapters.length - 1 || turning;
+    chapters.querySelectorAll<HTMLButtonElement>('button').forEach((button, index) => {
+      if (index === chapter) button.setAttribute('aria-current', 'step');
+      else button.removeAttribute('aria-current');
+    });
     const heading = page.querySelector<HTMLElement>('h2');
     heading?.setAttribute('tabindex', '-1');
     heading?.focus({ preventScroll: true });
@@ -108,7 +97,6 @@ export function initBookReader() {
 
   function showReading(token: number) {
     if (!session.canRead(token) || !data) return;
-    hideStage();
     setStatus('');
     error.hidden = true;
     spread.hidden = false;
@@ -118,6 +106,8 @@ export function initBookReader() {
       reader.querySelector('[data-reader-meta]'),
       [data.date, data.tags, data.authors].filter(Boolean).join(' · '),
     );
+    const source = activeLink?.querySelector('[data-book-cover]');
+    cover.replaceChildren(...(source ? [document.importNode(source, true)] : []));
     const links = reader.querySelector<HTMLElement>('[data-reader-links]')!;
     links.replaceChildren();
     for (const link of data.links) {
@@ -134,6 +124,15 @@ export function initBookReader() {
         option.value = String(index);
         option.textContent = item.dataset.chapterTitle ?? `Chapter ${index + 1}`;
         return option;
+      }),
+    );
+    chapters.replaceChildren(
+      ...data.chapters.map((item, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.dataset.chapterIndex = String(index);
+        button.textContent = `${String(index + 1).padStart(2, '0')}  ${item.dataset.chapterTitle ?? `Chapter ${index + 1}`}`;
+        return button;
       }),
     );
     updateChapter();
@@ -177,7 +176,6 @@ export function initBookReader() {
   }
 
   function showError(message: string) {
-    hideStage();
     spread.hidden = true;
     nav.hidden = true;
     setStatus('');
@@ -185,64 +183,37 @@ export function initBookReader() {
     error.hidden = false;
     const pageLink = reader.querySelector<HTMLAnchorElement>('[data-reader-open-page]');
     if (pageLink && activeLink) pageLink.href = activeLink.href;
-    closeButton.focus();
+    reader.querySelector<HTMLButtonElement>('[data-reader-close]')?.focus();
   }
 
-  function startOpening(id: string, animated: boolean, trigger?: HTMLAnchorElement) {
+  function startOpening(id: string, trigger?: HTMLAnchorElement) {
     const link = trigger ?? books.get(id);
     if (!link || closing) return;
     session.cancel();
     request?.abort();
-    hideStage();
     activeId = id;
     activeLink = link;
-    textOf(
-      reader.querySelector('[data-reader-title]'),
-      link.querySelector('.library-cover-title')?.textContent?.trim() ?? id,
-    );
     chapter = 0;
     data = null;
     error.hidden = true;
     spread.hidden = true;
     nav.hidden = true;
     setStatus(labels.loading ?? 'Opening book…');
+    textOf(
+      reader.querySelector('[data-reader-title]'),
+      link.querySelector('.library-cover-title')?.textContent?.trim() ?? id,
+    );
     const token = session.begin();
-    const source = link.querySelector<HTMLElement>('[data-book-cover]');
-    const rect = source?.getBoundingClientRect();
     if (!reader.open) {
       oldOverflow = document.body.style.overflow;
       reader.showModal();
       document.body.style.overflow = 'hidden';
     }
-    closeButton.focus({ preventScroll: true });
+    reader.querySelector<HTMLButtonElement>('[data-reader-close]')?.focus({ preventScroll: true });
+    session.markOpened(token);
     void fetchBook(token, link).catch((cause: unknown) => {
       if (session.accept(token) && !(cause instanceof DOMException && cause.name === 'AbortError'))
         showError(labels.error ?? 'This book could not be opened.');
-    });
-    if (!animated || reducedMotion.matches || !rect || !source) {
-      session.markOpened(token);
-      showReading(token);
-      return;
-    }
-    const clone = source.cloneNode(true) as HTMLElement;
-    clone.removeAttribute('id');
-    motionCover.replaceChildren(clone);
-    stage.classList.add('is-active');
-    source.style.visibility = 'hidden';
-    skip.hidden = false;
-    const bounds = reader.getBoundingClientRect();
-    const target = new DOMRect(
-      bounds.left + bounds.width * 0.12,
-      bounds.top + bounds.height * 0.19,
-      Math.min(260, bounds.width * 0.32),
-      Math.min(360, bounds.height * 0.55),
-    );
-    motion = openBook(stage, rect, target);
-    void motion.finished.then(() => {
-      if (!session.accept(token)) return;
-      session.markOpened(token);
-      showReading(token);
-      if (!session.canRead(token)) hideStage();
     });
   }
 
@@ -253,20 +224,16 @@ export function initBookReader() {
     request?.abort();
     const link = activeLink;
     const id = activeId;
-    if (!fromHistory && id && readBookId(new URL(location.href), allowedIds) === id) {
-      if (history.state?.libraryBook) history.back();
-      else history.replaceState(history.state, '', withBookId(new URL(location.href), null));
-    }
-    motion?.cancel();
-    const source = link?.querySelector<HTMLElement>('[data-book-cover]');
-    const rect = source?.getBoundingClientRect();
-    if (!reducedMotion.matches && rect && source && data) {
-      motionCover.replaceChildren(source.cloneNode(true));
-      stage.classList.add('is-active');
-      motion = closeBook(stage, rect);
-      await motion.finished;
-    }
-    hideStage();
+    const exit = reducedMotion.matches
+      ? null
+      : reader.animate(
+          [
+            { opacity: 1, transform: 'scale(1)' },
+            { opacity: 0, transform: 'scale(.985)' },
+          ],
+          { duration: 180, easing: 'ease-in', fill: 'forwards' },
+        );
+    await exit?.finished.catch(() => undefined);
     const restoreFocus = () => {
       const target = link?.isConnected
         ? link
@@ -275,14 +242,18 @@ export function initBookReader() {
               candidate.dataset.bookId === id &&
               candidate.dataset.bookPlacement === link?.dataset.bookPlacement,
           );
-      if (!target) return;
-      target.focus({ preventScroll: true });
+      target?.focus({ preventScroll: true });
       document.removeEventListener('astro:page-load', restoreFocus);
     };
     document.addEventListener('astro:page-load', restoreFocus, { once: true });
     reader.close();
-    window.setTimeout(restoreFocus, 75);
+    exit?.cancel();
     document.body.style.overflow = oldOverflow;
+    if (!fromHistory && id && readBookId(new URL(location.href), allowedIds) === id) {
+      if (history.state?.libraryBook) history.back();
+      else history.replaceState(history.state, '', withBookId(new URL(location.href), null));
+    }
+    window.setTimeout(restoreFocus, 75);
     activeId = null;
     activeLink = null;
     data = null;
@@ -294,10 +265,18 @@ export function initBookReader() {
     turning = true;
     prev.disabled = true;
     next.disabled = true;
-    if (!reducedMotion.matches) await turnPage(page, index > chapter ? 1 : -1).finished;
+    const fadeOut = reducedMotion.matches
+      ? null
+      : page.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 90, fill: 'forwards' });
+    await fadeOut?.finished.catch(() => undefined);
     chapter = index;
     turning = false;
     updateChapter();
+    fadeOut?.cancel();
+    if (!reducedMotion.matches)
+      await page
+        .animate([{ opacity: 0 }, { opacity: 1 }], { duration: 90 })
+        .finished.catch(() => undefined);
   }
 
   library.addEventListener(
@@ -320,7 +299,7 @@ export function initBookReader() {
         '',
         withBookId(new URL(location.href), link.dataset.bookId),
       );
-      startOpening(link.dataset.bookId, true, link);
+      startOpening(link.dataset.bookId, link);
     },
     listenerOptions,
   );
@@ -332,12 +311,15 @@ export function initBookReader() {
     },
     listenerOptions,
   );
-  closeButton.addEventListener('click', () => void closeCurrent(), listenerOptions);
-  skip.addEventListener('click', () => motion?.finish(), listenerOptions);
+  reader
+    .querySelectorAll<HTMLButtonElement>('[data-reader-close]')
+    .forEach((button) =>
+      button.addEventListener('click', () => void closeCurrent(), listenerOptions),
+    );
   reader.querySelector('[data-reader-retry]')?.addEventListener(
     'click',
     () => {
-      if (activeId) startOpening(activeId, false, activeLink ?? undefined);
+      if (activeId) startOpening(activeId, activeLink ?? undefined);
     },
     listenerOptions,
   );
@@ -346,6 +328,14 @@ export function initBookReader() {
   select.addEventListener(
     'change',
     () => void changeChapter(Number(select.value)),
+    listenerOptions,
+  );
+  chapters.addEventListener(
+    'click',
+    (event) => {
+      const button = (event.target as Element).closest<HTMLButtonElement>('[data-chapter-index]');
+      if (button) void changeChapter(Number(button.dataset.chapterIndex));
+    },
     listenerOptions,
   );
   reader.addEventListener(
@@ -358,7 +348,6 @@ export function initBookReader() {
     },
     listenerOptions,
   );
-  window.addEventListener('resize', () => motion?.finish(), listenerOptions);
   window.addEventListener(
     'popstate',
     () => {
@@ -367,7 +356,7 @@ export function initBookReader() {
         void closeCurrent(true);
         return;
       }
-      if (id !== activeId) startOpening(id, false);
+      if (id !== activeId) startOpening(id);
     },
     listenerOptions,
   );
@@ -377,7 +366,6 @@ export function initBookReader() {
       listeners.abort();
       session.cancel();
       request?.abort();
-      hideStage();
       if (reader.open) reader.close();
       document.body.style.overflow = oldOverflow;
     },
@@ -385,7 +373,7 @@ export function initBookReader() {
   );
   const initial = new URL(location.href);
   const initialId = readBookId(initial, allowedIds);
-  if (initialId) startOpening(initialId, false);
+  if (initialId) startOpening(initialId);
   else if (initial.searchParams.has('book')) {
     history.replaceState(history.state, '', withBookId(initial, null));
     const notice = document.createElement('p');

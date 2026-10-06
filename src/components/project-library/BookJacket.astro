@@ -1,4 +1,5 @@
 ---
+import { coverDesign } from './cover-design';
 interface Props {
   id: string;
   title: string;
@@ -6,109 +7,84 @@ interface Props {
   kicker: string;
 }
 const { id, title, year, kicker } = Astro.props;
-const hash = Array.from(id).reduce((sum, letter) => sum + letter.charCodeAt(0), 0);
-const colors = ['sage', 'slate', 'clay', 'plum', 'ochre', 'ink'];
-const featured = id === 'weekly-journal-bot';
-const color = featured ? 'clay' : colors[hash % colors.length];
-const motif = featured ? 0 : 1 + (hash % 4);
+const { motif, palette } = coverDesign(id);
 ---
 
-<span class={`library-cover library-cover--${color}`} data-book-cover>
+<span class={`library-cover library-cover--${palette}`} data-book-cover>
   <span class="library-cover-kicker">{kicker}</span>
   <span class="library-cover-title">{title}</span>
-  <svg class="library-cover-art" viewBox="0 0 200 140" fill="none" aria-hidden="true">
+  <svg class="library-cover-art" viewBox="0 0 180 140" fill="none" aria-hidden="true">
     {
-      motif === 0 && (
+      motif === 'document' && (
         <>
-          <circle cx="103" cy="70" r="62" fill="currentColor" opacity=".12" />
-          <path d="M35 30h99v64H70l-22 17V94H35z" fill="currentColor" opacity=".9" />
-          <path d="M60 49h49M60 62h35M60 75h43" stroke="var(--cover)" stroke-width="4" />
+          <rect x="43" y="16" width="88" height="110" rx="5" fill="currentColor" opacity=".22" />
           <path
-            d="M100 81h69v41h-12l-14 12v-12h-43z"
-            fill="var(--cover)"
+            d="M56 41h62M56 56h49M56 71h62M56 86h38"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+          <circle cx="126" cy="99" r="24" fill="currentColor" opacity=".8" />
+          <path
+            d="m115 99 8 8 15-18"
+            stroke="var(--cover)"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </>
+      )
+    }
+    {
+      motif === 'pages' && (
+        <>
+          <path
+            d="M23 29c25-8 47-6 67 3v86c-20-9-42-11-67-3V29ZM90 32c20-9 42-11 67-3v86c-25-8-47-6-67 3V32Z"
+            fill="currentColor"
+            opacity=".2"
             stroke="currentColor"
             stroke-width="3"
+            stroke-linejoin="round"
           />
-          <path d="m120 101 9 9 20-21" stroke="currentColor" stroke-width="4" />
-          <path d="M155 22v18m-9-9h18M23 111v12m-6-6h12" stroke="currentColor" stroke-width="2" />
+          <path
+            d="M90 32v86M37 49c15-3 27-2 38 2M37 65c15-3 27-2 38 2M105 51c11-4 23-5 38-2M105 67c11-4 23-5 38-2"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
         </>
       )
     }
     {
-      motif === 1 && (
-        <>
-          <circle cx="100" cy="70" r="55" fill="currentColor" opacity=".15" />
-          <circle cx="100" cy="70" r="29" stroke="currentColor" stroke-width="2" />
-          <ellipse
-            cx="100"
-            cy="70"
-            rx="86"
-            ry="27"
-            transform="rotate(-32 100 70)"
-            stroke="currentColor"
-            stroke-width="2"
-          />
-          <ellipse
-            cx="100"
-            cy="70"
-            rx="86"
-            ry="27"
-            transform="rotate(32 100 70)"
-            stroke="currentColor"
-          />
-          <circle cx="159" cy="35" r="8" fill="currentColor" />
-          <circle cx="42" cy="108" r="4" fill="currentColor" />
-          <path d="M100 26v88M56 70h88" stroke="currentColor" opacity=".5" />
-        </>
-      )
-    }
-    {
-      motif === 2 && (
+      motif === 'contour' && (
         <>
           <path
-            d="M32 122V65a34 34 0 0 1 68 0v57M100 122V35a34 34 0 0 1 68 0v87"
-            stroke="currentColor"
-            stroke-width="2"
-          />
-          <path
-            d="M45 122V65a21 21 0 0 1 42 0v57M113 122V35a21 21 0 0 1 42 0v87"
+            d="M20 93c4-35 33-67 67-67 31 0 58 25 69 55 7 20-2 43-26 47-16 3-27-8-40-9-15-1-27 13-44 8-18-5-28-18-26-34Z"
             fill="currentColor"
-            opacity=".25"
+            opacity=".13"
           />
-          <circle cx="134" cy="85" r="21" fill="currentColor" />
-          <path d="M20 123h160M66 90v32M49 106h34" stroke="currentColor" stroke-width="2" />
+          <path
+            d="M29 92c4-29 28-55 58-55 28 0 52 23 60 47 6 18-4 34-20 37-14 2-22-8-37-9-17-2-27 12-42 5-12-5-21-13-19-25Zm18 1c2-19 20-36 42-36 19 0 35 15 39 31 3 10-3 17-12 18-11 2-16-8-27-7-12 0-17 8-28 4-8-2-15-5-14-10Zm22 0c2-9 10-16 21-16 8 0 16 7 17 14"
+            stroke="currentColor"
+            stroke-width="2"
+          />
         </>
       )
     }
     {
-      motif === 3 && (
-        <>
-          <path d="M25 105 100 15l75 90H25Z" fill="currentColor" opacity=".2" />
-          <path
-            d="m25 105 75-90 75 90H25Zm16 0 59-69 59 69M58 105l42-48 42 48M76 105l24-27 24 27M22 118h156M45 131h110"
-            stroke="currentColor"
-            stroke-width="2"
-          />
-          <circle cx="153" cy="31" r="15" fill="currentColor" />
-        </>
-      )
-    }
-    {
-      motif === 4 && (
+      motif === 'diagram' && (
         <>
           <path
-            d="M100 126V35M100 83C56 85 31 65 30 28c42 0 68 16 70 55ZM100 107c43 0 65-19 68-52-40 0-65 17-68 52Z"
+            d="M38 34h52v33H38zM105 20h40v42h-40zM93 90h60v36H93zM28 96h44v30H28z"
+            fill="currentColor"
+            opacity=".2"
             stroke="currentColor"
             stroke-width="2"
           />
-          <path d="M100 83C56 85 31 65 30 28c42 0 68 16 70 55Z" fill="currentColor" opacity=".2" />
-          <path
-            d="m100 83-49-37m49 61 47-34M100 35c-19-10-23-25-16-34 15 3 23 14 16 34Z"
-            stroke="currentColor"
-            stroke-width="2"
-          />
-          <circle cx="151" cy="25" r="12" fill="currentColor" />
-          <path d="M59 127h82" stroke="currentColor" stroke-width="2" />
+          <path d="M90 50h15M125 62v28M72 111h21M58 67v29" stroke="currentColor" stroke-width="3" />
+          <circle cx="90" cy="50" r="4" fill="currentColor" />
+          <circle cx="125" cy="78" r="4" fill="currentColor" />
+          <circle cx="58" cy="82" r="4" fill="currentColor" />
         </>
       )
     }
