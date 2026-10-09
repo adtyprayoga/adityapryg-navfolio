@@ -30,6 +30,7 @@ RUN npm install -g bun@1
 
 # Dependencies first, so edits to src/ do not invalidate the install layer.
 COPY package.json bun.lock ./
+COPY patches ./patches
 # HUSKY=0 keeps the "prepare" hook quiet without a .git directory.
 ENV HUSKY=0
 # --frozen-lockfile fails on a lockfile that disagrees with package.json rather
