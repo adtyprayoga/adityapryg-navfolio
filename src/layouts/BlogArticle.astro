@@ -16,6 +16,7 @@ import { getSeriesContext, slugifyGroupName } from '../utils/content-groups';
 import { buildTocTree, countTocItems } from '../utils/toc-tree';
 import { getUiText } from '../utils/ui-text';
 import '@navfolio/theme-default/styles/blog-article.css';
+import '../styles/blog-code.css';
 
 const siteConfig = await getSiteConfig();
 const { comments: rawComments } = siteConfig;
@@ -156,7 +157,12 @@ const hasSidebar = shouldRenderSidebar && hasToc;
       )
     }
   </head>
-  <body class:list={['blog-detail-page', { 'blog-content-ui': contentFont === 'ui' }]}>
+  <body
+    class:list={[
+      'blog-detail-page',
+      { 'blog-content-ui': contentFont === 'ui', 'blog-post-code': isBlogPost },
+    ]}
+  >
     <BlogTopNav showTocIcon={hasToc} tocItems={tocItems} />
     <div class="blog-background" aria-hidden="true"></div>
 
