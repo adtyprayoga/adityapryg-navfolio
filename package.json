@@ -65,5 +65,9 @@
   },
   "lint-staged": {
     "*": "bun run format:check"
+  },
+  "patchedDependencies": {
+    "@navfolio/mdx-components@github:navfolio/mdx-components#6997956": "patches/@navfolio%2Fmdx-components@github%3Anavfolio%2Fmdx-components#6997956.patch",
+    "@navfolio/page-media@github:navfolio/page-media#788affd": "patches/@navfolio%2Fpage-media@github%3Anavfolio%2Fpage-media#788affd.patch"
   }
 }

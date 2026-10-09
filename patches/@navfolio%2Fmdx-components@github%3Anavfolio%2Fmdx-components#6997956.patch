@@ -1,0 +1,30 @@
+diff --git a/src/MediaShelf.astro b/src/MediaShelf.astro
+--- a/src/MediaShelf.astro
++++ b/src/MediaShelf.astro
+@@ -5,7 +5,7 @@
+ export type MediaShelfItem = {
+   title: string;
+   creator: string;
+-  type: 'book' | 'film' | 'series' | 'album' | 'podcast';
++  type: 'book' | 'film' | 'series' | 'album' | 'song' | 'podcast';
+   cover?: string | ImageMetadata;
+   coverAspect?: 'portrait' | 'landscape' | 'square' | 'wide';
+   rating?: number;
+@@ -91,7 +91,7 @@
+   .navfolio-media-shelf--shelf .navfolio-media-shelf__item { display:grid; gap:10px; justify-items:center; width:100%; text-align:center; }
+   .navfolio-media-shelf--shelf .navfolio-media-shelf__cover { width:min(100%, 176px); aspect-ratio:2 / 3; }
+   .navfolio-media-shelf--shelf .navfolio-media-shelf__cover[data-media-type='film'], .navfolio-media-shelf--shelf .navfolio-media-shelf__cover[data-media-type='series'] { aspect-ratio:16 / 10; }
+-  .navfolio-media-shelf--shelf .navfolio-media-shelf__cover[data-media-type='album'], .navfolio-media-shelf--shelf .navfolio-media-shelf__cover[data-media-type='podcast'] { aspect-ratio:1; }
++  .navfolio-media-shelf--shelf .navfolio-media-shelf__cover[data-media-type='album'], .navfolio-media-shelf--shelf .navfolio-media-shelf__cover[data-media-type='song'], .navfolio-media-shelf--shelf .navfolio-media-shelf__cover[data-media-type='podcast'] { aspect-ratio:1; }
+   .navfolio-media-shelf--shelf .navfolio-media-shelf__cover[data-cover-aspect='portrait'] { aspect-ratio:2 / 3; }
+   .navfolio-media-shelf--shelf .navfolio-media-shelf__cover[data-cover-aspect='landscape'] { aspect-ratio:16 / 10; }
+   .navfolio-media-shelf--shelf .navfolio-media-shelf__cover[data-cover-aspect='square'] { aspect-ratio:1; }
+@@ -105,7 +105,7 @@
+   .navfolio-media-shelf--inline .navfolio-media-shelf__item { display:grid; grid-template-columns:clamp(92px, 18cqi, 142px) minmax(0, 1fr); gap:clamp(14px, 3cqi, 24px); align-items:start; }
+   .navfolio-media-shelf--inline .navfolio-media-shelf__cover { aspect-ratio:2 / 3; }
+   .navfolio-media-shelf--inline .navfolio-media-shelf__cover[data-media-type='film'], .navfolio-media-shelf--inline .navfolio-media-shelf__cover[data-media-type='series'] { aspect-ratio:16 / 10; }
+-  .navfolio-media-shelf--inline .navfolio-media-shelf__cover[data-media-type='album'], .navfolio-media-shelf--inline .navfolio-media-shelf__cover[data-media-type='podcast'] { aspect-ratio:1; }
++  .navfolio-media-shelf--inline .navfolio-media-shelf__cover[data-media-type='album'], .navfolio-media-shelf--inline .navfolio-media-shelf__cover[data-media-type='song'], .navfolio-media-shelf--inline .navfolio-media-shelf__cover[data-media-type='podcast'] { aspect-ratio:1; }
+   .navfolio-media-shelf--inline .navfolio-media-shelf__cover[data-cover-aspect='portrait'] { aspect-ratio:2 / 3; }
+   .navfolio-media-shelf--inline .navfolio-media-shelf__cover[data-cover-aspect='landscape'] { aspect-ratio:16 / 10; }
+   .navfolio-media-shelf--inline .navfolio-media-shelf__cover[data-cover-aspect='square'] { aspect-ratio:1; }
