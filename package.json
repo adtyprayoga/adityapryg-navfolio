@@ -27,8 +27,8 @@
     "build:id": "NAVFOLIO_LANG=id NAVFOLIO_SITE_CONFIG=./src/config/site.id.toml NAVFOLIO_CONTENT_BASE=./src/content-id SITE_BASE=/id astro build --outDir dist-id && rm -rf dist/id && mkdir -p dist/id && cp -r dist-id/. dist/id/ && rm -rf dist-id && sh scripts/link-shared-assets.sh dist dist/id"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^7.3.0",
-    "@astrojs/mdx": "^8.0.2",
+    "@astrojs/markdown-remark": "^7.3.2",
+    "@astrojs/mdx": "^8.0.3",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
     "@expressive-code/plugin-collapsible-sections": "^0.44.2",
@@ -40,30 +40,30 @@
     "@navfolio/plugin-markdown": "github:navfolio/plugin-markdown",
     "@navfolio/theme-default": "github:navfolio/theme-default",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.3.5",
+    "astro": "^7.3.6",
     "astro-expressive-code": "^0.44.2",
     "date-fns": "^4.4.0",
     "github-slugger": "^2.0.0",
-    "katex": "^0.18.9",
+    "katex": "^0.19.0",
     "lucide-astro": "^0.556.0",
-    "mermaid": "^12.0.0",
+    "mermaid": "^12.1.0",
     "sharp": "^0.35.5",
     "smol-toml": "^1.9.0",
     "tailwindcss": "^4.3.3",
-    "three": "^0.179.1"
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@astrojs/compiler": "^4.0.0",
-    "@types/three": "^0.179.0",
-    "@typescript-eslint/eslint-plugin": "^8.70.1",
-    "@typescript-eslint/parser": "^8.70.1",
+    "@types/three": "^0.186.0",
+    "@typescript-eslint/eslint-plugin": "^8.71.1",
+    "@typescript-eslint/parser": "^8.71.1",
     "@typescript/native": "npm:typescript@^6.0.2",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.0",
     "pagefind": "^1.5.2",
     "prettier": "^3.9.9",
-    "prettier-plugin-astro": "^0.14.1",
-    "typescript": "^6.0.2"
+    "prettier-plugin-astro": "^1.1.0",
+    "typescript": "^7.0.2"
   },
   "lint-staged": {
     "*": "bun run format:check"
