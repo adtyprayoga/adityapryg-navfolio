@@ -467,7 +467,19 @@ const blog = defineCollection({
 
 const about = defineCollection({
   loader: glob({ base: contentBase, pattern: 'about.{md,mdx}' }),
-  schema: articleSchema,
+  schema: (context) =>
+    articleSchema(context).extend({
+      hero: z.object({
+        kicker: z.string(),
+        greeting: z.string(),
+        tagline: z.string(),
+        introduction: z.string(),
+        current: z.array(z.string()).length(3),
+        storyCta: z.string(),
+        projectCta: z.string(),
+      }),
+      social: z.array(z.object({ label: z.string(), href: z.url() })),
+    }),
 });
 
 const projects = defineCollection({

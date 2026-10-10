@@ -49,10 +49,12 @@
     "mermaid": "^12.0.0",
     "sharp": "^0.35.5",
     "smol-toml": "^1.9.0",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "three": "^0.179.1"
   },
   "devDependencies": {
     "@astrojs/compiler": "^4.0.0",
+    "@types/three": "^0.179.0",
     "@typescript-eslint/eslint-plugin": "^8.70.1",
     "@typescript-eslint/parser": "^8.70.1",
     "@typescript/native": "npm:typescript@^6.0.2",

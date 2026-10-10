@@ -1,0 +1,138 @@
+---
+interface Props {
+  locale: 'en' | 'id';
+}
+
+const { locale } = Astro.props;
+const labels =
+  locale === 'id'
+    ? {
+        alt: 'Avatar 3D berambut biru yang duduk di atas tumpukan buku',
+        scene: 'Avatar interaktif Aditya',
+        hint: 'Geser ke samping untuk melihat avatar',
+        pause: 'Jeda gerakan',
+        play: 'Lanjutkan gerakan',
+        left: 'Putar ke kiri',
+        right: 'Putar ke kanan',
+        settings: 'Pengaturan adegan',
+        daylight: 'Siang',
+        peach: 'Senja',
+        night: 'Malam',
+        reset: 'Atur ulang tampilan',
+        retry: 'Coba lagi',
+        loading: 'Memuat avatar 3D…',
+        unavailable: 'Avatar 3D tidak tersedia. Gambar tetap ditampilkan.',
+        loadError: 'Avatar 3D gagal dimuat. Gambar tetap ditampilkan.',
+        reduced: 'Gerakan dibatasi oleh pengaturan sistem',
+      }
+    : {
+        alt: 'Blue-haired 3D avatar sitting on a stack of books',
+        scene: "Aditya's interactive avatar",
+        hint: 'Drag sideways to look around',
+        pause: 'Pause movement',
+        play: 'Resume movement',
+        left: 'Turn left',
+        right: 'Turn right',
+        settings: 'Scene settings',
+        daylight: 'Daylight',
+        peach: 'Peach',
+        night: 'Night',
+        reset: 'Reset view',
+        retry: 'Retry',
+        loading: 'Loading 3D avatar…',
+        unavailable: '3D avatar is unavailable. The image remains visible.',
+        loadError: 'Could not load the 3D avatar. The image remains visible.',
+        reduced: 'Motion reduced by system settings',
+      };
+---
+
+<div
+  class="about-avatar"
+  data-about-avatar
+  data-labels={JSON.stringify(labels)}
+  data-pagefind-ignore
+>
+  <div class="about-avatar-stage" data-avatar-stage aria-label={labels.scene}>
+    <img
+      class="about-avatar-poster"
+      data-avatar-poster
+      src="/about-avatar/seated-poster.webp"
+      alt={labels.alt}
+      width="988"
+      height="1122"
+      loading="eager"
+      decoding="async"
+    />
+    <div class="about-avatar-canvas" data-avatar-canvas aria-hidden="true"></div>
+  </div>
+  <p class="about-avatar-hint" data-avatar-hint>{labels.hint}</p>
+  <p class="about-avatar-status" data-avatar-status role="status" aria-live="polite"></p>
+  <button class="about-avatar-retry" type="button" data-avatar-retry hidden>{labels.retry}</button>
+  <div class="about-avatar-controls" data-avatar-controls hidden>
+    <div class="about-avatar-primary-controls">
+      <div class="about-avatar-turn">
+        <button type="button" data-action="turn-left" aria-label={labels.left}>←</button>
+        <button type="button" data-action="turn-right" aria-label={labels.right}>→</button>
+      </div>
+      <button type="button" data-action="pause" aria-pressed="false">{labels.pause}</button>
+    </div>
+    <details class="about-avatar-settings">
+      <summary>{labels.settings}</summary>
+      <div class="about-avatar-settings-inner">
+        <div class="about-avatar-lighting" role="group" aria-label={labels.settings}>
+          <button type="button" data-lighting="daylight" aria-pressed="true"
+            >{labels.daylight}</button
+          >
+          <button type="button" data-lighting="peach" aria-pressed="false">{labels.peach}</button>
+          <button type="button" data-lighting="night" aria-pressed="false">{labels.night}</button>
+        </div>
+        <button type="button" data-action="reset">{labels.reset}</button>
+      </div>
+    </details>
+  </div>
+</div>
+
+<script>
+  function initAvatar() {
+    document.querySelectorAll<HTMLElement>('[data-about-avatar]').forEach((root) => {
+      if (root.dataset.avatarInitialized) return;
+      root.dataset.avatarInitialized = 'true';
+      let dispose: (() => void) | undefined;
+      let aborted = false;
+      const observer = new IntersectionObserver(
+        async ([entry]) => {
+          if (!entry?.isIntersecting) return;
+          observer.disconnect();
+          try {
+            const { mountAboutAvatar } = await import('./avatar-viewer');
+            if (!aborted) dispose = mountAboutAvatar(root);
+          } catch (error) {
+            console.error(error);
+            const status = root.querySelector<HTMLElement>('[data-avatar-status]');
+            if (status) status.textContent = JSON.parse(root.dataset.labels || '{}').unavailable;
+          }
+        },
+        { rootMargin: '250px' },
+      );
+      observer.observe(root);
+      const cleanup = () => {
+        aborted = true;
+        observer.disconnect();
+        dispose?.();
+        root.removeAttribute('data-avatar-initialized');
+        root.removeAttribute('data-ready');
+        root.querySelector('[data-avatar-poster]')?.removeAttribute('aria-hidden');
+        const controls = root.querySelector<HTMLElement>('[data-avatar-controls]');
+        if (controls) controls.hidden = true;
+        document.removeEventListener('astro:before-swap', cleanup);
+        window.removeEventListener('pagehide', cleanup);
+      };
+      document.addEventListener('astro:before-swap', cleanup, { once: true });
+      window.addEventListener('pagehide', cleanup, { once: true });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initAvatar);
+  window.addEventListener('pageshow', initAvatar);
+  initAvatar();
+</script>

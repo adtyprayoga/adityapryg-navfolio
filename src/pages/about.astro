@@ -1,21 +1,112 @@
 ---
 import { getCollection, render } from 'astro:content';
-import BlogArticle from '../layouts/BlogArticle.astro';
+import AboutAvatar from '../components/about/AboutAvatar.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getSiteConfig } from '../data/site';
+import { getUiLanguage } from '../utils/ui-text';
+import '../components/about/about.css';
 
 const [about] = await getCollection('about');
 
 if (!about) {
-  throw new Error('Missing src/content/about.mdx content entry.');
+  throw new Error('Missing About content entry.');
 }
 
 const { Content, headings } = await render(about);
+const chapters = headings.filter(({ depth }) => depth === 2);
+if (chapters.length !== 4) throw new Error('About requires four MDX chapters');
+
+const site = await getSiteConfig();
+const locale = getUiLanguage(site) === 'id' ? 'id' : 'en';
+const labels =
+  locale === 'id'
+    ? {
+        current: 'Saat ini',
+        chapters: 'Jelajahi cerita',
+        mobileChapters: 'Di halaman ini',
+        contact: 'Hubungi saya',
+        closing: 'Terima kasih sudah berkunjung.',
+        closingNote: 'Mari terhubung di tempat lain.',
+        location: 'Jakarta, Indonesia',
+      }
+    : {
+        current: 'These days',
+        chapters: 'Explore the story',
+        mobileChapters: 'On this page',
+        contact: 'Say hello',
+        closing: 'Thanks for stopping by.',
+        closingNote: 'You can find me around the web.',
+        location: 'Jakarta, Indonesia',
+      };
+const navItems = [
+  ...chapters.map(({ slug, text }) => ({ slug, text })),
+  { slug: 'contact', text: labels.contact },
+];
+const projectHref = locale === 'id' ? '/id/projects/' : '/projects/';
 ---
 
-<BlogArticle
-  post={about}
-  headings={headings}
-  sidebar={{ enable: false, ...about.data.sidebar }}
-  contentFont="ui"
->
-  <Content />
-</BlogArticle>
+<BaseLayout title={about.data.title} description={about.data.description}>
+  <main class="about-story" data-pagefind-body>
+    <section class="about-hero" aria-labelledby="about-title">
+      <div class="about-hero-copy">
+        <p class="about-kicker">{about.data.hero.kicker}</p>
+        <h1 id="about-title">{about.data.hero.greeting}<span>{about.data.hero.tagline}</span></h1>
+        <p class="about-intro">{about.data.hero.introduction}</p>
+        <div class="about-hero-actions">
+          <a class="about-primary-link" href={`#${chapters[0].slug}`}
+            >{about.data.hero.storyCta} ↓</a
+          >
+          <a class="about-secondary-link" href={projectHref}>{about.data.hero.projectCta} ↗</a>
+        </div>
+        <p class="about-location">{labels.location}</p>
+      </div>
+      <AboutAvatar locale={locale} />
+    </section>
+
+    <section class="about-current" aria-label={labels.current}>
+      <h2>{labels.current}</h2>
+      <ul>{about.data.hero.current.map((item) => <li>{item}</li>)}</ul>
+    </section>
+
+    <details class="about-mobile-nav">
+      <summary>{labels.mobileChapters}</summary>
+      <nav aria-label={labels.chapters}>
+        {navItems.map((item) => <a href={`#${item.slug}`}>{item.text}</a>)}
+      </nav>
+    </details>
+
+    <div class="about-story-grid">
+      <nav class="about-chapter-nav" aria-label={labels.chapters}>
+        <p>{labels.chapters}</p>
+        {
+          navItems.map((item, index) => (
+            <a href={`#${item.slug}`}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              {item.text}
+            </a>
+          ))
+        }
+      </nav>
+      <article class="about-content">
+        <Content />
+      </article>
+    </div>
+
+    <section class="about-close" id="contact" aria-labelledby="about-close-title">
+      <div>
+        <p class="about-kicker">{labels.contact}</p>
+        <h2 id="about-close-title">{labels.closing}</h2>
+        <p>{labels.closingNote}</p>
+      </div>
+      <nav aria-label={labels.contact}>
+        {
+          about.data.social.map(({ label, href }) => (
+            <a href={href} rel="me">
+              {label} ↗
+            </a>
+          ))
+        }
+      </nav>
+    </section>
+  </main>
+</BaseLayout>
