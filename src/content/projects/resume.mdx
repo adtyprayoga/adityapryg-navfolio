@@ -1,26 +1,70 @@
 ---
 shelf: personal
 title: 'Resume Builder'
-description: 'A bilingual resume builder with inline editing, Classic and ATS layouts, and browser-native PDF export.'
+seoTitle: 'Resume Builder, bilingual ATS resume maker in the browser'
+description: 'A bilingual resume builder that runs in your browser, with Classic and ATS layouts, CV import, undo, and PDF export. Built with Claude Code and Codex.'
 date: 2026-11-02
 icon: 'file-code-2'
-tags: ['svelte', 'typescript', 'vite', 'tailwindcss']
+tags: ['svelte', 'typescript', 'vite', 'tailwindcss', 'claude-code', 'codex']
 links:
+  - label: 'Live site'
+    href: 'https://resume.lab.adityapryg.dev'
+    kind: 'demo'
   - label: 'Repository'
     href: 'https://github.com/adtyprayoga/resume'
     kind: 'github'
 ---
 
+This project has two jobs. The first is to be a real, working resume builder.
+The second is to be a **worked example of how I build software with Claude Code
+and Codex**: the code is the product, but the way it was made is the demonstration.
+
+## What it does
+
 A resume builder for **Indonesian and English**, built with **Svelte 5**,
 **TypeScript**, **Vite**, and **Tailwind CSS**. Edit text directly on the A4
-preview and switch between **Classic** and **ATS** layouts using the same content.
+preview. Both language versions of one resume can be held at once, and things that
+never change, such as dates, contact details, and the photo, are written only once.
 
-The app runs entirely in the browser, with no account or server. Resume data is
-saved in local storage, and **JSON import and export** let you back it up or move
-it between browsers.
+It runs entirely in the browser, with no account or server. Everything stays in
+local storage, and **JSON import and export** let you back it up or move it between
+browsers. Every imported file is validated, and a file from a newer version is
+refused. **PDF export** uses the browser's print dialog, so the text stays
+selectable, searchable, and copyable.
 
-**PDF export** uses the browser's print dialog, keeping text selectable,
-searchable, and copyable. The ATS layout provides a simpler presentation;
-compatibility still depends on the system reading the resume.
+- **Classic and ATS layouts.** Classic is a clean page for people. ATS uses a plain
+  layout with a fixed reading order, and a script reads the exported PDF back to
+  check that order. Compatibility still depends on the system reading the resume.
+- **CV import.** A CV exported from Word is read by font size and weight first, then
+  by rules. It never invents, rewrites, or translates anything, and whatever it is
+  unsure of is left blank and listed as unplaced. Scanned pages work through OCR,
+  with a 0.91% character error rate on the test file. Import runs with Docling and
+  Tesseract in Docker, and the OCR can still alter a word or merge two course lines.
+- **Undo.** Ctrl+Z takes back the latest change, including a deleted entry, a hidden
+  section, or an import. Ctrl+Shift+Z brings it back. It keeps up to 100 steps and
+  forgets them when the tab closes.
+- **The storyteller.** A lamp icon tells your resume back to you as a story, chapter
+  by chapter. Where something is missing it asks, and every question can be skipped.
+  Your answers are written in the resume's language with templates, with no AI and no
+  server.
 
+## How it was built
+
+Every feature went through the same loop: brainstorm, design document, a check by a
+fresh helper that has seen none of the conversation, approval, a test-first plan,
+build, verification with evidence, a fresh-eyes review, and then my decision to
+push, open a pull request, or merge.
+
+- **I decide** what gets built, when to ship, and the privacy rules.
+- **Claude Code** handles brainstorming, designs, plans, most of the building,
+  helpers and reviewers, and verification.
+- **Codex** gives second-opinion and adversarial reviews, and once took over a
+  session to build the storyteller's core.
+
+Rules that never bend: a real CV is never committed and tests use invented people;
+rules of the house live in an `AGENTS.md` that both tools read; real-browser checks
+cover ATS reading order and print layout; and every report says what was and wasn't
+verified. The project has more than 1,200 passing tests as of 5 November 2026.
+
+Live site: [resume.lab.adityapryg.dev](https://resume.lab.adityapryg.dev) ·
 Source: [github.com/adtyprayoga/resume](https://github.com/adtyprayoga/resume)

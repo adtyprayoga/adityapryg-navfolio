@@ -1,27 +1,75 @@
 ---
 shelf: personal
 title: 'Resume Builder'
-description: 'Pembuat resume dwibahasa dengan penyuntingan langsung, tata letak Classic dan ATS, serta ekspor PDF melalui browser.'
+seoTitle: 'Resume Builder, pembuat CV ATS dwibahasa di browser'
+description: 'Pembuat resume dwibahasa yang berjalan di browser, dengan tata letak Classic dan ATS, impor CV, undo, dan ekspor PDF. Dibuat bersama Claude Code dan Codex.'
 date: 2026-11-02
 icon: 'file-code-2'
-tags: ['svelte', 'typescript', 'vite', 'tailwindcss']
+tags: ['svelte', 'typescript', 'vite', 'tailwindcss', 'claude-code', 'codex']
 links:
+  - label: 'Situs langsung'
+    href: 'https://resume.lab.adityapryg.dev'
+    kind: 'demo'
   - label: 'Repository'
     href: 'https://github.com/adtyprayoga/resume'
     kind: 'github'
 ---
 
+Proyek ini punya dua tugas. Pertama, menjadi pembuat resume yang benar-benar
+berfungsi. Kedua, menjadi **contoh nyata cara saya membangun perangkat lunak
+bersama Claude Code dan Codex**: kodenya adalah produknya, tetapi cara membuatnya
+adalah demonstrasinya.
+
+## Fungsinya
+
 Pembuat resume dalam **bahasa Indonesia dan Inggris**, dibangun dengan **Svelte 5**,
 **TypeScript**, **Vite**, dan **Tailwind CSS**. Teks dapat disunting langsung pada
-pratinjau A4, lalu ditampilkan dalam tata letak **Classic** atau **ATS** dengan
-konten yang sama.
+pratinjau A4. Kedua versi bahasa dari satu resume dapat disimpan sekaligus, dan data
+yang tidak berubah, seperti tanggal, kontak, dan foto, hanya ditulis satu kali.
 
-Aplikasi berjalan sepenuhnya di browser, tanpa akun atau server. Data resume
-disimpan di penyimpanan lokal browser, sementara **impor dan ekspor JSON**
-memungkinkan pencadangan atau pemindahan data antarbrowser.
+Aplikasi berjalan sepenuhnya di browser, tanpa akun atau server. Semua data
+tersimpan di penyimpanan lokal, sementara **impor dan ekspor JSON** memungkinkan
+pencadangan atau pemindahan data antarbrowser. Setiap berkas impor divalidasi, dan
+berkas dari versi yang lebih baru ditolak. **Ekspor PDF** menggunakan dialog cetak
+browser sehingga teks tetap dapat dipilih, dicari, dan disalin.
 
-**Ekspor PDF** menggunakan dialog cetak browser sehingga teks tetap dapat dipilih,
-dicari, dan disalin. Tata letak ATS menyediakan tampilan yang lebih sederhana;
-kompatibilitas tetap bergantung pada sistem yang membaca resume.
+- **Tata letak Classic dan ATS.** Classic adalah halaman bersih untuk pembaca
+  manusia. ATS memakai tata letak sederhana dengan urutan baca tetap, dan sebuah
+  skrip membaca ulang PDF hasil ekspor untuk memeriksa urutan itu. Kompatibilitas
+  tetap bergantung pada sistem yang membaca resume.
+- **Impor CV.** CV hasil ekspor Word dibaca lewat ukuran dan ketebalan huruf lebih
+  dulu, baru kemudian lewat aturan. Aplikasi tidak pernah mengarang, menulis ulang,
+  atau menerjemahkan apa pun, dan yang tidak diyakini dibiarkan kosong lalu
+  didaftar sebagai belum ditempatkan. Halaman hasil pindai dibaca dengan OCR,
+  dengan tingkat kesalahan karakter 0,91% pada berkas uji. Impor berjalan dengan
+  Docling dan Tesseract di Docker, dan OCR masih bisa mengubah satu kata atau
+  menggabungkan dua baris kursus.
+- **Undo.** Ctrl+Z membatalkan perubahan terakhir, termasuk entri yang dihapus,
+  bagian yang disembunyikan, atau hasil impor. Ctrl+Shift+Z mengembalikannya.
+  Riwayat menyimpan hingga 100 langkah dan hilang saat tab ditutup.
+- **Pencerita.** Ikon lampu menceritakan kembali resume Anda sebagai sebuah kisah,
+  bab demi bab. Bila ada yang kurang, ia bertanya, dan setiap pertanyaan boleh
+  dilewati. Jawaban Anda ditulis dalam bahasa resume memakai templat, tanpa AI dan
+  tanpa server.
 
+## Cara membuatnya
+
+Setiap fitur melalui alur yang sama: brainstorming, dokumen desain, pemeriksaan oleh
+pembantu baru yang belum melihat percakapan, persetujuan, rencana yang dimulai dari
+tes, pembangunan, verifikasi dengan bukti, tinjauan dengan mata segar, lalu
+keputusan saya untuk push, membuka pull request, atau merge.
+
+- **Saya menentukan** apa yang dibangun, kapan dirilis, dan aturan privasi.
+- **Claude Code** menangani brainstorming, desain, rencana, sebagian besar
+  pembangunan, pembantu dan peninjau, serta verifikasi.
+- **Codex** memberi tinjauan pendapat kedua dan tinjauan adversarial, dan pernah
+  mengambil alih satu sesi untuk membangun inti pencerita.
+
+Aturan yang tidak pernah dilonggarkan: CV asli tidak pernah di-commit dan tes
+memakai tokoh rekaan; aturan rumah ditulis dalam `AGENTS.md` yang dibaca kedua alat;
+pemeriksaan di browser sungguhan mencakup urutan baca ATS dan tata letak cetak; dan
+setiap laporan menyebut apa yang sudah dan belum diverifikasi. Proyek ini memiliki
+lebih dari 1.200 tes yang lulus per 5 November 2026.
+
+Situs langsung: [resume.lab.adityapryg.dev](https://resume.lab.adityapryg.dev) ·
 Sumber: [github.com/adtyprayoga/resume](https://github.com/adtyprayoga/resume)

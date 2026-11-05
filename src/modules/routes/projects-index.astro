@@ -5,6 +5,7 @@ import BookCover from '../../components/project-library/BookCover.astro';
 import BookJacket from '../../components/project-library/BookJacket.astro';
 import BookReader from '../../components/project-library/BookReader.astro';
 import { groupBooks } from '../../components/project-library/model';
+import { FEATURED_PROJECT_ID } from '../../components/project-library/featured';
 import '../../components/project-library/library.css';
 import { getSiteConfig } from '../../data/site';
 import navfolioConfig from '../../../navfolio.config';
@@ -17,7 +18,7 @@ const entries = await getCollection('projects');
 const shelves = groupBooks(entries);
 const featured = shelves
   .flatMap((shelf) => shelf.books)
-  .find((project) => project.id === 'weekly-journal-bot');
+  .find((project) => project.id === FEATURED_PROJECT_ID);
 const route = getPageModuleRoute(navfolioConfig, 'projects');
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const i18n = getI18n(siteConfig);
