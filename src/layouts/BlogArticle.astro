@@ -47,6 +47,7 @@ interface Props {
       comments?: boolean;
       draft?: boolean;
       sidebar?: SidebarConfig;
+      links?: { href: string }[];
     };
   };
   headings?: { depth: number; slug: string; text: string }[];
@@ -87,6 +88,7 @@ const post = props.post ?? {
   },
 };
 const isBlogPost = post.collection === 'blog';
+const isProject = post.collection === 'projects';
 const shouldMountCommentSection = supportsCommentSection(post.collection);
 const { title, description, date, heroImage, showHeroImage = true } = post.data;
 const contentFont = props.contentFont ?? 'article';
@@ -150,6 +152,9 @@ const hasSidebar = shouldRenderSidebar && hasToc;
       description={description}
       image={heroImage}
       publishedTime={isBlogPost ? date : undefined}
+      project={isProject
+        ? { dateCreated: date, links: post.data.links ?? [], keywords: post.data.tags ?? [] }
+        : undefined}
     />
     {
       comments.provider === 'waline' && comments.enabled && (

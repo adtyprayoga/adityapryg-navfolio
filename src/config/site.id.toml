@@ -251,7 +251,7 @@ text = "Mendokumentasikan knowledge base Obsidian self-hosted untuk Codex"
 mark = "01"
 
 [[config.home.doing]]
-text = "Membangun bot Telegram untuk jurnal mingguan, pengingat, dan rekap"
+text = "Membangun pembuat resume dwibahasa bersama Claude Code dan Codex"
 mark = "02"
 
 [[config.home.doing]]

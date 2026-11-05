@@ -4,6 +4,7 @@ import ThemeBaseHead from '@navfolio/theme-default/components/BaseHead.astro';
 import ShareCard from '../assets/figure/share-card.jpg';
 import { getSiteConfig } from '../data/site';
 import { getUiLanguage } from '../utils/ui-text';
+import { projectSchema } from '../utils/structured-data';
 import '../styles/global.css';
 
 interface Props {
@@ -16,9 +17,11 @@ interface Props {
   // Set on article pages so the head can emit publication metadata and
   // BlogPosting structured data.
   publishedTime?: Date;
+  // Set on project pages so the head can emit CreativeWork structured data.
+  project?: { dateCreated: Date; links: { href: string }[]; keywords: string[] };
 }
 
-const { title, seoTitle, description, image, publishedTime } = Astro.props;
+const { title, seoTitle, description, image, publishedTime, project } = Astro.props;
 const headTitle = seoTitle ?? title;
 const siteConfig = await getSiteConfig();
 const { site, fonts } = siteConfig;
@@ -94,6 +97,22 @@ if (publishedTime) {
     mainEntityOfPage: { '@type': 'WebPage', '@id': String(Astro.url) },
     author: { '@id': `${origin}/#person` },
   });
+  schema.push(person);
+}
+
+if (project) {
+  schema.push(
+    projectSchema({
+      url: String(Astro.url),
+      name: title,
+      description,
+      dateCreated: project.dateCreated,
+      language: language === 'id' ? 'id' : 'en',
+      links: project.links,
+      keywords: project.keywords,
+      authorId: `${origin}/#person`,
+    }),
+  );
   schema.push(person);
 }
 
