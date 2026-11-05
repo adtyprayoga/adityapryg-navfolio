@@ -20,6 +20,7 @@ const designs: Record<string, { motif: CoverMotif; palette: CoverPalette }> = {
   'pjb-ims2': { motif: 'diagram', palette: 'teal' },
   'navfolio-site': { motif: 'pages', palette: 'plum' },
   bukubook: { motif: 'pages', palette: 'terracotta' },
+  resume: { motif: 'pages', palette: 'teal' },
 };
 
 export function coverDesign(id: string) {
