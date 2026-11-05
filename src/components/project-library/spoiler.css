@@ -1,0 +1,26 @@
+/* "Behind the page" notes stay closed until the reader opens them. */
+details.behind-the-page {
+  margin: 1.6rem 0;
+  border-left: 3px solid var(--paper-line-strong);
+  border-radius: 4px;
+  background: var(--paper-surface-soft, color-mix(in srgb, var(--paper-ink) 4%, transparent));
+}
+
+details.behind-the-page summary {
+  min-height: 44px;
+  padding: 0.6rem 1rem;
+  color: var(--paper-accent);
+  font: 500 0.85rem/1.5 var(--font-meta, ui-monospace, monospace);
+  cursor: pointer;
+}
+
+details.behind-the-page summary:focus-visible {
+  outline: 2px solid var(--paper-accent);
+  outline-offset: 2px;
+}
+
+details.behind-the-page > :not(summary) {
+  margin: 0;
+  padding: 0 1rem 1rem;
+  font-size: 0.95rem;
+}

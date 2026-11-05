@@ -40,7 +40,12 @@ It spoke two languages, Indonesian and English, and could hold both versions of 
 
 It was built from Svelte, Vite, Tailwind and TypeScript, and it was careful. It never trusted anything it was handed. Every file was checked, every link was inspected, and a file from a newer version of itself was politely refused.
 
-> **Behind the page.** The maker wrote down the rules of the house in an `AGENTS.md` file, so that every AI session starts from the same facts: the commands, the architecture, and the odd decisions that look wrong but are deliberate. Claude Code and Codex both read it.
+<details className="behind-the-page">
+<summary>Behind the page</summary>
+
+The maker wrote down the rules of the house in an `AGENTS.md` file, so that every AI session starts from the same facts: the commands, the architecture, and the odd decisions that look wrong but are deliberate. Claude Code and Codex both read it.
+
+</details>
 
 </BookChapter>
 
@@ -50,7 +55,12 @@ The hero showed every resume in two ways.
 
 **Classic** was for people: a clean page with a little colour. **ATS** was for the machines that read resumes before any person does, with a plain layout and a reading order that never changes. A script reads the exported PDF back and checks that the order is right, because the hero cared more about being read correctly than about looking clever.
 
-> **Behind the page.** A fake browser in a test cannot tell you where a page breaks or what order a PDF reads in. So the workflow includes real checks (`verify:ats`, `verify:print`) that drive a headless Chromium. They run after anything that could touch the printed page.
+<details className="behind-the-page">
+<summary>Behind the page</summary>
+
+A fake browser in a test cannot tell you where a page breaks or what order a PDF reads in. So the workflow includes real checks (`verify:ats`, `verify:print`) that drive a headless Chromium. They run after anything that could touch the printed page.
+
+</details>
 
 </BookChapter>
 
@@ -70,7 +80,12 @@ It even learned to read scanned pages, with a character error rate of 0.91%. It 
 
 Along the way it gained two new sections, **Courses & Certifications** and **References**, because real resumes have them.
 
-> **Behind the page.** This was the biggest piece of work, so it ran **subagent-driven**: a design, a twelve-task plan, and for each task a fresh helper to build it and another to review it, with fix rounds in between. The real CV never entered the repository. It was read only from a private folder, and every test fixture uses invented people.
+<details className="behind-the-page">
+<summary>Behind the page</summary>
+
+This was the biggest piece of work, so it ran **subagent-driven**: a design, a twelve-task plan, and for each task a fresh helper to build it and another to review it, with fix rounds in between. The real CV never entered the repository. It was read only from a private folder, and every test fixture uses invented people.
+
+</details>
 
 </BookChapter>
 
@@ -82,7 +97,12 @@ So the hero learned **undo**. **Ctrl+Z** takes back the latest change, whatever 
 
 Reviewers read the work like strangers on a road, and they found cracks: a photo that lost its permission, a repeated sound that screen readers skipped, a shortcut that fired inside a dialog, and an Undo button that stayed dead for the very first edit. Each crack was fixed, with a test that failed first.
 
-> **Behind the page.** Undo was small and tightly connected, five tasks that built on each other, so it ran **native**: one session built every task itself, then one fresh reviewer on the strongest model read the whole branch. Afterwards Codex gave a second opinion with an *adversarial review*, which doesn't hunt for typos but challenges the approach. It found the dead Undo button, which was fixed before anything shipped.
+<details className="behind-the-page">
+<summary>Behind the page</summary>
+
+Undo was small and tightly connected, five tasks that built on each other, so it ran **native**: one session built every task itself, then one fresh reviewer on the strongest model read the whole branch. Afterwards Codex gave a second opinion with an *adversarial review*, which doesn't hunt for typos but challenges the approach. It found the dead Undo button, which was fixed before anything shipped.
+
+</details>
 
 </BookChapter>
 
@@ -102,7 +122,12 @@ The hero never judges. It notices and asks.
 
 When someone answers, the hero writes it into the resume with the guide's own sentence patterns, in the resume's language, with no AI and no server, and never invents a word. What it wrote stays highlighted on screen, never in print, until the person edits it. Each page turned is one step of undo. Each blank also whispers its meaning, as a small floating tip on a desktop and as a band under the line on a phone.
 
-> **Behind the page.** This is the whole workflow in miniature. It began as a sentence from the maker ("a lamp icon, and I want it to look like a storyteller") and became a conversation, three mockups to choose from, a written design, a plan, and a build. Midway, **Codex** took over the session and built the story's core with its own helpers, until it reached its usage limit. **Claude Code** then picked up the ledger, finished the screens and ran the final review. The tips were added afterwards, from a clickable prototype the maker could try first.
+<details className="behind-the-page">
+<summary>Behind the page</summary>
+
+This is the whole workflow in miniature. It began as a sentence from the maker ("a lamp icon, and I want it to look like a storyteller") and became a conversation, three mockups to choose from, a written design, a plan, and a build. Midway, **Codex** took over the session and built the story's core with its own helpers, until it reached its usage limit. **Claude Code** then picked up the ledger, finished the screens and ran the final review. The tips were added afterwards, from a clickable prototype the maker could try first.
+
+</details>
 
 </BookChapter>
 
