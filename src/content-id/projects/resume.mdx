@@ -40,7 +40,12 @@ Ia berbicara dua bahasa, Indonesia dan Inggris, dan dapat menyimpan kedua versi 
 
 Ia dibuat dari Svelte, Vite, Tailwind, dan TypeScript, dan ia berhati-hati. Ia tidak pernah memercayai apa pun yang diberikan kepadanya. Setiap berkas diperiksa, setiap tautan diteliti, dan berkas dari versi yang lebih baru dari dirinya ditolak dengan sopan.
 
-> **Di balik halaman.** Pembuatnya menuliskan aturan rumah dalam berkas `AGENTS.md`, agar setiap sesi AI bermula dari fakta yang sama: perintah, arsitektur, dan keputusan ganjil yang tampak keliru tetapi disengaja. Claude Code dan Codex sama-sama membacanya.
+<details className="behind-the-page">
+<summary>Di balik halaman</summary>
+
+Pembuatnya menuliskan aturan rumah dalam berkas `AGENTS.md`, agar setiap sesi AI bermula dari fakta yang sama: perintah, arsitektur, dan keputusan ganjil yang tampak keliru tetapi disengaja. Claude Code dan Codex sama-sama membacanya.
+
+</details>
 
 </BookChapter>
 
@@ -50,7 +55,12 @@ Sang tokoh menampilkan setiap resume dengan dua cara.
 
 **Classic** untuk manusia: halaman bersih dengan sedikit warna. **ATS** untuk mesin yang membaca resume sebelum manusia mana pun, dengan tata letak sederhana dan urutan baca yang tidak pernah berubah. Sebuah skrip membaca ulang PDF hasil ekspor dan memeriksa bahwa urutannya benar, karena sang tokoh lebih peduli dibaca dengan benar daripada tampil memikat.
 
-> **Di balik halaman.** Browser tiruan dalam tes tidak dapat memberi tahu di mana halaman terpotong atau dalam urutan apa sebuah PDF dibaca. Karena itu alur kerjanya menyertakan pemeriksaan nyata (`verify:ats`, `verify:print`) yang menjalankan Chromium tanpa antarmuka. Pemeriksaan ini dijalankan setelah apa pun yang dapat menyentuh halaman cetak.
+<details className="behind-the-page">
+<summary>Di balik halaman</summary>
+
+Browser tiruan dalam tes tidak dapat memberi tahu di mana halaman terpotong atau dalam urutan apa sebuah PDF dibaca. Karena itu alur kerjanya menyertakan pemeriksaan nyata (`verify:ats`, `verify:print`) yang menjalankan Chromium tanpa antarmuka. Pemeriksaan ini dijalankan setelah apa pun yang dapat menyentuh halaman cetak.
+
+</details>
 
 </BookChapter>
 
@@ -70,7 +80,12 @@ Ia bahkan belajar membaca halaman hasil pindai, dengan tingkat kesalahan karakte
 
 Di sepanjang jalan ia mendapat dua bagian baru, **Kursus & Sertifikasi** dan **Referensi**, karena resume sungguhan memilikinya.
 
-> **Di balik halaman.** Ini pekerjaan terbesar, sehingga dijalankan secara **subagent-driven**: sebuah desain, rencana dua belas tugas, dan untuk setiap tugas satu pembantu baru yang membangunnya dan satu lagi yang meninjaunya, dengan putaran perbaikan di antaranya. CV asli tidak pernah masuk ke repositori. CV itu hanya dibaca dari folder privat, dan setiap fixture tes memakai tokoh rekaan.
+<details className="behind-the-page">
+<summary>Di balik halaman</summary>
+
+Ini pekerjaan terbesar, sehingga dijalankan secara **subagent-driven**: sebuah desain, rencana dua belas tugas, dan untuk setiap tugas satu pembantu baru yang membangunnya dan satu lagi yang meninjaunya, dengan putaran perbaikan di antaranya. CV asli tidak pernah masuk ke repositori. CV itu hanya dibaca dari folder privat, dan setiap fixture tes memakai tokoh rekaan.
+
+</details>
 
 </BookChapter>
 
@@ -82,7 +97,12 @@ Maka sang tokoh belajar **undo**. **Ctrl+Z** membatalkan perubahan terakhir, apa
 
 Para peninjau membaca hasil kerja ini seperti orang asing di tengah jalan, dan mereka menemukan retakan: foto yang kehilangan izinnya, bunyi berulang yang dilewati pembaca layar, pintasan yang aktif di dalam dialog, dan tombol Undo yang tetap mati pada suntingan pertama. Setiap retakan diperbaiki, dengan tes yang gagal lebih dulu.
 
-> **Di balik halaman.** Undo kecil dan saling terkait erat, lima tugas yang saling bersambung, sehingga dijalankan secara **native**: satu sesi membangun setiap tugas sendiri, lalu satu peninjau baru pada model terkuat membaca seluruh cabang. Setelah itu Codex memberi pendapat kedua lewat _tinjauan adversarial_, yang tidak memburu salah ketik tetapi menantang pendekatannya. Ia menemukan tombol Undo yang mati, dan itu diperbaiki sebelum apa pun dirilis.
+<details className="behind-the-page">
+<summary>Di balik halaman</summary>
+
+Undo kecil dan saling terkait erat, lima tugas yang saling bersambung, sehingga dijalankan secara **native**: satu sesi membangun setiap tugas sendiri, lalu satu peninjau baru pada model terkuat membaca seluruh cabang. Setelah itu Codex memberi pendapat kedua lewat _tinjauan adversarial_, yang tidak memburu salah ketik tetapi menantang pendekatannya. Ia menemukan tombol Undo yang mati, dan itu diperbaiki sebelum apa pun dirilis.
+
+</details>
 
 </BookChapter>
 
@@ -102,7 +122,12 @@ Sang tokoh tidak pernah menghakimi. Ia memperhatikan dan bertanya.
 
 Ketika seseorang menjawab, sang tokoh menuliskannya ke dalam resume dengan pola kalimat dari panduan itu, dalam bahasa resume, tanpa AI dan tanpa server, dan tidak pernah mengarang satu kata pun. Apa yang ditulisnya tetap disorot di layar, tidak pernah di cetakan, sampai orangnya menyuntingnya. Setiap halaman yang dibalik adalah satu langkah undo. Setiap isian kosong juga membisikkan maknanya, sebagai tip kecil yang melayang di desktop dan sebagai pita di bawah baris di ponsel.
 
-> **Di balik halaman.** Inilah seluruh alur kerja dalam bentuk mini. Semuanya bermula dari satu kalimat pembuatnya ("ikon lampu, dan saya ingin tampilannya seperti seorang pencerita") dan menjadi percakapan, tiga mockup untuk dipilih, desain tertulis, rencana, dan pembangunan. Di tengah jalan, **Codex** mengambil alih sesi dan membangun inti kisah dengan pembantunya sendiri, sampai batas penggunaannya habis. **Claude Code** lalu melanjutkan dari buku catatan kemajuan, menyelesaikan layar-layarnya, dan menjalankan tinjauan akhir. Tip ditambahkan setelahnya, dari prototipe yang dapat diklik yang bisa dicoba lebih dulu oleh pembuatnya.
+<details className="behind-the-page">
+<summary>Di balik halaman</summary>
+
+Inilah seluruh alur kerja dalam bentuk mini. Semuanya bermula dari satu kalimat pembuatnya ("ikon lampu, dan saya ingin tampilannya seperti seorang pencerita") dan menjadi percakapan, tiga mockup untuk dipilih, desain tertulis, rencana, dan pembangunan. Di tengah jalan, **Codex** mengambil alih sesi dan membangun inti kisah dengan pembantunya sendiri, sampai batas penggunaannya habis. **Claude Code** lalu melanjutkan dari buku catatan kemajuan, menyelesaikan layar-layarnya, dan menjalankan tinjauan akhir. Tip ditambahkan setelahnya, dari prototipe yang dapat diklik yang bisa dicoba lebih dulu oleh pembuatnya.
+
+</details>
 
 </BookChapter>
 
